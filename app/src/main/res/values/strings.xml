@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">seller-lounge</string>
+    <string name="home">Home</string>
+    <string name="login">Login</string>
+    <string name="auth_fail">로그인을 할 수 없습니다. 계정 확인을 부탁드립니다.</string>
+    <string name="login_fail">로그인을 할 수 없습니다. 잠시 후 다시 시도해주시기 바랍니다.</string>
 </resources>
