@@ -14,6 +14,7 @@
             app:popUpTo="@id/dest_login"
             app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/dest_home"
         android:name="com.wasingun.seller_lounge.ui.home.HomeFragment"
@@ -24,5 +25,20 @@
             app:popUpTo="@string/home"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/dest_product_search"
+        android:name="com.wasingun.seller_lounge.ui.productsearch.ProductSearchFragment"
+        android:label="@string/product_search" />
+
+    <fragment
+        android:id="@+id/dest_trend_comparison"
+        android:name="com.wasingun.seller_lounge.ui.trendcomparison.TrendComparisonFragment"
+        android:label="@string/trend_comparison" />
+
+    <fragment
+        android:id="@+id/dest_setting"
+        android:name="com.wasingun.seller_lounge.ui.setting.SettingFragment"
+        android:label="@string/setting" />
 
 </navigation>
