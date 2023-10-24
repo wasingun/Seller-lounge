@@ -1,7 +1,19 @@
 <resources>
     <string name="app_name">seller-lounge</string>
-    <string name="home">Home</string>
+    <string name="home">홈</string>
     <string name="login">Login</string>
     <string name="auth_fail">로그인을 할 수 없습니다. 계정 확인을 부탁드립니다.</string>
     <string name="login_fail">로그인을 할 수 없습니다. 잠시 후 다시 시도해주시기 바랍니다.</string>
+    <string name="seller">Seller</string>
+    <string name="lounge">lounge</string>
+    <string name="product_search">쇼핑검색</string>
+    <string name="trend_comparison">트랜드 비교</string>
+    <string name="setting">설정</string>
+    <string name="Product_search">쇼핑검색</string>
+    <string name="sort_by">정렬 기준(기본: 정확도순)</string>
+    <string-array name="sort_select">
+        <item>정확도순</item>
+        <item>낮은 가격순</item>
+        <item>높은 가격순</item>
+    </string-array>
 </resources>
