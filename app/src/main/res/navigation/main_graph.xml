@@ -22,7 +22,7 @@
         <action
             android:id="@+id/action_dest_home_to_dest_login"
             app:destination="@id/dest_login"
-            app:popUpTo="@string/home"
+            app:popUpTo="@id/dest_login"
             app:popUpToInclusive="true" />
     </fragment>
 
