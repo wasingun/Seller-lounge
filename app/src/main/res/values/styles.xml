@@ -12,4 +12,10 @@
         <item name="itemIconTint">@color/grey</item>
     </style>
 
+    <style name="ButtonStyle" parent="TextAppearance.AppCompat.Button">
+        <item name="backgroundTint">@color/sky_blue</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>
