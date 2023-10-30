@@ -17,6 +17,9 @@
     <string name="announce_blank_keyword">비교할 키워드를 입력해주세요</string>
     <string name="announce_blank_category">카테고리를 선택해주세요</string>
     <string name="keyword_count_over">비교할 키워드는 최대 5개 까지만 입력해주세요.</string>
+    <string name="error_api_communication">통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
+    <string name="chart_result">비교값 그래프</string>
+    <string name="date">date</string>
 
     <string-array name="sort_select">
         <item>정확도순</item>

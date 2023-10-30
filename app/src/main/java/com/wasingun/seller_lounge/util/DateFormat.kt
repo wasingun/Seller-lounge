@@ -5,7 +5,7 @@ import java.util.Date
 import java.util.Locale
 
 fun latestDateFormat(date: Long): String {
-    val oneDaysInMills = 24L * 60 * 60 * 1000
+    val oneDaysInMills = 48L * 60 * 60 * 1000
     val oneDayAgo = date - oneDaysInMills
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     return dateFormat.format(Date(oneDayAgo))
