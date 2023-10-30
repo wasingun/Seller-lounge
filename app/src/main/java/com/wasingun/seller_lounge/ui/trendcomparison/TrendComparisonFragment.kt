@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.SellerLoungeApplication
 import com.wasingun.seller_lounge.data.repository.TrendComparisonRepository
@@ -16,7 +17,7 @@ import com.wasingun.seller_lounge.util.EventObserver
 
 class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
 
-    private val viewModel by viewModels<TrendComparisonViewModel>{
+    private val viewModel by viewModels<TrendComparisonViewModel> {
         TrendComparisonViewModel.provideFactory(TrendComparisonRepository(SellerLoungeApplication.appContainer.provideApiClient()))
     }
 
@@ -28,23 +29,37 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
 
 
         val categoryList = resources.getStringArray(R.array.category_select)
-        val categoryArrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_sort, categoryList)
+        val categoryArrayAdapter =
+            ArrayAdapter(requireContext(), R.layout.dropdown_sort, categoryList)
         binding.tvCategoryList.setAdapter(categoryArrayAdapter)
 
         binding.tvCategoryList.setDropDownBackgroundDrawable(
-            ColorDrawable(ContextCompat.getColor(requireContext(),R.color.white))
+            ColorDrawable(ContextCompat.getColor(requireContext(), R.color.white))
         )
-        setFailMessage()
+        setIncorrectMessage()
+        moveToResultScreen()
+        setAPIErrorMessage()
     }
 
-    private fun setFailMessage() {
-        viewModel.snackbarText.observe(viewLifecycleOwner,EventObserver {resourceId ->
+    private fun setIncorrectMessage() {
+        viewModel.snackbarText.observe(viewLifecycleOwner, EventObserver { resourceId ->
             binding.btnSearch.showTextMessage(resourceId)
         })
     }
 
-    private fun setMoveToScreen() {
-        viewModel.moveToScreen.observe(viewLifecycleOwner, EventObserver {moveToScreen ->
+    private fun moveToResultScreen() {
+        viewModel.keywordResponseList.observe(viewLifecycleOwner, EventObserver {
+            val action =
+                TrendComparisonFragmentDirections.actionDestTrendComparisonToTrendComparisonResultFragment(
+                    it
+                )
+            findNavController().navigate(action)
+        })
+    }
+
+    private fun setAPIErrorMessage() {
+        viewModel.isError.observe(viewLifecycleOwner, EventObserver {
+            binding.btnSearch.showTextMessage(it)
         })
     }
 
