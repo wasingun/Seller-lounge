@@ -34,11 +34,23 @@
     <fragment
         android:id="@+id/dest_trend_comparison"
         android:name="com.wasingun.seller_lounge.ui.trendcomparison.TrendComparisonFragment"
-        android:label="@string/trend_comparison" />
+        android:label="@string/trend_comparison">
+        <action
+            android:id="@+id/action_dest_trend_comparison_to_trendComparisonResultFragment"
+            app:destination="@id/dest_trend_comparison_result" />
+    </fragment>
 
     <fragment
         android:id="@+id/dest_setting"
         android:name="com.wasingun.seller_lounge.ui.setting.SettingFragment"
         android:label="@string/setting" />
+    <fragment
+        android:id="@+id/dest_trend_comparison_result"
+        android:name="com.wasingun.seller_lounge.ui.trendcomparison.TrendComparisonResultFragment"
+        android:label="TrendComparisonResultFragment">
+        <argument
+            android:name="keyword_response"
+            app:argType="com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse" />
+    </fragment>
 
 </navigation>
