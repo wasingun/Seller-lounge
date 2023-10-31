@@ -24,8 +24,7 @@
             android:text="@string/comparison_trend"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="트랜드 비교" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_search_keyword"
@@ -67,11 +66,11 @@
             app:layout_constraintTop_toBottomOf="@id/til_search_keyword">
 
             <AutoCompleteTextView
-                android:id="@+id/tv_category_list"
+                android:id="@+id/actv_category_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="false"
-                android:hint="카테고리"
+                android:hint="@string/category"
                 android:inputType="none"
                 android:text="@={viewModel.category}"
                 android:textColor="@color/grey"
@@ -87,7 +86,7 @@
             android:layout_height="60dp"
             android:layout_marginEnd="11dp"
             android:onClick="@{() -> viewModel.requestResult()}"
-            android:text="검색"
+            android:text="@string/search"
             app:cornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="@id/til_category_selector"
             app:layout_constraintEnd_toEndOf="parent"

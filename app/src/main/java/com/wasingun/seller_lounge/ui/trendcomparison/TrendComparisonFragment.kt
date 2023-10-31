@@ -23,17 +23,15 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.executePendingBindings()
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
 
         val categoryList = resources.getStringArray(R.array.category_select)
         val categoryArrayAdapter =
             ArrayAdapter(requireContext(), R.layout.dropdown_sort, categoryList)
-        binding.tvCategoryList.setAdapter(categoryArrayAdapter)
+        binding.actvCategoryList.setAdapter(categoryArrayAdapter)
 
-        binding.tvCategoryList.setDropDownBackgroundDrawable(
+        binding.actvCategoryList.setDropDownBackgroundDrawable(
             ColorDrawable(ContextCompat.getColor(requireContext(), R.color.white))
         )
         setIncorrectMessage()

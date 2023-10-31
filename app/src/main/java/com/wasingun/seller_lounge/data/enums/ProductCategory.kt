@@ -9,6 +9,6 @@ enum class ProductCategory(val id: String, val categoryName: String) {
     PARENTING("50000005", "출산/육아"),
     FOOD("50000006", "식품"),
     SPORTS_LEISURE("50000007", "스포츠/레저"),
-    LIVING_HEALTH("50000008", "생활/건강25"),
+    LIVING_HEALTH("50000008", "생활/건강"),
     LEISURE_LIFE_CONVENIENCE("50000009", "여가/생활편의");
 }

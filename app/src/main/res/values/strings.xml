@@ -20,6 +20,8 @@
     <string name="error_api_communication">통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="chart_result">비교값 그래프</string>
     <string name="date">date</string>
+    <string name="category">카테고리</string>
+    <string name="search">검색</string>
 
     <string-array name="sort_select">
         <item>정확도순</item>
