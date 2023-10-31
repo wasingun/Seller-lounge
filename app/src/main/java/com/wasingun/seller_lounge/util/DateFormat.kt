@@ -17,3 +17,7 @@ fun thirtyDaysAgoDateFormat(date: Long): String {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     return dateFormat.format(Date(thirtyDaysAgo))
 }
+
+fun removeYear(date: String): String {
+    return date.substring(5 until 10)
+}

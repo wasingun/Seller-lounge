@@ -14,6 +14,7 @@ import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResult
 import com.wasingun.seller_lounge.databinding.FragmentTrendComparisonResultBinding
 import com.wasingun.seller_lounge.ui.BaseFragment
+import com.wasingun.seller_lounge.util.removeYear
 
 class TrendComparisonResultFragment : BaseFragment<FragmentTrendComparisonResultBinding>() {
     private val args: TrendComparisonResultFragmentArgs by navArgs()
@@ -24,7 +25,7 @@ class TrendComparisonResultFragment : BaseFragment<FragmentTrendComparisonResult
         val lineChart = binding.chart
         val lineData = LineData()
         val keywordResult = args.keywordResponse.results
-        val dateList = keywordResult[0].data.map { removeYear(it.period) }
+        val dateList = keywordResult[0].data.map { removeYear(it.period)}
 
         setAxis(lineChart, dateList)
         setChartData(keywordResult, lineData)
@@ -83,13 +84,5 @@ class TrendComparisonResultFragment : BaseFragment<FragmentTrendComparisonResult
 
     override fun getFragmentView(): Int {
         return R.layout.fragment_trend_comparison_result
-    }
-
-    private fun removeYear(date: String): String {
-        var changedDateFormat = ""
-        for (i in 5..9) {
-            changedDateFormat += date[i]
-        }
-        return changedDateFormat
     }
 }
