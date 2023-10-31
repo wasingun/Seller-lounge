@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/dest_home"
+        android:enabled="true"
+        android:icon="@drawable/selector_home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/dest_product_search"
+        android:enabled="true"
+        android:icon="@drawable/selector_product_search"
+        android:title="@string/product_search" />
+    <item
+        android:id="@+id/dest_trend_comparison"
+        android:enabled="true"
+        android:icon="@drawable/selector_trend_comparison"
+        android:title="@string/trend_comparison" />
+    <item
+        android:id="@+id/dest_setting"
+        android:enabled="true"
+        android:icon="@drawable/selector_setting"
+        android:title="@string/setting" />
+
+</menu>
