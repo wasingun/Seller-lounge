@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordDetail
@@ -16,9 +14,13 @@ import com.wasingun.seller_lounge.util.Constants
 import com.wasingun.seller_lounge.util.Event
 import com.wasingun.seller_lounge.util.latestDateFormat
 import com.wasingun.seller_lounge.util.thirtyDaysAgoDateFormat
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TrendComparisonViewModel(private val repository: TrendComparisonRepository) : ViewModel() {
+@HiltViewModel
+class TrendComparisonViewModel @Inject constructor(private val repository: TrendComparisonRepository) :
+    ViewModel() {
 
     private val _keywordResponseList = MutableLiveData<Event<KeywordResponse>>()
     val keywordResponseList: LiveData<Event<KeywordResponse>> = _keywordResponseList
@@ -36,7 +38,7 @@ class TrendComparisonViewModel(private val repository: TrendComparisonRepository
             ProductCategory.values().firstOrNull { it.categoryName == currentCategory }?.id ?: ""
         val currentKeywordList = currentKeyword
             .split(",")
-            .map{it -> KeywordDetail(it, listOf(it))}
+            .map { KeywordDetail(it, listOf(it)) }
         val currentKeywordCount = currentKeywordList.size
 
         if (isValidInfo(currentKeyword, currentCategory, currentKeywordCount)) return
@@ -76,13 +78,5 @@ class TrendComparisonViewModel(private val repository: TrendComparisonRepository
             return true
         }
         return false
-    }
-
-    companion object {
-        fun provideFactory(repository: TrendComparisonRepository) = viewModelFactory {
-            initializer {
-                TrendComparisonViewModel(repository)
-            }
-        }
     }
 }

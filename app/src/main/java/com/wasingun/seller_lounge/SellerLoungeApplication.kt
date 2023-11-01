@@ -8,14 +8,11 @@ import dagger.hilt.android.HiltAndroidApp
 class SellerLoungeApplication : Application() {
 
     override fun onCreate() {
-        appContainer = AppContainer()
-
         super.onCreate()
         auth = FirebaseAuth.getInstance()
     }
 
     companion object {
         lateinit var auth: FirebaseAuth
-        lateinit var appContainer: AppContainer
     }
 }
