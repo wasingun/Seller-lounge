@@ -8,18 +8,16 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.wasingun.seller_lounge.R
-import com.wasingun.seller_lounge.SellerLoungeApplication
-import com.wasingun.seller_lounge.data.repository.TrendComparisonRepository
 import com.wasingun.seller_lounge.databinding.FragmentTrendComparisonBinding
 import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.ui.BaseFragment
 import com.wasingun.seller_lounge.util.EventObserver
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
 
-    private val viewModel by viewModels<TrendComparisonViewModel> {
-        TrendComparisonViewModel.provideFactory(TrendComparisonRepository(SellerLoungeApplication.appContainer.provideApiClient()))
-    }
+    private val viewModel by viewModels<TrendComparisonViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
