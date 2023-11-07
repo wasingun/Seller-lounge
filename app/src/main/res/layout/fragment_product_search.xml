@@ -11,7 +11,7 @@
             style="@style/TextHeadLine"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:text="@string/Product_search"
+            android:text="@string/product_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,10 +38,9 @@
             app:layout_constraintEnd_toStartOf="@id/btn_search_icon"
             app:layout_constraintStart_toStartOf="parent" />
 
-
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider_search"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
             app:dividerColor="@color/light_grey"
