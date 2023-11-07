@@ -4,7 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
-    id ("kotlin-parcelize")
+    id("kotlin-parcelize")
     id("androidx.navigation.safeargs")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
@@ -90,6 +90,9 @@ dependencies {
     //hilt
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-compiler:2.48")
+
+    //Coil
+    implementation("io.coil-kt:coil:2.4.0")
 
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
