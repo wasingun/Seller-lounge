@@ -27,7 +27,9 @@ class MainActivity : AppCompatActivity() {
             binding.bnvMain.setupWithNavController(it)
         }
         navController?.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.dest_login || destination.id == R.id.dest_trend_comparison_result) {
+            if (destination.id == R.id.dest_login
+                || destination.id == R.id.dest_trend_comparison_result
+                || destination.id == R.id.dest_post_content) {
                 binding.bnvMain.visibility = View.GONE
             } else {
                 binding.bnvMain.visibility = View.VISIBLE
