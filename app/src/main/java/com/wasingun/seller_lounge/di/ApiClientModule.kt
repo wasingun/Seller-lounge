@@ -2,7 +2,8 @@ package com.wasingun.seller_lounge.di
 
 import com.google.gson.Gson
 import com.wasingun.seller_lounge.BuildConfig
-import com.wasingun.seller_lounge.data.source.NaverApiClient
+import com.wasingun.seller_lounge.network.ApiCallAdapterFactory
+import com.wasingun.seller_lounge.network.NaverApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,6 +50,7 @@ object ApiClientModule {
             .baseUrl(BASE_URL)
             .client(okHttp)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(ApiCallAdapterFactory.create())
             .build()
     }
 

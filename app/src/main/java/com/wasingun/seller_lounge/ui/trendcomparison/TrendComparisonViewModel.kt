@@ -10,6 +10,9 @@ import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordDetail
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse
 import com.wasingun.seller_lounge.data.repository.TrendComparisonRepository
+import com.wasingun.seller_lounge.network.onError
+import com.wasingun.seller_lounge.network.onException
+import com.wasingun.seller_lounge.network.onSuccess
 import com.wasingun.seller_lounge.util.Constants
 import com.wasingun.seller_lounge.util.Event
 import com.wasingun.seller_lounge.util.latestDateFormat
@@ -48,29 +51,30 @@ class TrendComparisonViewModel @Inject constructor(private val repository: Trend
             val thirtyDaysAgo = thirtyDaysAgoDateFormat(System.currentTimeMillis())
             val timeUnit = Constants.DATE
 
-            try {
-                _keywordResponseList.value = Event(
-                    repository.requestComparisonResult(
-                        KeywordRequest(
-                            thirtyDaysAgo,
-                            oneDaysAgo,
-                            timeUnit,
-                            categoryCode,
-                            currentKeywordList
-                        )
-                    )
+            val result = repository.requestComparisonResult(
+                KeywordRequest(
+                    thirtyDaysAgo,
+                    oneDaysAgo,
+                    timeUnit,
+                    categoryCode,
+                    currentKeywordList
                 )
-            } catch (e: Exception) {
-                _isError.value = Event(R.string.error_api_communication)
+            )
+            result.onSuccess {
+                _keywordResponseList.value = Event(it)
+            }.onError { _, _ ->
+                _isError.value = Event(R.string.error_api_http_response)
+            }.onException {
+                _isError.value = Event(R.string.error_api_network)
             }
         }
     }
 
     private fun isValidInfo(keyword: String, categoey: String, keywordCount: Int): Boolean {
-        if (keyword.isNullOrBlank()) {
+        if (keyword.isBlank()) {
             _snackbarText.value = Event(R.string.announce_blank_keyword)
             return true
-        } else if (categoey.isNullOrBlank()) {
+        } else if (categoey.isBlank()) {
             _snackbarText.value = Event(R.string.announce_blank_category)
             return true
         } else if (keywordCount > 5) {

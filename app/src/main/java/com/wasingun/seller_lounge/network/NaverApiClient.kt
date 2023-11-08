@@ -1,4 +1,4 @@
-package com.wasingun.seller_lounge.data.source
+package com.wasingun.seller_lounge.network
 
 import com.wasingun.seller_lounge.data.model.productsearch.SearchResponse
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
@@ -12,7 +12,7 @@ interface NaverApiClient {
     @POST("datalab/shopping/category/keywords")
     suspend fun getComparedKeywordData(
         @Body request: KeywordRequest
-    ): KeywordResponse
+    ): ApiResponse<KeywordResponse>
 
     @GET("search/shop.json")
     suspend fun getSearchResult(@Query("query") query: String): SearchResponse
