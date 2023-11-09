@@ -9,7 +9,7 @@ import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordDetail
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse
-import com.wasingun.seller_lounge.data.repository.TrendComparisonRepository
+import com.wasingun.seller_lounge.data.repository.SearchContentRepository
 import com.wasingun.seller_lounge.network.onError
 import com.wasingun.seller_lounge.network.onException
 import com.wasingun.seller_lounge.network.onSuccess
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TrendComparisonViewModel @Inject constructor(private val repository: TrendComparisonRepository) :
+class TrendComparisonViewModel @Inject constructor(private val repository: SearchContentRepository) :
     ViewModel() {
 
     private val _keywordResponseList = MutableLiveData<Event<KeywordResponse>>()

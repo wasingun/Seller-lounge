@@ -13,16 +13,18 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiClientModule {
+object NaverApiClientModule {
     private const val BASE_URL = "https://openapi.naver.com/v1/"
     private val gson = Gson()
 
     @Singleton
     @Provides
+    @Named("naverContentOkHttpClient")
     fun provideOkHttpClient(): OkHttpClient {
         val logger = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -45,7 +47,8 @@ object ApiClientModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttp: OkHttpClient): Retrofit {
+    @Named("naverContentRetrofit")
+    fun provideRetrofit(@Named("naverContentOkHttpClient") okHttp: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttp)
@@ -56,7 +59,7 @@ object ApiClientModule {
 
     @Singleton
     @Provides
-    fun provideApiClient(retrofit: Retrofit): NaverApiClient {
+    fun provideApiClient(@Named("naverContentRetrofit") retrofit: Retrofit): NaverApiClient {
         return retrofit.create(NaverApiClient::class.java)
     }
 }
