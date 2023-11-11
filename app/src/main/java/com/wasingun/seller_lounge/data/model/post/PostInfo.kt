@@ -10,5 +10,5 @@ data class PostInfo(
     val imageList: List<String>,
     val documentList: List<String>,
     val createTime: String,
-    val userId: String?,
+    val userId: String,
 )
