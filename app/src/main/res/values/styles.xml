@@ -19,4 +19,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="AttachmentButtonStyle" parent="TextAppearance.MaterialComponents.Button">
+        <item name="backgroundTint">@color/clear</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="iconSize">20dp</item>
+        <item name="iconTint">@color/grey</item>
+    </style>
+
 </resources>

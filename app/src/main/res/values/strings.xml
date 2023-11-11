@@ -9,7 +9,6 @@
     <string name="product_search">쇼핑검색</string>
     <string name="trend_comparison">트랜드 비교</string>
     <string name="setting">설정</string>
-    <string name="Product_search">쇼핑검색</string>
     <string name="sort_by">정렬 기준(기본: 정확도순)</string>
     <string name="comparison_trend">트랜드 비교</string>
     <string name="enter_shopping_keyword">쇼핑 키워드 입력</string>
@@ -24,6 +23,12 @@
     <string name="category">카테고리</string>
     <string name="search">검색</string>
     <string name="post">글쓰기</string>
+    <string name="announce_input_title">제목을 입력해주세요</string>
+    <string name="announce_input_body">내용을 입력해주세요</string>
+    <string name="attachment_photo">사진첨부</string>
+    <string name="attachment_document">문서첨부</string>
+    <string name="announce_image_attachment_limit">이미지는 최대 10개 까지 첨부 가능합니다.</string>
+    <string name="announce_document_attachment_limit">문서는 2개까지 첨부 가능합니다.</string>
 
     <string-array name="sort_select">
         <item>정확도순</item>

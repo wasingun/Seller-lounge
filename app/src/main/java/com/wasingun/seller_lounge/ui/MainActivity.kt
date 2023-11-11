@@ -12,6 +12,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val hideOnDestinationList = listOf(
+        R.id.dest_login,
+        R.id.dest_trend_comparison_result,
+        R.id.dest_post_content,
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             binding.bnvMain.setupWithNavController(it)
         }
         navController?.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.dest_login || destination.id == R.id.dest_trend_comparison_result) {
+            if (destination.id in hideOnDestinationList) {
                 binding.bnvMain.visibility = View.GONE
             } else {
                 binding.bnvMain.visibility = View.VISIBLE

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="imageContent"
+            type="com.wasingun.seller_lounge.data.model.ImageContent" />
+
+        <variable
+            name="listener"
+            type="com.wasingun.seller_lounge.ui.postcontent.ImageDeleteListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="70dp"
+        android:layout_height="70dp">
+
+        <ImageView
+            android:id="@+id/iv_content"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            setRoundCornerImage="@{imageContent.uri}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:backgroundTint="@color/clear"
+            android:onClick="@{() -> listener.clickImageDelete(imageContent)}"
+            android:src="@drawable/ic_delete_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+

@@ -24,6 +24,9 @@
             app:destination="@id/dest_login"
             app:popUpTo="@id/dest_login"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_dest_home_to_postContentFragment"
+            app:destination="@id/dest_post_content" />
     </fragment>
 
     <fragment
@@ -47,10 +50,14 @@
     <fragment
         android:id="@+id/dest_trend_comparison_result"
         android:name="com.wasingun.seller_lounge.ui.trendcomparison.TrendComparisonResultFragment"
-        android:label="TrendComparisonResultFragment">
+        android:label="@string/chart_result">
         <argument
             android:name="keyword_response"
             app:argType="com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse" />
     </fragment>
+    <fragment
+        android:id="@+id/dest_post_content"
+        android:name="com.wasingun.seller_lounge.ui.postcontent.PostContentFragment"
+        android:label="@string/post" />
 
 </navigation>
