@@ -12,11 +12,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostContentViewModel @Inject constructor() : ViewModel() {
-    private var _imageList = MutableLiveData<List<ImageContent>>()
+    private val _imageList = MutableLiveData<List<ImageContent>>()
     val imageList: LiveData<List<ImageContent>> = _imageList
-    private var _documentList = MutableLiveData<List<DocumentContent>>()
+    private val _documentList = MutableLiveData<List<DocumentContent>>()
     val documentList: LiveData<List<DocumentContent>> = _documentList
-    private var _isError = MutableLiveData<Event<Int>>()
+    private val _isError = MutableLiveData<Event<Int>>()
     val isError: LiveData<Event<Int>> = _isError
 
     fun removeImageList(imageContent: ImageContent) {

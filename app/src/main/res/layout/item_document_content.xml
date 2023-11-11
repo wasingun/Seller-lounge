@@ -64,7 +64,7 @@
             tools:text="2023년 하반기 신규상품 제안 리스트" />
 
         <ImageButton
-            android:id="@+id/iv_delete"
+            android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/clear"
