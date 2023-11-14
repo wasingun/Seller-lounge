@@ -8,6 +8,9 @@ import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.network.ApiResponse
 import com.wasingun.seller_lounge.network.PostDataClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -25,20 +28,30 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
         userId: String
     ): ApiResponse<Unit> {
 
-        val imageLocationList = imageList.map { imageContent ->
-            val storageRef = FirebaseStorage.getInstance().reference
-            val location = "images/${userId}/${imageContent.fileName}"
-            val imageRef = storageRef.child(location)
-            imageRef.putFile(imageContent.uri).await()
-            location
-        }
+        var imageLocationList : List<String>
+        var documentLocationList : List<String>
 
-        val documentLocationList = documentList.map { documentContent ->
-            val storageRef = FirebaseStorage.getInstance().reference
-            val location = "documents/${userId}/${documentContent.fileName}"
-            val documentRef = storageRef.child(location)
-            documentRef.putFile(documentContent.uri).await()
-            location
+        coroutineScope {
+            val imageUpload = imageList.map { imageContent ->
+                async{
+                    val storageRef = FirebaseStorage.getInstance().reference
+                    val location = "images/${userId}/${imageContent.fileName}"
+                    val imageRef = storageRef.child(location)
+                    imageRef.putFile(imageContent.uri).await()
+                    location
+                }
+            }
+            val documentUpload = documentList.map { documentContent ->
+                async{
+                    val storageRef = FirebaseStorage.getInstance().reference
+                    val location = "documents/${userId}/${documentContent.fileName}"
+                    val documentRef = storageRef.child(location)
+                    documentRef.putFile(documentContent.uri).await()
+                    location
+                }
+            }
+            imageLocationList = imageUpload.map {it.await()}
+            documentLocationList = documentUpload.map {it.await()}
         }
 
         val postInfo = PostInfo(
@@ -51,6 +64,7 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
             createdTime,
             userId
         )
+
         return postDataClient.uploadPostContent(postId, postInfo)
     }
 

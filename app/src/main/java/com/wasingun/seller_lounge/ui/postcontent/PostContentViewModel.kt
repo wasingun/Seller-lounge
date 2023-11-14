@@ -9,7 +9,6 @@ import com.wasingun.seller_lounge.SellerLoungeApplication
 import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.data.model.DocumentContent
 import com.wasingun.seller_lounge.data.model.ImageContent
-import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.data.repository.GeneralRepository
 import com.wasingun.seller_lounge.network.onError
 import com.wasingun.seller_lounge.network.onException
