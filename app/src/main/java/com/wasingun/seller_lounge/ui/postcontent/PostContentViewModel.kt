@@ -21,13 +21,13 @@ import javax.inject.Inject
 @HiltViewModel
 class PostContentViewModel @Inject constructor(private val repository: GeneralRepository) :
     ViewModel() {
-    private var _postImageList = MutableLiveData<List<ImageContent>>()
+    private val _postImageList = MutableLiveData<List<ImageContent>>()
     val postImageList: LiveData<List<ImageContent>> = _postImageList
-    private var _postDocumentList = MutableLiveData<List<DocumentContent>>()
+    private val _postDocumentList = MutableLiveData<List<DocumentContent>>()
     val postDocumentList: LiveData<List<DocumentContent>> = _postDocumentList
     private val _isCompleted = MutableLiveData<Boolean>(false)
     val isCompleted: LiveData<Boolean> = _isCompleted
-    private var _isError = MutableLiveData<Event<Int>>()
+    private val _isError = MutableLiveData<Event<Int>>()
     val isError: LiveData<Event<Int>> = _isError
 
     val postTitle = MutableLiveData<String>()

@@ -1,7 +1,5 @@
-package com.wasingun.seller_lounge.di
+package com.wasingun.seller_lounge.data.datasource
 
-import com.wasingun.seller_lounge.data.datasource.PostDataSource
-import com.wasingun.seller_lounge.data.datasource.PostRemoteDataSource
 import com.wasingun.seller_lounge.network.PostDataClient
 import dagger.Module
 import dagger.Provides
