@@ -58,6 +58,15 @@
     <fragment
         android:id="@+id/dest_post_content"
         android:name="com.wasingun.seller_lounge.ui.postcontent.PostContentFragment"
-        android:label="@string/post" />
+        android:label="@string/post">
+        <action
+            android:id="@+id/action_dest_post_content_to_loadingDialogFragment"
+            app:destination="@id/dest_loading_dialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/dest_loading_dialog"
+        android:name="com.wasingun.seller_lounge.ui.common.LoadingDialogFragment"
+        android:label="LoadingDialogFragment" />
 
 </navigation>
