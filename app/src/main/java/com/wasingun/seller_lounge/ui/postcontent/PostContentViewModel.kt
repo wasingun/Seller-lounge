@@ -1,7 +1,5 @@
 package com.wasingun.seller_lounge.ui.postcontent
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wasingun.seller_lounge.R
@@ -10,29 +8,32 @@ import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.data.model.DocumentContent
 import com.wasingun.seller_lounge.data.model.ImageContent
 import com.wasingun.seller_lounge.data.repository.GeneralRepository
-import com.wasingun.seller_lounge.network.onError
-import com.wasingun.seller_lounge.network.onException
-import com.wasingun.seller_lounge.network.onSuccess
-import com.wasingun.seller_lounge.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PostContentViewModel @Inject constructor(private val repository: GeneralRepository) :
     ViewModel() {
-    private val _postImageList = MutableLiveData<List<ImageContent>>()
-    val postImageList: LiveData<List<ImageContent>> = _postImageList
-    private val _postDocumentList = MutableLiveData<List<DocumentContent>>()
-    val postDocumentList: LiveData<List<DocumentContent>> = _postDocumentList
-    private val _isCompleted = MutableLiveData<Boolean>(false)
-    val isCompleted: LiveData<Boolean> = _isCompleted
-    private val _isError = MutableLiveData<Event<Int>>()
-    val isError: LiveData<Event<Int>> = _isError
+    private val _postImageList = MutableStateFlow<List<ImageContent>?>(null)
+    val postImageList: StateFlow<List<ImageContent>?> = _postImageList
+    private val _postDocumentList = MutableStateFlow<List<DocumentContent>?>(null)
+    val postDocumentList: StateFlow<List<DocumentContent>?> = _postDocumentList
+    private val _isCompleted = MutableStateFlow<Boolean>(false)
+    val isCompleted: StateFlow<Boolean> = _isCompleted
+    private val _isInputError = MutableStateFlow(1)
+    val isInputError: StateFlow<Int> = _isInputError
+    private val _isNetworkError = MutableStateFlow(1)
+    val isNetworkError: StateFlow<Int> = _isNetworkError
+    private val _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
-    val postTitle = MutableLiveData<String>()
-    val postBody = MutableLiveData<String>()
-    val postCategory = MutableLiveData<String>()
+    val postTitle = MutableStateFlow<String?>(null)
+    val postBody = MutableStateFlow<String?>(null)
+    val postCategory = MutableStateFlow<String?>(null)
 
     fun uploadPostInfo() {
         val postId = "${System.currentTimeMillis()}"
@@ -45,11 +46,11 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
         val documentList = postDocumentList.value ?: listOf()
         val createTime = System.currentTimeMillis().toString()
         val userId = SellerLoungeApplication.auth.currentUser?.uid ?: ""
-
         if (isBlank(category, title, body)) return
+        _isLoading.value = true
 
         viewModelScope.launch {
-            val result = repository.postInfoUploadResult(
+            repository.postInfoUploadResult(
                 postId,
                 category,
                 title,
@@ -57,15 +58,13 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
                 imageList,
                 documentList,
                 createTime,
-                userId
-            )
-            result.onSuccess {
-                _isCompleted.value = true
-            }.onError { _, _ ->
-                _isError.value = Event(R.string.error_api_http_response)
-            }.onException {
-                _isError.value = Event(R.string.error_api_network)
-            }
+                userId,
+                onComplete = {
+                    _isLoading.value = false
+                    _isCompleted.value = true
+                },
+                onError = { _isNetworkError.value = it }
+            ).collect()
         }
     }
 
@@ -75,13 +74,13 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
         body: String
     ): Boolean {
         if (category == ProductCategory.NONE) {
-            _isError.value = Event(R.string.announce_blank_category)
+            _isInputError.value = R.string.announce_blank_category
             return true
         } else if (title.isBlank()) {
-            _isError.value = Event(R.string.announce_input_title)
+            _isInputError.value = R.string.announce_input_title
             return true
         } else if (body.isBlank()) {
-            _isError.value = Event(R.string.announce_blank_body)
+            _isInputError.value = R.string.announce_blank_body
             return true
         }
         return false
@@ -105,7 +104,7 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
         val currentList = _postImageList.value ?: listOf()
         val newList = mutableListOf<ImageContent>()
         if (currentList.size + imageList.size > 10) {
-            _isError.value = Event(R.string.announce_image_attachment_limit)
+            _isInputError.value = R.string.announce_image_attachment_limit
         } else {
             newList.addAll(currentList)
             newList.addAll(imageList)
@@ -117,7 +116,7 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
         val currentList = _postDocumentList.value ?: listOf()
         val newList = mutableListOf<DocumentContent>()
         if (currentList.size >= 2) {
-            _isError.value = Event(R.string.announce_document_attachment_limit)
+            _isInputError.value = R.string.announce_document_attachment_limit
         } else {
             newList.addAll(currentList)
             newList.add(document)
