@@ -52,7 +52,7 @@
                 android:hint="@string/category"
                 android:inputType="none"
                 android:text="@={viewModel.postCategory}"
-                android:textColor="@color/grey"
+                android:textColor="@color/deep_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

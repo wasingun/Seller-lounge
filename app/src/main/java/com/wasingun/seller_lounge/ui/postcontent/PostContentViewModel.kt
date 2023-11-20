@@ -39,7 +39,7 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
         val postId = "${System.currentTimeMillis()}"
         val category = ProductCategory.values().firstOrNull {
             postCategory.value == it.categoryName
-        } ?: ProductCategory.NONE
+        } ?: ProductCategory.ALL
         val title = postTitle.value ?: ""
         val body = postBody.value ?: ""
         val imageList = postImageList.value ?: listOf()
@@ -73,7 +73,7 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
         title: String,
         body: String
     ): Boolean {
-        if (category == ProductCategory.NONE) {
+        if (category == ProductCategory.ALL) {
             _isInputError.value = R.string.announce_blank_category
             return true
         } else if (title.isBlank()) {

@@ -55,7 +55,7 @@
             android:layout_height="70dp"
             android:padding="5dp"
             app:boxStrokeColor="@color/sky_blue"
-            app:hintTextColor="@color/grey"
+            app:hintTextColor="@color/deep_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider_search">
@@ -67,7 +67,7 @@
                 android:clickable="false"
                 android:hint="@string/sort_by"
                 android:inputType="none"
-                android:textColor="@color/grey"
+                android:textColor="@color/deep_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
