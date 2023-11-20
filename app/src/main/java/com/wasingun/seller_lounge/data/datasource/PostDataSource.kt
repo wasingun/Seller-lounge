@@ -3,6 +3,7 @@ package com.wasingun.seller_lounge.data.datasource
 import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.data.model.DocumentContent
 import com.wasingun.seller_lounge.data.model.ImageContent
+import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.network.ApiResponse
 
@@ -16,6 +17,8 @@ interface PostDataSource {
                                documentList: List<DocumentContent>,
                                createdTime: String,
                                userId: String): ApiResponse<Unit>
+
+    suspend fun getPostList(): ApiResponse<Map<String, PostInfo>>
 
     suspend fun userInfoUpload(userId: String, userInfo: UserInfo): ApiResponse<Unit>
 }
