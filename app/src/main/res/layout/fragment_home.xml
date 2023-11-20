@@ -26,16 +26,16 @@
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             app:tabGravity="center"
             app:tabIndicatorHeight="1dp"
-            app:tabTextAppearance="@style/TabLayoutTitle"
-            app:tabMode="scrollable" />
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabLayoutTitle" />
 
         <EditText
             android:id="@+id/et_search"
             android:layout_width="360dp"
             android:layout_height="40dp"
-            android:textSize="14sp"
             android:background="@color/clear"
             android:maxLines="1"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tl_tab_menu" />
 
@@ -43,13 +43,13 @@
             android:id="@+id/search_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/et_search"
-            app:layout_constraintBottom_toBottomOf="@id/et_search"
-            android:src="@drawable/ic_search"
-            android:padding="0dp"
+            android:layout_marginEnd="20dp"
             android:background="@color/clear"
-            android:layout_marginEnd="20dp"/>
+            android:padding="0dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="@id/et_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_search" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/view_search_divider"
@@ -58,16 +58,17 @@
             app:dividerColor="@color/light_grey"
             app:layout_constraintBottom_toBottomOf="@id/et_search"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_home"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginBottom="70dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tl_tab_menu" />
+            app:layout_constraintTop_toBottomOf="@id/view_search_divider" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_post"

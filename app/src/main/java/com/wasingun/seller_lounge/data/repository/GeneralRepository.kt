@@ -16,7 +16,7 @@ import com.wasingun.seller_lounge.network.onException
 import com.wasingun.seller_lounge.network.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onCompletion
+import com.wasingun.seller_lounge.util.Constants
 import javax.inject.Inject
 
 class GeneralRepository @Inject constructor(
@@ -74,8 +74,21 @@ class GeneralRepository @Inject constructor(
         }
     }
 
-    suspend fun getPostList(): ApiResponse<Map<String, PostInfo>> {
-        return postDataSource.getPostList()
+    fun getPostList(
+        onComplete: () -> Unit,
+        onError: (Int) -> Unit
+    ): Flow<List<PostInfo>> {
+
+        val result = postDataSource.getPostList(
+            onError = {
+                if (it == Constants.REQUEST_ERROR) {
+                    onError(R.string.error_api_http_response)
+                } else if (it == Constants.NETWORK_ERROR) {
+                    onError(R.string.error_api_network)
+                }
+            }, onComplete = onComplete
+        )
+        return result
     }
 
     suspend fun userInfoUploadResult(userId: String, userInfo: UserInfo): ApiResponse<Unit> {

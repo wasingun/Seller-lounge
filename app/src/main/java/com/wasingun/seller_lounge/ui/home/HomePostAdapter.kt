@@ -11,7 +11,7 @@ class HomePostAdapter(private val postClickListener: PostClickListener) :
 
     private var postList: List<PostInfo> = listOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomePostViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomePostViewHolder {
         return HomePostViewHolder.from(parent)
     }
 
@@ -42,5 +42,10 @@ class HomePostAdapter(private val postClickListener: PostClickListener) :
                 return HomePostViewHolder(binding)
             }
         }
+    }
+
+    fun submitPost(posts: List<PostInfo>) {
+        postList = posts
+        notifyDataSetChanged()
     }
 }
