@@ -43,7 +43,7 @@ class DocumentContentAdapter(private val documentDeleteListener: DocumentDeleteL
 
     private class DiffCallback : DiffUtil.ItemCallback<DocumentContent>() {
         override fun areItemsTheSame(oldItem: DocumentContent, newItem: DocumentContent): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            return oldItem.uri == newItem.uri
         }
 
         override fun areContentsTheSame(

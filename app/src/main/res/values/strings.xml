@@ -29,22 +29,11 @@
     <string name="attachment_document">문서첨부</string>
     <string name="announce_image_attachment_limit">이미지는 최대 10개 까지 첨부 가능합니다.</string>
     <string name="announce_document_attachment_limit">문서는 2개까지 첨부 가능합니다.</string>
+    <string name="announce_blank_body">내용을 입력해주세요.</string>
 
     <string-array name="sort_select">
         <item>정확도순</item>
         <item>낮은 가격순</item>
         <item>높은 가격순</item>
-    </string-array>
-    <string-array name="category_select">
-        <item>패션의류</item>
-        <item>패션잡화</item>
-        <item>디지털/가전</item>
-        <item>생활/건강</item>
-        <item>가구/인테리어</item>
-        <item>스포츠/레저</item>
-        <item>식품</item>
-        <item>화장품/미용</item>
-        <item>출산/육아</item>
-        <item>여가/생활편의</item>
     </string-array>
 </resources>

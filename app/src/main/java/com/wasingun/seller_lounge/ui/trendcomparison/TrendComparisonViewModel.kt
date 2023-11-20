@@ -9,7 +9,7 @@ import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordDetail
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse
-import com.wasingun.seller_lounge.data.repository.TrendComparisonRepository
+import com.wasingun.seller_lounge.data.repository.GeneralRepository
 import com.wasingun.seller_lounge.network.onError
 import com.wasingun.seller_lounge.network.onException
 import com.wasingun.seller_lounge.network.onSuccess
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TrendComparisonViewModel @Inject constructor(private val repository: TrendComparisonRepository) :
+class TrendComparisonViewModel @Inject constructor(private val repository: GeneralRepository) :
     ViewModel() {
 
     private val _keywordResponseList = MutableLiveData<Event<KeywordResponse>>()
@@ -70,11 +70,11 @@ class TrendComparisonViewModel @Inject constructor(private val repository: Trend
         }
     }
 
-    private fun isValidInfo(keyword: String, categoey: String, keywordCount: Int): Boolean {
+    private fun isValidInfo(keyword: String, category: String, keywordCount: Int): Boolean {
         if (keyword.isBlank()) {
             _snackbarText.value = Event(R.string.announce_blank_keyword)
             return true
-        } else if (categoey.isBlank()) {
+        } else if (category.isBlank()) {
             _snackbarText.value = Event(R.string.announce_blank_category)
             return true
         } else if (keywordCount > 5) {

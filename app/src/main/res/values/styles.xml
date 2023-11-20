@@ -29,4 +29,9 @@
         <item name="iconTint">@color/grey</item>
     </style>
 
+    <style name="DropdownBoxStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/sky_blue</item>
+        <item name="hintTextColor">@color/grey</item>
+    </style>
+
 </resources>

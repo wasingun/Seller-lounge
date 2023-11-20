@@ -21,19 +21,19 @@
 
         <ImageView
             android:id="@+id/iv_content"
+            setRoundCornerImage="@{imageContent.uri}"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            setRoundCornerImage="@{imageContent.uri}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="0dp"
             android:backgroundTint="@color/clear"
             android:onClick="@{() -> listener.clickImageDelete(imageContent)}"
+            android:padding="0dp"
             android:src="@drawable/ic_delete_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

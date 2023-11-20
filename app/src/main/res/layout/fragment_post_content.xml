@@ -13,6 +13,10 @@
             name="documentRequestListener"
             type="com.wasingun.seller_lounge.ui.postcontent.DocumentRequestListener" />
 
+        <variable
+            name="viewModel"
+            type="com.wasingun.seller_lounge.ui.postcontent.PostContentViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,13 +35,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_category_selector"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            style="@style/DropdownBoxStyle"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            app:boxStrokeColor="@color/sky_blue"
-            app:hintTextColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title">
@@ -49,6 +51,7 @@
                 android:clickable="false"
                 android:hint="@string/category"
                 android:inputType="none"
+                android:text="@={viewModel.postCategory}"
                 android:textColor="@color/grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -64,6 +67,7 @@
             android:background="@color/clear"
             android:hint="@string/announce_input_title"
             android:maxLines="1"
+            android:text="@={viewModel.postTitle}"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +94,7 @@
             android:background="@color/clear"
             android:gravity="top"
             android:hint="@string/announce_input_body"
+            android:text="@={viewModel.postBody}"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/rv_document_list"
             app:layout_constraintEnd_toEndOf="parent"
@@ -141,6 +146,18 @@
             app:icon="@drawable/ic_document"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_attachment_photo" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_complete"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:onClick="@{() -> viewModel.uploadPostInfo()}"
+            android:text="작성 완료"
+            app:cornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

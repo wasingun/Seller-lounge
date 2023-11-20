@@ -42,7 +42,7 @@ class ImageContentAdapter(private val imageDeleteListener: ImageDeleteListener) 
 
     private class DiffCallback : DiffUtil.ItemCallback<ImageContent>() {
         override fun areItemsTheSame(oldItem: ImageContent, newItem: ImageContent): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            return oldItem.uri == newItem.uri
         }
 
         override fun areContentsTheSame(oldItem: ImageContent, newItem: ImageContent): Boolean {
