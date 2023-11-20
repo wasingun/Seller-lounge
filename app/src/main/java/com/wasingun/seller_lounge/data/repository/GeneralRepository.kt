@@ -62,14 +62,14 @@ class GeneralRepository @Inject constructor(
             createdTime,
             userId
         )
-        return flow<Unit> {
+        return flow {
             result.onError { _, _ ->
-                onError(R.string.error_api_http_response)
+                emit(onError(R.string.error_api_http_response))
             }.onException {
-                onError(R.string.error_api_network)
+                emit(onError(R.string.error_api_network))
+            }.onSuccess {
+                emit(onComplete())
             }
-        }.onCompletion {
-            onComplete()
         }
     }
 
