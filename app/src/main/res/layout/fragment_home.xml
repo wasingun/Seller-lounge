@@ -6,6 +6,69 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TextHeadLine"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="@string/seller_forum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_tab_menu"
+            style="@style/TabLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="1dp"
+            app:tabTextAppearance="@style/TabLayoutTitle"
+            app:tabMode="scrollable" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="360dp"
+            android:layout_height="40dp"
+            android:textSize="14sp"
+            android:background="@color/clear"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tl_tab_menu" />
+
+        <ImageButton
+            android:id="@+id/search_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_search"
+            app:layout_constraintBottom_toBottomOf="@id/et_search"
+            android:src="@drawable/ic_search"
+            android:padding="0dp"
+            android:background="@color/clear"
+            android:layout_marginEnd="20dp"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/view_search_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:dividerColor="@color/light_grey"
+            app:layout_constraintBottom_toBottomOf="@id/et_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_home"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tl_tab_menu" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_post"
             style="@style/ButtonStyle"
