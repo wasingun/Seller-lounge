@@ -17,3 +17,16 @@ fun ImageView.setRoundedCornerImage(uri: Uri) {
         error(null)
     }
 }
+
+@BindingAdapter("loadImageFromUrl")
+fun ImageView.loadImageFromUrl(url: String?) {
+    load(url) {
+        if (!url.isNullOrBlank()) {
+            transformations(
+                RoundedCornersTransformation(
+                    10.0f
+                )
+            )
+        }
+    }
+}
