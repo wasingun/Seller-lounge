@@ -7,8 +7,8 @@ data class PostInfo(
     val category: ProductCategory,
     val title : String,
     val body: String,
-    val imageList: List<String>,
-    val documentList: List<String>,
+    val imageList: List<String>? = null,
+    val documentList: List<String>? = null,
     val createTime: String,
     val userId: String,
 )
