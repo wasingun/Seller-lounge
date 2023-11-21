@@ -4,12 +4,13 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.enums.ProductCategory
@@ -18,8 +19,9 @@ import com.wasingun.seller_lounge.data.model.ImageContent
 import com.wasingun.seller_lounge.databinding.FragmentPostContentBinding
 import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.ui.BaseFragment
-import com.wasingun.seller_lounge.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
@@ -44,39 +46,79 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
     }
 
     private fun setErrorMessage() {
-        viewModel.isError.observe(viewLifecycleOwner, EventObserver { resourceId ->
-            when (resourceId) {
-                R.string.announce_image_attachment_limit -> {
-                    binding.btnAttachmentPhoto.showTextMessage(R.string.announce_image_attachment_limit)
-                }
-                R.string.announce_document_attachment_limit -> {
-                    binding.btnAttachmentDocument.showTextMessage(R.string.announce_document_attachment_limit)
-                }
-                R.string.announce_input_title -> {
-                    binding.btnComplete.showTextMessage(R.string.announce_input_title)
-                }
-                R.string.announce_blank_category -> {
-                    binding.btnComplete.showTextMessage(R.string.announce_blank_category)
-                }
-                else -> {
-                    binding.btnComplete.showTextMessage(R.string.announce_blank_body)
+        lifecycleScope.launch {
+            viewModel.isInputError.collect { resourceId ->
+                when (resourceId) {
+                    R.string.announce_image_attachment_limit -> {
+                        binding.btnAttachmentPhoto.showTextMessage(R.string.announce_image_attachment_limit)
+                    }
+
+                    R.string.announce_document_attachment_limit -> {
+                        binding.btnAttachmentDocument.showTextMessage(R.string.announce_document_attachment_limit)
+                    }
+
+                    R.string.announce_input_title -> {
+                        binding.btnComplete.showTextMessage(R.string.announce_input_title)
+                    }
+
+                    R.string.announce_blank_category -> {
+                        binding.btnComplete.showTextMessage(R.string.announce_blank_category)
+                    }
+
+                    R.string.announce_blank_body -> {
+                        binding.btnComplete.showTextMessage(R.string.announce_blank_body)
+                    }
                 }
             }
-        })
+        }
+        lifecycleScope.launch {
+            viewModel.isNetworkError.collect() { resourceId ->
+                when (resourceId) {
+                    R.string.error_api_http_response -> {
+                        delay(300)
+                        findNavController().navigateUp()
+                        binding.root.showTextMessage(R.string.error_api_http_response)
+                    }
+
+                    R.string.error_api_network -> {
+                        delay(300)
+                        findNavController().navigateUp()
+                        binding.root.showTextMessage(R.string.error_api_network)
+                    }
+                }
+            }
+        }
     }
 
     private fun observeData() {
-        viewModel.postImageList.observe(viewLifecycleOwner) { imageContentList ->
-            imageListAdapter.submitList(imageContentList)
-        }
-        viewModel.postDocumentList.observe(viewLifecycleOwner) { documentContentList ->
-            documentListAdapter.submitList(documentContentList)
-        }
-        viewModel.isCompleted.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                findNavController().navigateUp()
+        lifecycleScope.launch {
+            viewModel.postImageList.collect { imageContentList ->
+                imageListAdapter.submitList(imageContentList)
             }
-        })
+        }
+        lifecycleScope.launch {
+            viewModel.postDocumentList.collect { documentContentList ->
+                documentListAdapter.submitList(documentContentList)
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.isCompleted.collect {
+                if (it) {
+                    delay(300)
+                    findNavController().navigateUp()
+                    findNavController().navigateUp()
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.isLoading.collect {
+                if (it) {
+                    val action =
+                        PostContentFragmentDirections.actionDestPostContentToLoadingDialogFragment()
+                    findNavController().navigate(action)
+                }
+            }
+        }
     }
 
     private fun setLayout() {

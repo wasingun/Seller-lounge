@@ -1,5 +1,6 @@
 package com.wasingun.seller_lounge.data.repository
 
+import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.datasource.NaverApiDataSource
 import com.wasingun.seller_lounge.data.datasource.PostDataSource
 import com.wasingun.seller_lounge.data.enums.ProductCategory
@@ -9,6 +10,12 @@ import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse
 import com.wasingun.seller_lounge.network.ApiResponse
+import com.wasingun.seller_lounge.network.onError
+import com.wasingun.seller_lounge.network.onException
+import com.wasingun.seller_lounge.network.onSuccess
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
 import javax.inject.Inject
 
 class GeneralRepository @Inject constructor(
@@ -16,8 +23,21 @@ class GeneralRepository @Inject constructor(
     private val postDataSource: PostDataSource
 ) {
 
-    suspend fun requestComparisonResult(keywordRequest: KeywordRequest): ApiResponse<KeywordResponse> {
-        return naverDataSource.requestComparisonResult(keywordRequest)
+    fun requestComparisonResult(
+        keywordRequest: KeywordRequest,
+        onComplete: (KeywordResponse) -> Unit,
+        onError: (message: Int) -> Unit,
+    ): Flow<KeywordResponse> {
+        return flow {
+            val result = naverDataSource.requestComparisonResult(keywordRequest)
+            result.onSuccess { keywordResponse ->
+                onComplete(keywordResponse)
+            }.onError { _, _ ->
+                onError(R.string.error_api_http_response)
+            }.onException {
+                onError(R.string.error_api_network)
+            }
+        }
     }
 
     suspend fun postInfoUploadResult(
@@ -28,9 +48,11 @@ class GeneralRepository @Inject constructor(
         imageList: List<ImageContent>,
         documentList: List<DocumentContent>,
         createdTime: String,
-        userId: String
-    ): ApiResponse<Unit> {
-        return postDataSource.postInfoUpload(
+        userId: String,
+        onComplete: () -> Unit,
+        onError: (message: Int) -> Unit
+    ): Flow<Unit> {
+        val result = postDataSource.postInfoUpload(
             postId,
             category,
             title,
@@ -40,6 +62,15 @@ class GeneralRepository @Inject constructor(
             createdTime,
             userId
         )
+        return flow {
+            result.onError { _, _ ->
+                emit(onError(R.string.error_api_http_response))
+            }.onException {
+                emit(onError(R.string.error_api_network))
+            }.onSuccess {
+                emit(onComplete())
+            }
+        }
     }
 
     suspend fun userInfoUploadResult(userId: String, userInfo: UserInfo): ApiResponse<Unit> {

@@ -6,19 +6,29 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.databinding.FragmentTrendComparisonBinding
 import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.ui.BaseFragment
-import com.wasingun.seller_lounge.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
 
     private val viewModel by viewModels<TrendComparisonViewModel>()
+    private val inputErrorMessageList = listOf(
+        R.string.announce_blank_category,
+        R.string.announce_blank_keyword,
+        R.string.keyword_count_over
+    )
+    private val apiErrorMessage = listOf(
+        R.string.error_api_network,
+        R.string.error_api_http_response
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,7 +36,7 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         setDropdownMenu()
-        setIncorrectMessage()
+        setInputErrorMessage()
         moveToResultScreen()
         setAPIErrorMessage()
     }
@@ -42,26 +52,39 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
         )
     }
 
-    private fun setIncorrectMessage() {
-        viewModel.snackbarText.observe(viewLifecycleOwner, EventObserver { resourceId ->
-            binding.btnSearch.showTextMessage(resourceId)
-        })
+    private fun setInputErrorMessage() {
+        lifecycleScope.launch {
+            viewModel.snackbarText.collect { resourceId ->
+                if (resourceId in inputErrorMessageList) {
+                    binding.btnSearch.showTextMessage(resourceId)
+                }
+            }
+        }
     }
 
     private fun moveToResultScreen() {
-        viewModel.keywordResponseList.observe(viewLifecycleOwner, EventObserver {
-            val action =
-                TrendComparisonFragmentDirections.actionDestTrendComparisonToTrendComparisonResultFragment(
-                    it
-                )
-            findNavController().navigate(action)
-        })
+        lifecycleScope.launch {
+            viewModel.keywordResponseResult.collect {
+                if (it?.endDate != null) {
+                    val action =
+                        TrendComparisonFragmentDirections.actionDestTrendComparisonToTrendComparisonResultFragment(
+                            it
+                        )
+                    viewModel.resetKeywordResponse()
+                    findNavController().navigate(action)
+                }
+            }
+        }
     }
 
     private fun setAPIErrorMessage() {
-        viewModel.isError.observe(viewLifecycleOwner, EventObserver {
-            binding.btnSearch.showTextMessage(it)
-        })
+        lifecycleScope.launch {
+            viewModel.isError.collect { resourceId ->
+                if (resourceId in apiErrorMessage) {
+                    binding.btnSearch.showTextMessage(resourceId)
+                }
+            }
+        }
     }
 
     override fun getFragmentView(): Int {
