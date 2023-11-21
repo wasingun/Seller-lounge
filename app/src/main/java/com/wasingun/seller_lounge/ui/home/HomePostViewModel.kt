@@ -32,7 +32,11 @@ class HomePostViewModel @Inject constructor(private val repository: GeneralRepos
             onComplete = {
                 _isLoading.value = false
             },
-            onError = { _isError.value = it }
+            onError = {
+                _isError.value = it
+                _isError.value = 0
+                _isLoading.value = false
+            }
         ).map { postList ->
             postList.sortedByDescending { it.createTime }
         }

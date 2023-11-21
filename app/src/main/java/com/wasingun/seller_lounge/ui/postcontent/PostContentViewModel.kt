@@ -24,9 +24,9 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
     val postDocumentList: StateFlow<List<DocumentContent>?> = _postDocumentList
     private val _isCompleted = MutableStateFlow<Boolean>(false)
     val isCompleted: StateFlow<Boolean> = _isCompleted
-    private val _isInputError = MutableStateFlow(1)
+    private val _isInputError = MutableStateFlow(0)
     val isInputError: StateFlow<Int> = _isInputError
-    private val _isNetworkError = MutableStateFlow(1)
+    private val _isNetworkError = MutableStateFlow(0)
     val isNetworkError: StateFlow<Int> = _isNetworkError
     private val _isLoading = MutableStateFlow<Boolean>(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -63,7 +63,11 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
                     _isLoading.value = false
                     _isCompleted.value = true
                 },
-                onError = { _isNetworkError.value = it }
+                onError = {
+                    _isNetworkError.value = it
+                    _isNetworkError.value = 0
+                    _isLoading.value = false
+                }
             ).collect()
         }
     }

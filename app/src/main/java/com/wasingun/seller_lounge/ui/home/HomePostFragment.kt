@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.databinding.LayoutHomePostBinding
+import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.ui.BaseFragment
 import com.wasingun.seller_lounge.util.Constants
 import com.wasingun.seller_lounge.util.getSerializableCompat
@@ -33,8 +34,31 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         binding.rvPostList.adapter = adapter
         viewModel.getPost()
         getPostList(category)
+        observeError()
         searchTitleKeyword(category)
+        showLoadingState()
+    }
 
+    private fun observeError() {
+        lifecycleScope.launch {
+            viewModel.isError.collect { errorMessage ->
+                if (errorMessage != 0) {
+                    binding.root.showTextMessage(errorMessage)
+                }
+            }
+        }
+    }
+
+    private fun showLoadingState() {
+        lifecycleScope.launch {
+            viewModel.isLoading.collect { state ->
+                if (state) {
+                    binding.viewLoadingIndicator.visibility = View.VISIBLE
+                } else {
+                    binding.viewLoadingIndicator.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun searchTitleKeyword(category: ProductCategory?) {
