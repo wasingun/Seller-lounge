@@ -104,9 +104,6 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
                 emit(postMapCollection.map { entry ->
                     entry.value.run {
                         this.copy(
-                            documentList = documentList?.map {
-                                getDownloadUrl(it)
-                            },
                             imageList = imageList?.map {
                                 getDownloadUrl(it)
                             }
