@@ -17,7 +17,7 @@ import javax.inject.Inject
 class HomePostViewModel @Inject constructor(private val repository: GeneralRepository) :
     ViewModel() {
 
-    val postList:StateFlow<List<PostInfo>> = getPost().stateIn(
+    val postList: StateFlow<List<PostInfo>> = getPost().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(10000),
         initialValue = listOf()
@@ -29,9 +29,11 @@ class HomePostViewModel @Inject constructor(private val repository: GeneralRepos
 
     fun getPost(): Flow<List<PostInfo>> {
         val result = repository.getPostList(
-            onComplete = { _isLoading.value = false },
+            onComplete = {
+                _isLoading.value = false
+            },
             onError = { _isError.value = it }
-        ).map {postList ->
+        ).map { postList ->
             postList.sortedByDescending { it.createTime }
         }
         return result

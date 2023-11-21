@@ -22,6 +22,9 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
 
     })
     private val viewModel by viewModels<HomePostViewModel>()
+    private val sharedViewModel by viewModels<HomeSharedViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,6 +33,29 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         binding.rvPostList.adapter = adapter
         viewModel.getPost()
         getPostList(category)
+        searchTitleKeyword(category)
+
+    }
+
+    private fun searchTitleKeyword(category: ProductCategory?) {
+        lifecycleScope.launch {
+            sharedViewModel.searchButtonState.collect { state ->
+                if (state) {
+                    val currentList = if (category == ProductCategory.ALL) {
+                        viewModel.postList.value
+                    } else {
+                        viewModel.postList.value.filter { it.category == category }
+                    }
+                    val currentKeyword = sharedViewModel.searchKeyword.value
+
+                    if (sharedViewModel.searchKeyword.value.isNotBlank()) {
+                        adapter.submitPost(currentList.filter { it.title.contains(currentKeyword) })
+                    } else {
+                        adapter.submitPost(currentList)
+                    }
+                }
+            }
+        }
     }
 
     private fun getPostList(category: ProductCategory?) {
