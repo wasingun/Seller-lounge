@@ -14,7 +14,6 @@ import com.wasingun.seller_lounge.network.onException
 import com.wasingun.seller_lounge.network.onSuccess
 import com.wasingun.seller_lounge.util.Constants
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onCompletion
@@ -43,6 +42,31 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
             getDocumentFileLocation(userId, documentContent)
         }
 
+        if (uploadAttachedFile(
+                imageList,
+                userId,
+                documentList
+            )
+        ) return ApiResultException(Throwable())
+
+        val postInfo = PostInfo(
+            postId,
+            category,
+            title,
+            body,
+            imageLocationList,
+            documentLocationList,
+            createdTime,
+            userId
+        )
+        return postDataClient.uploadPostContent(postId, postInfo)
+    }
+
+    private suspend fun uploadAttachedFile(
+        imageList: List<ImageContent>,
+        userId: String,
+        documentList: List<DocumentContent>
+    ): Boolean {
         try {
             withTimeout(10000L) {
                 imageList.forEach { imageContent ->
@@ -65,20 +89,9 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
                 }
             }
         } catch (e: Exception) {
-            return ApiResultException(Throwable())
+            return true
         }
-
-        val postInfo = PostInfo(
-            postId,
-            category,
-            title,
-            body,
-            imageLocationList,
-            documentLocationList,
-            createdTime,
-            userId
-        )
-        return postDataClient.uploadPostContent(postId, postInfo)
+        return false
     }
 
     override fun getPostList(
@@ -91,6 +104,9 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
                 emit(postMapCollection.map { entry ->
                     entry.value.run {
                         this.copy(
+                            documentList = documentList?.map {
+                                getDownloadUrl(it)
+                            },
                             imageList = imageList?.map {
                                 getDownloadUrl(it)
                             }
