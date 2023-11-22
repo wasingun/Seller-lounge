@@ -35,7 +35,7 @@
             app:tabGravity="center"
             app:tabIndicatorHeight="1dp"
             app:tabMode="scrollable"
-            app:tabTextAppearance="@style/TabLayoutTitle" />
+            app:tabTextAppearance="@style/TabLayoutText" />
 
         <EditText
             android:id="@+id/et_search"

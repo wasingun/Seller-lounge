@@ -38,11 +38,20 @@
         <item name="android:textSize">11sp</item>
     </style>
 
+    <style name="TextLabelGrey11" parent="TextLabel11">
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
     <style name="TextTitle14" parent="TextAppearance.Material3.TitleSmall">
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="TabLayoutTitle" parent="TextAppearance.Design.Tab">
+    <style name="TextBody12" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TabLayoutText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
     </style>
 

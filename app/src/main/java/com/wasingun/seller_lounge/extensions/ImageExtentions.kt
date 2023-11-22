@@ -7,26 +7,35 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 
 @BindingAdapter("setRoundCornerImage")
-fun ImageView.setRoundedCornerImage(uri: Uri) {
-    load(uri) {
-        transformations(
-            RoundedCornersTransformation(
-                10.0f
-            )
-        )
-        error(null)
+fun ImageView.setRoundedCornerImage(imageAddress: Any?) {
+    if (imageAddress != null) {
+        when(imageAddress) {
+            is Uri -> {
+                load(imageAddress) {
+                    transformations(
+                        RoundedCornersTransformation(
+                            10.0f
+                        )
+                    )
+                    error(null)
+                }
+            }
+            is String -> {
+                load(imageAddress) {
+                    transformations(
+                        RoundedCornersTransformation(
+                            10.0f
+                        )
+                    )
+                    error(null)
+                }
+            }
+        }
     }
 }
 
-@BindingAdapter("loadImageFromUrl")
-fun ImageView.loadImageFromUrl(url: String?) {
-    load(url) {
-        if (!url.isNullOrBlank()) {
-            transformations(
-                RoundedCornersTransformation(
-                    10.0f
-                )
-            )
-        }
+fun ImageView.setImageList(imageUrl: String?) {
+    if (!imageUrl.isNullOrBlank()) {
+        load(imageUrl)
     }
 }
