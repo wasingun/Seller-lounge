@@ -1,8 +1,8 @@
 package com.wasingun.seller_lounge.ui.home
 
-import com.wasingun.seller_lounge.data.model.ImageContent
+import com.wasingun.seller_lounge.data.model.post.PostInfo
 
 fun interface PostClickListener {
 
-    fun clickPost(imageContent: ImageContent)
+    fun clickPost(postInfo: PostInfo)
 }

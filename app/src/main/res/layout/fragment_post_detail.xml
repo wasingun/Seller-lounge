@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/btn_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="17dp"
+            android:backgroundTint="@color/clear"
+            android:padding="0dp"
+            android:src="@drawable/ic_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_category"
+            style="@style/TextLabel11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_reactangle_grey"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="3dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_arrow"
+            tools:text="디지털/가전" />
+
+        <ImageView
+            android:id="@+id/iv_profile_image"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_category" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            style="@style/TextTitle14"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_marginStart="11dp"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_image"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_image"
+            tools:text="와신군" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/TextLabelGrey11"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_marginStart="11dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_image"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_image"
+            tools:text="1시간 전" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TextTitle14"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile_image"
+            tools:text="겨울 신규상품 카다로그 드립니다." />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_image_list"
+            android:layout_width="0dp"
+            android:layout_height="360dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_circle_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/vp_image_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/clear"
+            app:tabBackground="@drawable/selector_indicator"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp" />
+
+        <TextView
+            android:id="@+id/tv_body"
+            style="@style/TextBody12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vp_image_list"
+            tools:text="본문 내용" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_document_list"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_body" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
