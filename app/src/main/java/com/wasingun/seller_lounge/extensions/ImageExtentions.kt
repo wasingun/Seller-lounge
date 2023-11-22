@@ -4,6 +4,7 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import coil.load
+import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 
 @BindingAdapter("setRoundCornerImage")
@@ -37,5 +38,14 @@ fun ImageView.setRoundedCornerImage(imageAddress: Any?) {
 fun ImageView.setImageList(imageUrl: String?) {
     if (!imageUrl.isNullOrBlank()) {
         load(imageUrl)
+    }
+}
+
+@BindingAdapter("setCircleImage")
+fun ImageView.setCircleImage(imageUrl: String?) {
+    if (!imageUrl.isNullOrBlank()) {
+        load(imageUrl) {
+            transformations(CircleCropTransformation())
+        }
     }
 }
