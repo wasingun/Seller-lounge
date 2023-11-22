@@ -10,6 +10,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface PostDataSource {
 
+    fun getPostList(
+        onComplete: () -> Unit,
+        onError: (String) -> Unit
+    ): Flow<List<PostInfo>>
+
     suspend fun postInfoUpload(
         postId: String,
         category: ProductCategory,
@@ -21,10 +26,7 @@ interface PostDataSource {
         userId: String
     ): ApiResponse<Unit>
 
-    fun getPostList(
-        onComplete: () -> Unit,
-        onError: (String) -> Unit
-    ): Flow<List<PostInfo>>
-
     suspend fun userInfoUpload(userId: String, userInfo: UserInfo): ApiResponse<Unit>
+
+    suspend fun getWriterInfo(userId: String):ApiResponse<UserInfo>
 }

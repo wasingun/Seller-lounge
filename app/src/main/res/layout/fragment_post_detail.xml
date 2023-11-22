@@ -40,6 +40,7 @@
             android:layout_height="34dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="12dp"
+            android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_category" />
 
@@ -87,10 +88,10 @@
             android:id="@+id/tl_circle_indicator"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
+            android:background="@color/clear"
             app:layout_constraintBottom_toBottomOf="@id/vp_image_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="@color/clear"
             app:tabBackground="@drawable/selector_indicator"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp" />

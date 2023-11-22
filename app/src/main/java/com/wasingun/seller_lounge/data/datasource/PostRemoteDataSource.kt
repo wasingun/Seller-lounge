@@ -124,6 +124,10 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
         return postDataClient.uploadUserInfo(userId, userInfo)
     }
 
+    override suspend fun getWriterInfo(userId: String): ApiResponse<UserInfo> {
+        return postDataClient.getUserInfo(userId)
+    }
+
     private suspend fun getDownloadUrl(location: String): String {
         val firebaseStorage = FirebaseStorage.getInstance()
         return firebaseStorage.getReference(location)
