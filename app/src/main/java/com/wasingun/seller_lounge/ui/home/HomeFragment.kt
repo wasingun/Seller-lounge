@@ -2,19 +2,31 @@ package com.wasingun.seller_lounge.ui.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.tabs.TabLayoutMediator
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.SellerLoungeApplication
+import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.databinding.FragmentHomeBinding
 import com.wasingun.seller_lounge.ui.BaseFragment
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+    private lateinit var adapter: HomeViewPagerAdapter
+    private val sharedViewModel by viewModels<HomeSharedViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnPost.setOnClickListener{
+        binding.btnPost.setOnClickListener {
             moveToPost()
         }
+        adapter = HomeViewPagerAdapter(this)
+        binding.vpHome.adapter = adapter
+        binding.viewModel = sharedViewModel
+
+        TabLayoutMediator(binding.tlTabMenu, binding.vpHome) { tab, position ->
+            tab.text = ProductCategory.values()[position].categoryName
+        }.attach()
     }
 
     private fun moveToPost() {

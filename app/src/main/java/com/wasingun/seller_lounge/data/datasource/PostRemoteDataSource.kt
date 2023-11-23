@@ -9,7 +9,14 @@ import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.network.ApiResponse
 import com.wasingun.seller_lounge.network.ApiResultException
 import com.wasingun.seller_lounge.network.PostDataClient
+import com.wasingun.seller_lounge.network.onError
+import com.wasingun.seller_lounge.network.onException
+import com.wasingun.seller_lounge.network.onSuccess
+import com.wasingun.seller_lounge.util.Constants
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
@@ -35,6 +42,31 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
             getDocumentFileLocation(userId, documentContent)
         }
 
+        if (uploadAttachedFile(
+                imageList,
+                userId,
+                documentList
+            )
+        ) return ApiResultException(Throwable())
+
+        val postInfo = PostInfo(
+            postId,
+            category,
+            title,
+            body,
+            imageLocationList,
+            documentLocationList,
+            createdTime,
+            userId
+        )
+        return postDataClient.uploadPostContent(postId, postInfo)
+    }
+
+    private suspend fun uploadAttachedFile(
+        imageList: List<ImageContent>,
+        userId: String,
+        documentList: List<DocumentContent>
+    ): Boolean {
         try {
             withTimeout(10000L) {
                 imageList.forEach { imageContent ->
@@ -57,20 +89,47 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
                 }
             }
         } catch (e: Exception) {
-            return ApiResultException(Throwable())
+            return true
         }
+        return false
+    }
 
-        val postInfo = PostInfo(
-            postId,
-            category,
-            title,
-            body,
-            imageLocationList,
-            documentLocationList,
-            createdTime,
-            userId
-        )
-        return postDataClient.uploadPostContent(postId, postInfo)
+    override fun getPostList(
+        onComplete: () -> Unit,
+        onError: (String) -> Unit
+    ): Flow<List<PostInfo>> {
+        return flow {
+            val result = postDataClient.getPostList()
+            result.onSuccess { postMapCollection ->
+                emit(postMapCollection.map { entry ->
+                    entry.value.run {
+                        this.copy(
+                            imageList = imageList?.map {
+                                getDownloadUrl(it)
+                            }
+                        )
+                    }
+                })
+            }.onError { code, message ->
+                onError(Constants.REQUEST_ERROR)
+            }.onException {
+                onError(Constants.NETWORK_ERROR)
+            }
+        }.onCompletion {
+            onComplete()
+        }
+    }
+
+    override suspend fun userInfoUpload(userId: String, userInfo: UserInfo): ApiResponse<Unit> {
+        return postDataClient.uploadUserInfo(userId, userInfo)
+    }
+
+    private suspend fun getDownloadUrl(location: String): String {
+        val firebaseStorage = FirebaseStorage.getInstance()
+        return firebaseStorage.getReference(location)
+            .downloadUrl
+            .await()
+            .toString()
     }
 
     private fun getDocumentFileLocation(
@@ -82,8 +141,4 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
         userId: String,
         imageContent: ImageContent
     ) = "images/${userId}/${imageContent.fileName}"
-
-    override suspend fun userInfoUpload(userId: String, userInfo: UserInfo): ApiResponse<Unit> {
-        return postDataClient.uploadUserInfo(userId, userInfo)
-    }
 }

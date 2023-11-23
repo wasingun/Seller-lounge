@@ -36,7 +36,7 @@
             app:boxStrokeColor="@color/sky_blue"
             app:errorIconDrawable="@null"
             app:helperText="@string/search_helper_text"
-            app:hintTextColor="@color/grey"
+            app:hintTextColor="@color/deep_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title">
@@ -70,7 +70,7 @@
                 android:hint="@string/category"
                 android:inputType="none"
                 android:text="@={viewModel.category}"
-                android:textColor="@color/grey"
+                android:textColor="@color/deep_grey"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

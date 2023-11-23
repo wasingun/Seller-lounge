@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="postInfo"
+            type="com.wasingun.seller_lounge.data.model.post.PostInfo" />
+
+        <variable
+            name="postClickListener"
+            type="com.wasingun.seller_lounge.ui.home.PostClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/tv_category"
+            style="@style/TextLabel11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_reactangle_grey"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="3dp"
+            android:text="@{postInfo.category.categoryName}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="디지털/가전" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TextTitle14"
+            android:layout_width="250dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{postInfo.title}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_category" />
+
+        <TextView
+            android:id="@+id/tv_body"
+            style="@style/TextLabel11"
+            android:layout_width="250dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{postInfo.body}"
+            android:textColor="@color/grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/TextLabel11"
+            convertDisplayedDate="@{postInfo.createTime}"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_body" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:scrollbarSize="4dp"
+            app:dividerColor="@color/light_grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            loadImageFromUrl="@{postInfo.imageList[0]}"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

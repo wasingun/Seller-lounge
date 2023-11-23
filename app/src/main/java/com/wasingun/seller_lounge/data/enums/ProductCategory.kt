@@ -1,6 +1,7 @@
 package com.wasingun.seller_lounge.data.enums
 
 enum class ProductCategory(val id: String, val categoryName: String) {
+    ALL("0000", "전체"),
     FASHION_CLOTHES("50000000", "패션의류"),
     FASHION_ACCESSORIES("50000001", "패션잡화"),
     COSMETICS_BEAUTY("50000002", "화장품/미용"),
@@ -11,5 +12,4 @@ enum class ProductCategory(val id: String, val categoryName: String) {
     SPORTS_LEISURE("50000007", "스포츠/레저"),
     LIVING_HEALTH("50000008", "생활/건강"),
     LEISURE_LIFE_CONVENIENCE("50000009", "여가/생활편의"),
-    NONE("00000000", "없음")
 }

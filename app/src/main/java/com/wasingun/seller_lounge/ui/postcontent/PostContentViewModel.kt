@@ -24,9 +24,9 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
     val postDocumentList: StateFlow<List<DocumentContent>?> = _postDocumentList
     private val _isCompleted = MutableStateFlow<Boolean>(false)
     val isCompleted: StateFlow<Boolean> = _isCompleted
-    private val _isInputError = MutableStateFlow(1)
+    private val _isInputError = MutableStateFlow(0)
     val isInputError: StateFlow<Int> = _isInputError
-    private val _isNetworkError = MutableStateFlow(1)
+    private val _isNetworkError = MutableStateFlow(0)
     val isNetworkError: StateFlow<Int> = _isNetworkError
     private val _isLoading = MutableStateFlow<Boolean>(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -39,7 +39,7 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
         val postId = "${System.currentTimeMillis()}"
         val category = ProductCategory.values().firstOrNull {
             postCategory.value == it.categoryName
-        } ?: ProductCategory.NONE
+        } ?: ProductCategory.ALL
         val title = postTitle.value ?: ""
         val body = postBody.value ?: ""
         val imageList = postImageList.value ?: listOf()
@@ -63,7 +63,11 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
                     _isLoading.value = false
                     _isCompleted.value = true
                 },
-                onError = { _isNetworkError.value = it }
+                onError = {
+                    _isNetworkError.value = it
+                    _isNetworkError.value = 0
+                    _isLoading.value = false
+                }
             ).collect()
         }
     }
@@ -73,7 +77,7 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
         title: String,
         body: String
     ): Boolean {
-        if (category == ProductCategory.NONE) {
+        if (category == ProductCategory.ALL) {
             _isInputError.value = R.string.announce_blank_category
             return true
         } else if (title.isBlank()) {

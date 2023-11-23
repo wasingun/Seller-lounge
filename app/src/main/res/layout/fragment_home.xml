@@ -2,9 +2,83 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.wasingun.seller_lounge.ui.home.HomeSharedViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TextHeadLine"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="@string/seller_forum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_tab_menu"
+            style="@style/TabLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="1dp"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabLayoutTitle" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="360dp"
+            android:layout_height="40dp"
+            android:background="@color/clear"
+            android:maxLines="1"
+            android:text="@={viewModel.searchKeyword}"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tl_tab_menu" />
+
+        <ImageButton
+            android:id="@+id/search_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:background="@color/clear"
+            android:onClick="@{() -> viewModel.searchTitle()}"
+            android:padding="0dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="@id/et_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_search" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/view_search_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:dividerColor="@color/light_grey"
+            app:layout_constraintBottom_toBottomOf="@id/et_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_home"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_search_divider" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_post"

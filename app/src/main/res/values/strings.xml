@@ -30,6 +30,7 @@
     <string name="announce_image_attachment_limit">이미지는 최대 10개 까지 첨부 가능합니다.</string>
     <string name="announce_document_attachment_limit">문서는 2개까지 첨부 가능합니다.</string>
     <string name="announce_blank_body">내용을 입력해주세요.</string>
+    <string name="seller_forum">셀러 게시판</string>
     <string name="completed">작성 완료</string>
     <string name="message_wait">잠시만 기다려주세요</string>
 

@@ -134,7 +134,7 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
     }
 
     private fun setDropdownMenu() {
-        val categoryList = ProductCategory.values().map { it.categoryName }.take(10)
+        val categoryList = ProductCategory.values().map { it.categoryName }.slice(1..10)
         val categoryArrayAdapter =
             ArrayAdapter(requireContext(), R.layout.dropdown_sort, categoryList)
         binding.actvCategoryList.setAdapter(categoryArrayAdapter)

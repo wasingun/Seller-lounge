@@ -6,6 +6,7 @@ import com.wasingun.seller_lounge.data.datasource.PostDataSource
 import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.data.model.DocumentContent
 import com.wasingun.seller_lounge.data.model.ImageContent
+import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse
@@ -15,7 +16,7 @@ import com.wasingun.seller_lounge.network.onException
 import com.wasingun.seller_lounge.network.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onCompletion
+import com.wasingun.seller_lounge.util.Constants
 import javax.inject.Inject
 
 class GeneralRepository @Inject constructor(
@@ -71,6 +72,23 @@ class GeneralRepository @Inject constructor(
                 emit(onComplete())
             }
         }
+    }
+
+    fun getPostList(
+        onComplete: () -> Unit,
+        onError: (Int) -> Unit
+    ): Flow<List<PostInfo>> {
+
+        val result = postDataSource.getPostList(
+            onError = {
+                if (it == Constants.REQUEST_ERROR) {
+                    onError(R.string.error_api_http_response)
+                } else if (it == Constants.NETWORK_ERROR) {
+                    onError(R.string.error_api_network)
+                }
+            }, onComplete = onComplete
+        )
+        return result
     }
 
     suspend fun userInfoUploadResult(userId: String, userInfo: UserInfo): ApiResponse<Unit> {
