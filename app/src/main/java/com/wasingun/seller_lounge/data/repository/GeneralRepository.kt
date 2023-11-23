@@ -1,6 +1,7 @@
 package com.wasingun.seller_lounge.data.repository
 
 import com.wasingun.seller_lounge.R
+import com.wasingun.seller_lounge.data.datasource.LocalPostDao
 import com.wasingun.seller_lounge.data.datasource.NaverApiDataSource
 import com.wasingun.seller_lounge.data.datasource.PostDataSource
 import com.wasingun.seller_lounge.data.enums.ProductCategory
@@ -21,7 +22,8 @@ import javax.inject.Inject
 
 class GeneralRepository @Inject constructor(
     private val naverDataSource: NaverApiDataSource,
-    private val postDataSource: PostDataSource
+    private val postDataSource: PostDataSource,
+    private val localPostDao: LocalPostDao
 ) {
 
     fun requestComparisonResult(
