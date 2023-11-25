@@ -31,9 +31,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             moveToPost()
         }
         setViewPager()
+        setErrorMessage()
+    }
+
+    private fun setErrorMessage() {
         lifecycleScope.launch {
-            sharedViewModel.isError.collect {errorMessage ->
-                if(errorMessage != 0) {
+            sharedViewModel.isError.collect { errorMessage ->
+                if (errorMessage != 0) {
                     binding.root.showTextMessage(errorMessage)
                 }
             }

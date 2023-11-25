@@ -28,7 +28,7 @@ class PostImageAdapter() :
 
         companion object {
 
-            fun from(parent: ViewGroup): PostImageAdapter.ImageBannerViewHolder {
+            fun from(parent: ViewGroup): ImageBannerViewHolder {
                 val binding = ItemPostImageBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
