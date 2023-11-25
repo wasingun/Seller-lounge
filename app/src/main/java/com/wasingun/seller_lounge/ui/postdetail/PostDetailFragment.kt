@@ -29,12 +29,23 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         getWriterInfo()
         setLayout(postInfo)
         setWriterInfo()
+        saveLocalPost(postInfo)
+        setErrorMessage()
+    }
+
+    private fun setErrorMessage() {
         lifecycleScope.launch {
-            viewModel.isError.collect{errorMessage ->
-                if(errorMessage != 0) {
+            viewModel.isError.collect { errorMessage ->
+                if (errorMessage != 0) {
                     binding.root.showTextMessage(errorMessage)
                 }
             }
+        }
+    }
+
+    private fun saveLocalPost(postInfo: PostInfo) {
+        lifecycleScope.launch {
+            viewModel.saveLocalPost(postInfo)
         }
     }
 

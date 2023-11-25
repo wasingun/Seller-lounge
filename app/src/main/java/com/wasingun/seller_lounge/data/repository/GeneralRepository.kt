@@ -1,12 +1,13 @@
 package com.wasingun.seller_lounge.data.repository
 
 import com.wasingun.seller_lounge.R
-import com.wasingun.seller_lounge.data.datasource.LocalPostDao
+import com.wasingun.seller_lounge.data.datasource.LocalDataSource
 import com.wasingun.seller_lounge.data.datasource.NaverApiDataSource
-import com.wasingun.seller_lounge.data.datasource.PostDataSource
+import com.wasingun.seller_lounge.data.datasource.RemotePostDataSource
 import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.data.model.DocumentContent
 import com.wasingun.seller_lounge.data.model.ImageContent
+import com.wasingun.seller_lounge.data.model.localpost.LocalPostInfo
 import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
@@ -22,8 +23,8 @@ import javax.inject.Inject
 
 class GeneralRepository @Inject constructor(
     private val naverDataSource: NaverApiDataSource,
-    private val postDataSource: PostDataSource,
-    private val localPostDao: LocalPostDao
+    private val remotePostDataSource: RemotePostDataSource,
+    private val localDataSource: LocalDataSource
 ) {
 
     fun requestComparisonResult(
@@ -55,7 +56,7 @@ class GeneralRepository @Inject constructor(
         onComplete: () -> Unit,
         onError: (message: Int) -> Unit
     ): Flow<Unit> {
-        val result = postDataSource.postInfoUpload(
+        val result = remotePostDataSource.postInfoUpload(
             postId,
             category,
             title,
@@ -81,7 +82,7 @@ class GeneralRepository @Inject constructor(
         onError: (Int) -> Unit
     ): Flow<List<PostInfo>> {
 
-        val result = postDataSource.getPostList(
+        val result = remotePostDataSource.getPostList(
             onError = {
                 if (it == Constants.REQUEST_ERROR) {
                     onError(R.string.error_api_http_response)
@@ -93,11 +94,23 @@ class GeneralRepository @Inject constructor(
         return result
     }
 
+    suspend fun saveLocalPost(localPostInfo: LocalPostInfo) {
+        localDataSource.saveLocalPost(localPostInfo)
+    }
+
+    suspend fun findLocalPost(postInfo: PostInfo): LocalPostInfo? {
+        return localDataSource.findLocalPost(postInfo)
+    }
+
+    suspend fun getLocalPostList(): List<PostInfo> {
+        return localDataSource.getLocalPostList()
+    }
+
     suspend fun getWriterInfo(userId: String): ApiResponse<UserInfo> {
-        return postDataSource.getWriterInfo(userId)
+        return remotePostDataSource.getWriterInfo(userId)
     }
 
     suspend fun userInfoUploadResult(userId: String, userInfo: UserInfo): ApiResponse<Unit> {
-        return postDataSource.userInfoUpload(userId, userInfo)
+        return remotePostDataSource.userInfoUpload(userId, userInfo)
     }
 }
