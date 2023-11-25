@@ -3,7 +3,7 @@ package com.wasingun.seller_lounge
 import android.app.Application
 import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
-import com.wasingun.seller_lounge.data.datasource.LocalPostDatabase
+import com.wasingun.seller_lounge.local.LocalPostDatabase
 import com.wasingun.seller_lounge.util.Constants
 import dagger.hilt.android.HiltAndroidApp
 
