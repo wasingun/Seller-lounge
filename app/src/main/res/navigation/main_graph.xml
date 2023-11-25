@@ -50,7 +50,11 @@
     <fragment
         android:id="@+id/dest_setting"
         android:name="com.wasingun.seller_lounge.ui.setting.SettingFragment"
-        android:label="@string/setting" />
+        android:label="@string/setting" >
+        <action
+            android:id="@+id/action_dest_setting_to_recentlyViewedPostFragment"
+            app:destination="@id/dest_recently_viewed_post" />
+    </fragment>
 
     <fragment
         android:id="@+id/dest_trend_comparison_result"
@@ -73,7 +77,7 @@
     <dialog
         android:id="@+id/dest_loading_dialog"
         android:name="com.wasingun.seller_lounge.ui.common.LoadingDialogFragment"
-        android:label="LoadingDialogFragment" />
+        android:label="@string/loading" />
 
     <fragment
         android:id="@+id/dest_post_detail"
@@ -82,6 +86,15 @@
         <argument
             android:name="post"
             app:argType="com.wasingun.seller_lounge.data.model.post.PostInfo" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dest_recently_viewed_post"
+        android:name="com.wasingun.seller_lounge.ui.setting.RecentlyViewedPostFragment"
+        android:label="@string/recently_viewed_post" >
+        <action
+            android:id="@+id/action_dest_recently_viewed_post_to_dest_post_detail"
+            app:destination="@id/dest_post_detail" />
     </fragment>
 
 </navigation>
