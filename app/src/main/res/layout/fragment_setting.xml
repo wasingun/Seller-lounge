@@ -4,6 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="firebaseUser"
+            type="com.google.firebase.auth.FirebaseUser" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,6 +28,7 @@
 
         <ImageView
             android:id="@+id/iv_profile_image"
+            setCircleImage="@{firebaseUser.photoUrl.toString()}"
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:layout_marginStart="20dp"
@@ -31,7 +40,7 @@
             android:id="@+id/tv_nickname"
             style="@style/TextTitleBold14"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
+            android:layout_height="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:text="@string/nickname"
@@ -42,8 +51,9 @@
             android:id="@+id/tv_user_nickname"
             style="@style/TextTitle14"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="20dp"
+            android:text="@{firebaseUser.displayName}"
             app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_nickname"
@@ -53,7 +63,7 @@
             android:id="@+id/tv_email"
             style="@style/TextTitleBold14"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
+            android:layout_height="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="@string/email"
@@ -63,8 +73,9 @@
         <TextView
             style="@style/TextTitle14"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="20dp"
+            android:text="@{firebaseUser.email}"
             app:layout_constraintBottom_toBottomOf="@id/tv_email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_email"
@@ -74,7 +85,7 @@
             android:id="@+id/tv_customer_feedback"
             style="@style/TextTitleBold14"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
+            android:layout_height="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="@string/customer_feedback"
@@ -85,7 +96,7 @@
             android:id="@+id/tv_recently_viewed_post"
             style="@style/TextTitleBold14"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
+            android:layout_height="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="@string/recently_viewed_post"
@@ -96,13 +107,12 @@
             android:id="@+id/tv_logout"
             style="@style/TextTitleBold14"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
+            android:layout_height="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="@string/logout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_recently_viewed_post" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
