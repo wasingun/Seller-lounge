@@ -8,10 +8,10 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object PostDataModule {
+object RemotePostDataModule {
 
     @Provides
-    fun provideDataSource(apiClient: PostDataClient): PostDataSource {
-        return PostRemoteDataSource(apiClient)
+    fun provideDataSource(apiClient: PostDataClient): RemotePostDataSource {
+        return RemotePostFirebaseDataSource(apiClient)
     }
 }

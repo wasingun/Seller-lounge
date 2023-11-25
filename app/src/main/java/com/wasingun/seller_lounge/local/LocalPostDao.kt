@@ -1,4 +1,4 @@
-package com.wasingun.seller_lounge.data.datasource
+package com.wasingun.seller_lounge.local
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -12,17 +12,17 @@ import com.wasingun.seller_lounge.data.model.post.PostInfo
 interface LocalPostDao {
 
     @Query("SELECT * FROM LocalPostInfo ORDER BY savedTime DESC")
-    fun getPostInfo(): List<LocalPostInfo>
+    suspend fun getPostInfo(): List<LocalPostInfo>
 
     @Query("SELECT * FROM LocalPostInfo WHERE postInfo = :postInfo")
-    fun findPostInfo(postInfo: PostInfo): LocalPostInfo
+    suspend fun findPostInfo(postInfo: PostInfo): LocalPostInfo?
 
     @Update
-    fun updatePostInfo(localPostInfo: LocalPostInfo)
+    suspend fun updatePostInfo(localPostInfo: LocalPostInfo)
 
     @Insert
-    fun insertPostInfo(localPostInfo: LocalPostInfo)
+    suspend fun insertPostInfo(localPostInfo: LocalPostInfo)
 
     @Delete
-    fun deletePostInfo(localPostInfo: LocalPostInfo)
+    suspend fun deletePostInfo(localPostInfo: LocalPostInfo)
 }

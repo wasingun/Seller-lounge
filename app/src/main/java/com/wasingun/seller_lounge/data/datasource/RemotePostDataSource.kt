@@ -8,7 +8,7 @@ import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.network.ApiResponse
 import kotlinx.coroutines.flow.Flow
 
-interface PostDataSource {
+interface RemotePostDataSource {
 
     fun getPostList(
         onComplete: () -> Unit,
