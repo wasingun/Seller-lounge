@@ -46,12 +46,17 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextTitle16" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextTitleBold14" parent="TextTitle14">
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextBody12" parent="TextAppearance.Material3.BodySmall">
-        <item name="android:textSize">12sp</item>
+    <style name="TextBody14" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

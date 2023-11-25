@@ -41,6 +41,7 @@
     <string name="customer_feedback">고객의견</string>
     <string name="recently_viewed_post">최근 열람 게시물</string>
     <string name="logout">로그아웃</string>
+    <string name="loading">로딩</string>
 
     <string-array name="sort_select">
         <item>정확도순</item>
