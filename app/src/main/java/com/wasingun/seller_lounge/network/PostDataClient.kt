@@ -14,6 +14,9 @@ interface PostDataClient {
         @Body userInfo: UserInfo
     ): ApiResponse<Unit>
 
+    @GET("userInfo/{userId}.json")
+    suspend fun getUserInfo(@Path("userId") userId: String): ApiResponse<UserInfo>
+
     @PUT("postInfo/{postId}.json")
     suspend fun uploadPostContent(
         @Path("postId") postId: String,

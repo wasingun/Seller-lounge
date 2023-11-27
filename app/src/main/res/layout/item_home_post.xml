@@ -18,7 +18,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:onClick="@{() -> postClickListener.clickPost(postInfo)}">
 
         <TextView
             android:id="@+id/tv_category"
@@ -50,7 +51,7 @@
 
         <TextView
             android:id="@+id/tv_body"
-            style="@style/TextLabel11"
+            style="@style/TextLabelGrey11"
             android:layout_width="250dp"
             android:layout_height="16dp"
             android:layout_marginStart="10dp"
@@ -58,13 +59,12 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{postInfo.body}"
-            android:textColor="@color/grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <TextView
             android:id="@+id/tv_time"
-            style="@style/TextLabel11"
+            style="@style/TextLabelGrey11"
             convertDisplayedDate="@{postInfo.createTime}"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
@@ -72,7 +72,6 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_body" />
 
@@ -86,7 +85,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            loadImageFromUrl="@{postInfo.imageList[0]}"
+            setRoundCornerImage="@{postInfo.imageList[0]}"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"

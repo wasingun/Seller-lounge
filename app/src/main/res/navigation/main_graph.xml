@@ -25,8 +25,12 @@
             app:popUpTo="@id/dest_login"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_dest_home_to_postContentFragment"
+            android:id="@+id/action_dest_home_to_post_content_fragment"
             app:destination="@id/dest_post_content" />
+        <action
+            android:id="@+id/action_dest_home_to_postDetailFragment"
+            app:destination="@id/dest_post_detail" />
+
     </fragment>
 
     <fragment
@@ -47,6 +51,7 @@
         android:id="@+id/dest_setting"
         android:name="com.wasingun.seller_lounge.ui.setting.SettingFragment"
         android:label="@string/setting" />
+
     <fragment
         android:id="@+id/dest_trend_comparison_result"
         android:name="com.wasingun.seller_lounge.ui.trendcomparison.TrendComparisonResultFragment"
@@ -55,6 +60,7 @@
             android:name="keyword_response"
             app:argType="com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse" />
     </fragment>
+
     <fragment
         android:id="@+id/dest_post_content"
         android:name="com.wasingun.seller_lounge.ui.postcontent.PostContentFragment"
@@ -68,5 +74,14 @@
         android:id="@+id/dest_loading_dialog"
         android:name="com.wasingun.seller_lounge.ui.common.LoadingDialogFragment"
         android:label="LoadingDialogFragment" />
+
+    <fragment
+        android:id="@+id/dest_post_detail"
+        android:name="com.wasingun.seller_lounge.ui.postdetail.PostDetailFragment"
+        android:label="PostDetailFragment" >
+        <argument
+            android:name="post"
+            app:argType="com.wasingun.seller_lounge.data.model.post.PostInfo" />
+    </fragment>
 
 </navigation>

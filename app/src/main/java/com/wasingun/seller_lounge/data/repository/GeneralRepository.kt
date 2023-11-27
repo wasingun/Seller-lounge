@@ -91,6 +91,10 @@ class GeneralRepository @Inject constructor(
         return result
     }
 
+    suspend fun getWriterInfo(userId: String): ApiResponse<UserInfo> {
+        return postDataSource.getWriterInfo(userId)
+    }
+
     suspend fun userInfoUploadResult(userId: String, userInfo: UserInfo): ApiResponse<Unit> {
         return postDataSource.userInfoUpload(userId, userInfo)
     }

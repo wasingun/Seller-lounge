@@ -1,7 +1,10 @@
 package com.wasingun.seller_lounge.data.model.post
 
+import android.os.Parcelable
 import com.wasingun.seller_lounge.data.enums.ProductCategory
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class PostInfo(
     val postId: String,
     val category: ProductCategory,
@@ -11,4 +14,4 @@ data class PostInfo(
     val documentList: List<String>? = null,
     val createTime: String,
     val userId: String,
-)
+): Parcelable
