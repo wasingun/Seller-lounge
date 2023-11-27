@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="fileName"
+            type="String" />
+        
+        <variable
+            name="attachedFileClickListener"
+            type="com.wasingun.seller_lounge.ui.postdetail.AttachedFileClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:onClick="@{() -> attachedFileClickListener.clickDownload(fileName)}">
+
+        <View
+            android:id="@+id/view_text_border"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/shape_reactangle_transparent"
+            android:backgroundTint="@color/light_grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_document"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_document"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/view_text_border"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_document_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@{fileName}"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/view_text_border"
+            app:layout_constraintStart_toEndOf="@id/iv_document"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
