@@ -95,6 +95,9 @@ dependencies {
     //Coil
     implementation("io.coil-kt:coil:2.4.0")
 
+    //Jetpack workManager
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
