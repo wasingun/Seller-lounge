@@ -56,7 +56,7 @@ class GeneralRepository @Inject constructor(
         onComplete: () -> Unit,
         onError: (message: Int) -> Unit
     ): Flow<Unit> {
-        val result = remotePostDataSource.postInfoUpload(
+        val result = remotePostDataSource.uploadPostInfo(
             postId,
             category,
             title,
@@ -111,6 +111,6 @@ class GeneralRepository @Inject constructor(
     }
 
     suspend fun userInfoUploadResult(userId: String, userInfo: UserInfo): ApiResponse<Unit> {
-        return remotePostDataSource.userInfoUpload(userId, userInfo)
+        return remotePostDataSource.uploadUserInfo(userId, userInfo)
     }
 }
