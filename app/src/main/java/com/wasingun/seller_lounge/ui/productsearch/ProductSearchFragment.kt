@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import com.wasingun.seller_lounge.R
+import com.wasingun.seller_lounge.data.enums.SortSearchType
 import com.wasingun.seller_lounge.databinding.FragmentProductSearchBinding
 import com.wasingun.seller_lounge.ui.BaseFragment
 
@@ -14,8 +15,10 @@ class ProductSearchFragment : BaseFragment<FragmentProductSearchBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sortType = resources.getStringArray(R.array.sort_select)
-        val sortTypeArrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_sort, sortType)
+        val sortTypeList = SortSearchType.values().map{
+            it.sortType
+        }
+        val sortTypeArrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_sort, sortTypeList)
         binding.actvSelectedSort.setAdapter(sortTypeArrayAdapter)
 
         binding.actvSelectedSort.setDropDownBackgroundDrawable(

@@ -1,9 +1,12 @@
 package com.wasingun.seller_lounge.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.wasingun.seller_lounge.R
-import com.wasingun.seller_lounge.data.datasource.LocalDataSource
+import com.wasingun.seller_lounge.data.datasource.RecentPostDataSource
 import com.wasingun.seller_lounge.data.datasource.NaverApiDataSource
-import com.wasingun.seller_lounge.data.datasource.RemotePostDataSource
+import com.wasingun.seller_lounge.data.datasource.PostDataSource
+import com.wasingun.seller_lounge.data.datasource.ShoppingProductDataSource
 import com.wasingun.seller_lounge.data.enums.ProductCategory
 import com.wasingun.seller_lounge.data.model.DocumentContent
 import com.wasingun.seller_lounge.data.model.ImageContent
@@ -13,6 +16,7 @@ import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse
 import com.wasingun.seller_lounge.network.ApiResponse
+import com.wasingun.seller_lounge.network.NaverApiClient
 import com.wasingun.seller_lounge.network.onError
 import com.wasingun.seller_lounge.network.onException
 import com.wasingun.seller_lounge.network.onSuccess
@@ -23,8 +27,9 @@ import javax.inject.Inject
 
 class GeneralRepository @Inject constructor(
     private val naverDataSource: NaverApiDataSource,
-    private val remotePostDataSource: RemotePostDataSource,
-    private val localDataSource: LocalDataSource
+    private val remotePostDataSource: PostDataSource,
+    private val localDataSource: RecentPostDataSource,
+    private val naverApiClient: NaverApiClient
 ) {
 
     fun requestComparisonResult(
@@ -93,6 +98,18 @@ class GeneralRepository @Inject constructor(
         )
         return result
     }
+
+    fun getProductInfoList(query: String, sort: String, pageSize: Int) = Pager(
+        PagingConfig(
+            pageSize = pageSize,
+        )
+    ) {
+        ShoppingProductDataSource(
+            naverApiClient,
+            query,
+            sort
+        )
+    }.flow
 
     suspend fun saveLocalPost(localPostInfo: LocalPostInfo) {
         localDataSource.saveLocalPost(localPostInfo)

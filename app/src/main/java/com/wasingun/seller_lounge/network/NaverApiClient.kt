@@ -15,5 +15,9 @@ interface NaverApiClient {
     ): ApiResponse<KeywordResponse>
 
     @GET("search/shop.json")
-    suspend fun getSearchResult(@Query("query") query: String): SearchResponse
+    suspend fun getSearchResult(
+        @Query("query") query: String,
+        @Query("start") start: Int,
+        @Query("sort") sort: String,
+    ): SearchResponse
 }
