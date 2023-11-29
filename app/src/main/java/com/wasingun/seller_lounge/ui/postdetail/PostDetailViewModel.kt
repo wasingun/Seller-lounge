@@ -1,7 +1,10 @@
 package com.wasingun.seller_lounge.ui.postdetail
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.wasingun.seller_lounge.R
+import com.wasingun.seller_lounge.data.model.localpost.LocalPostInfo
+import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.data.repository.GeneralRepository
 import com.wasingun.seller_lounge.network.onError
@@ -20,6 +23,7 @@ class PostDetailViewModel @Inject constructor(private val repository: GeneralRep
 
     private val _writerInfo = MutableStateFlow<UserInfo>(UserInfo("", "", "", ""))
     val writerInfo: StateFlow<UserInfo> = _writerInfo
+
     suspend fun getWriterInfo(userId: String) {
         val result = repository.getWriterInfo(userId)
         result.onSuccess {
@@ -30,6 +34,15 @@ class PostDetailViewModel @Inject constructor(private val repository: GeneralRep
         }.onException {
             _isError.value = R.string.offline_mode
             _isError.value = 0
+        }
+    }
+
+    suspend fun saveLocalPost(postInfo: PostInfo) {
+        val findLocalPost = repository.findLocalPost(postInfo)
+        val savedTime = System.currentTimeMillis()
+        val localPostInfo = LocalPostInfo(postInfo = postInfo, savedTime = savedTime)
+        if (findLocalPost == null) {
+            repository.saveLocalPost(localPostInfo)
         }
     }
 }

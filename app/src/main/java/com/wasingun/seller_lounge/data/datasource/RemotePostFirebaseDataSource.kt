@@ -21,8 +21,8 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
-class PostRemoteDataSource @Inject constructor(private val postDataClient: PostDataClient) :
-    PostDataSource {
+class RemotePostFirebaseDataSource @Inject constructor(private val postDataClient: PostDataClient) :
+    RemotePostDataSource {
 
     override suspend fun postInfoUpload(
         postId: String,
@@ -34,7 +34,6 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
         createdTime: String,
         userId: String
     ): ApiResponse<Unit> {
-
         val imageLocationList = imageList.map { imageContent ->
             getImageFileLocation(userId, imageContent)
         }
@@ -42,12 +41,9 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
             getDocumentFileLocation(userId, documentContent)
         }
 
-        if (uploadAttachedFile(
-                imageList,
-                userId,
-                documentList
-            )
-        ) return ApiResultException(Throwable())
+        if (uploadAttachedFile(imageList, userId, documentList)) {
+            return ApiResultException(Throwable())
+        }
 
         val postInfo = PostInfo(
             postId,
@@ -63,6 +59,15 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
     }
 
     private suspend fun uploadAttachedFile(
+        imageList: List<ImageContent>,
+        userId: String,
+        documentList: List<DocumentContent>
+    ): Boolean {
+        if (uploadFile(imageList, userId, documentList)) return true
+        return false
+    }
+
+    private suspend fun uploadFile(
         imageList: List<ImageContent>,
         userId: String,
         documentList: List<DocumentContent>

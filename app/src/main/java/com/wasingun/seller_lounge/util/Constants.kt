@@ -5,4 +5,5 @@ object Constants {
     const val KEY_CATEGORY = "category"
     const val REQUEST_ERROR = "requestError"
     const val NETWORK_ERROR = "networkError"
+    const val DATABASE_NAME = "database_seller_lounge"
 }
