@@ -3,7 +3,7 @@ package com.wasingun.seller_lounge.data.datasource
 import com.wasingun.seller_lounge.data.model.localpost.LocalPostInfo
 import com.wasingun.seller_lounge.data.model.post.PostInfo
 
-interface LocalDataSource {
+interface RecentPostDataSource {
 
     suspend fun saveLocalPost(localPostInfo: LocalPostInfo)
 
