@@ -15,7 +15,7 @@
 
         <variable
             name="documentContent"
-            type="com.wasingun.seller_lounge.data.model.DocumentContent" />
+            type="com.wasingun.seller_lounge.data.model.attachedcontent.DocumentContent" />
 
     </data>
 

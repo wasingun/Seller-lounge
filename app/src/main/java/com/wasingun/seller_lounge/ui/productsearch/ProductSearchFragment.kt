@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import com.wasingun.seller_lounge.R
-import com.wasingun.seller_lounge.data.enums.SortSearchType
+import com.wasingun.seller_lounge.data.model.localpost.SortSearchType
 import com.wasingun.seller_lounge.databinding.FragmentProductSearchBinding
 import com.wasingun.seller_lounge.ui.BaseFragment
 

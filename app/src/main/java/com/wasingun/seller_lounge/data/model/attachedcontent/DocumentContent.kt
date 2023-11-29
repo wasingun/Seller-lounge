@@ -1,4 +1,4 @@
-package com.wasingun.seller_lounge.data.model
+package com.wasingun.seller_lounge.data.model.attachedcontent
 
 import android.net.Uri
 

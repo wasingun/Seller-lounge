@@ -1,5 +1,7 @@
-package com.wasingun.seller_lounge.data.datasource
+package com.wasingun.seller_lounge.di
 
+import com.wasingun.seller_lounge.data.datasource.NaverApiDataSource
+import com.wasingun.seller_lounge.data.datasource.NaverApiRemoteDataSource
 import com.wasingun.seller_lounge.network.NaverApiClient
 import dagger.Module
 import dagger.Provides

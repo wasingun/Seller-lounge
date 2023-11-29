@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.wasingun.seller_lounge.data.model.DocumentContent
+import com.wasingun.seller_lounge.data.model.attachedcontent.DocumentContent
 import com.wasingun.seller_lounge.databinding.ItemDocumentContentBinding
 
 class DocumentContentAdapter(private val documentDeleteListener: DocumentDeleteListener) :

@@ -1,4 +1,4 @@
-package com.wasingun.seller_lounge.data.enums
+package com.wasingun.seller_lounge.data.model.localpost
 
 enum class SortSearchType(val id: String, val sortType: String) {
     BY_RELEVANCE("sim", "정확도순"),

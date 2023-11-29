@@ -1,7 +1,7 @@
 package com.wasingun.seller_lounge.data.model.post
 
 import android.os.Parcelable
-import com.wasingun.seller_lounge.data.enums.ProductCategory
+import com.wasingun.seller_lounge.data.model.ProductCategory
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
