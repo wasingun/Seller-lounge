@@ -15,7 +15,7 @@ interface RemotePostDataSource {
         onError: (String) -> Unit
     ): Flow<List<PostInfo>>
 
-    suspend fun postInfoUpload(
+    suspend fun uploadPostInfo(
         postId: String,
         category: ProductCategory,
         title: String,
@@ -26,7 +26,7 @@ interface RemotePostDataSource {
         userId: String
     ): ApiResponse<Unit>
 
-    suspend fun userInfoUpload(userId: String, userInfo: UserInfo): ApiResponse<Unit>
+    suspend fun uploadUserInfo(userId: String, userInfo: UserInfo): ApiResponse<Unit>
 
     suspend fun getWriterInfo(userId: String):ApiResponse<UserInfo>
 }

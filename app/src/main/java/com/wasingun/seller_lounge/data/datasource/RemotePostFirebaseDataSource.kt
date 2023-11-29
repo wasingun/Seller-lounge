@@ -24,7 +24,7 @@ import javax.inject.Inject
 class RemotePostFirebaseDataSource @Inject constructor(private val postDataClient: PostDataClient) :
     RemotePostDataSource {
 
-    override suspend fun postInfoUpload(
+    override suspend fun uploadPostInfo(
         postId: String,
         category: ProductCategory,
         title: String,
@@ -125,7 +125,7 @@ class RemotePostFirebaseDataSource @Inject constructor(private val postDataClien
         }
     }
 
-    override suspend fun userInfoUpload(userId: String, userInfo: UserInfo): ApiResponse<Unit> {
+    override suspend fun uploadUserInfo(userId: String, userInfo: UserInfo): ApiResponse<Unit> {
         return postDataClient.uploadUserInfo(userId, userInfo)
     }
 

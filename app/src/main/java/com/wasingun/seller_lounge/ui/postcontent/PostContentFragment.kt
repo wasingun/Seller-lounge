@@ -4,7 +4,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
@@ -170,11 +169,13 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
         getDocumentContents.launch(
             arrayOf(
                 "application/pdf",
-                "application/msword",
+                "application/vnd.ms-excel",
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "application/zip",
+                "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                 "application/vnd.ms-powerpoint",
-                "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                "application/zip",
             )
         )
     }
