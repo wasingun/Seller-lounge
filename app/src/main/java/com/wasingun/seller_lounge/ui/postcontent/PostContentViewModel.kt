@@ -2,12 +2,13 @@ package com.wasingun.seller_lounge.ui.postcontent
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseUser
 import com.wasingun.seller_lounge.R
-import com.wasingun.seller_lounge.SellerLoungeApplication
-import com.wasingun.seller_lounge.data.enums.ProductCategory
-import com.wasingun.seller_lounge.data.model.DocumentContent
-import com.wasingun.seller_lounge.data.model.ImageContent
-import com.wasingun.seller_lounge.data.repository.GeneralRepository
+import com.wasingun.seller_lounge.data.model.ProductCategory
+import com.wasingun.seller_lounge.data.model.attachedcontent.DocumentContent
+import com.wasingun.seller_lounge.data.model.attachedcontent.ImageContent
+import com.wasingun.seller_lounge.data.repository.AuthRepository
+import com.wasingun.seller_lounge.data.repository.PostContentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +17,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostContentViewModel @Inject constructor(private val repository: GeneralRepository) :
-    ViewModel() {
+class PostContentViewModel @Inject constructor(
+    private val repository: PostContentRepository,
+    private val authRepository: AuthRepository
+) : ViewModel() {
     private val _postImageList = MutableStateFlow<List<ImageContent>?>(null)
     val postImageList: StateFlow<List<ImageContent>?> = _postImageList
     private val _postDocumentList = MutableStateFlow<List<DocumentContent>?>(null)
@@ -45,7 +48,8 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
         val imageList = postImageList.value ?: listOf()
         val documentList = postDocumentList.value ?: listOf()
         val createTime = System.currentTimeMillis().toString()
-        val userId = SellerLoungeApplication.auth.currentUser?.uid ?: ""
+        val currentUser = getCurrentUser()
+        val userId = currentUser?.uid ?: ""
         if (isBlank(category, title, body)) return
         _isLoading.value = true
 
@@ -126,5 +130,9 @@ class PostContentViewModel @Inject constructor(private val repository: GeneralRe
             newList.add(document)
             _postDocumentList.value = newList
         }
+    }
+
+    fun getCurrentUser(): FirebaseUser? {
+        return authRepository.getCurrentUser()
     }
 }

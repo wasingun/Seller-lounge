@@ -1,12 +1,11 @@
 package com.wasingun.seller_lounge.ui.postdetail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.localpost.LocalPostInfo
 import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.data.model.post.UserInfo
-import com.wasingun.seller_lounge.data.repository.GeneralRepository
+import com.wasingun.seller_lounge.data.repository.PostDetailRepository
 import com.wasingun.seller_lounge.network.onError
 import com.wasingun.seller_lounge.network.onException
 import com.wasingun.seller_lounge.network.onSuccess
@@ -16,7 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class PostDetailViewModel @Inject constructor(private val repository: GeneralRepository) :
+class PostDetailViewModel @Inject constructor(private val repository: PostDetailRepository) :
     ViewModel() {
     private val _isError = MutableStateFlow(0)
     val isError: StateFlow<Int> = _isError
