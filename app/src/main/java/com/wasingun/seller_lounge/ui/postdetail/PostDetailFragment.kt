@@ -31,7 +31,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
     private val args: PostDetailFragmentArgs by navArgs()
     private val postImageAdapter = PostImageAdapter()
     private lateinit var documentAdapter: PostDetailAttachedDocumentAdapter
-    private val viewModel: PostDetailViewModel by viewModels<PostDetailViewModel>()
+    private val viewModel: PostDetailViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
