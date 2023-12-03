@@ -10,7 +10,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object PostDataModule {
+object PostDataSourceModule {
 
     @Provides
     fun provideDataSource(apiClient: PostDataClient): PostDataSource {

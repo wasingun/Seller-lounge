@@ -7,7 +7,6 @@ import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.ProductCategory
 import com.wasingun.seller_lounge.data.model.attachedcontent.DocumentContent
 import com.wasingun.seller_lounge.data.model.attachedcontent.ImageContent
-import com.wasingun.seller_lounge.data.repository.AuthRepository
 import com.wasingun.seller_lounge.data.repository.PostContentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,8 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostContentViewModel @Inject constructor(
-    private val repository: PostContentRepository,
-    private val authRepository: AuthRepository
+    private val repository: PostContentRepository
 ) : ViewModel() {
     private val _postImageList = MutableStateFlow<List<ImageContent>?>(null)
     val postImageList: StateFlow<List<ImageContent>?> = _postImageList
@@ -133,6 +131,6 @@ class PostContentViewModel @Inject constructor(
     }
 
     fun getCurrentUser(): FirebaseUser? {
-        return authRepository.getCurrentUser()
+        return repository.getCurrentUser()
     }
 }

@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.post.UserInfo
-import com.wasingun.seller_lounge.data.repository.AuthRepository
-import com.wasingun.seller_lounge.data.repository.UserRepository
+import com.wasingun.seller_lounge.data.repository.HomeSharedRepository
 import com.wasingun.seller_lounge.network.onError
 import com.wasingun.seller_lounge.network.onException
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeSharedViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val authRepository: AuthRepository) :
+    private val userRepository: HomeSharedRepository) :
     ViewModel() {
 
     private val _isError = MutableStateFlow(0)
@@ -52,5 +50,5 @@ class HomeSharedViewModel @Inject constructor(
         }
     }
 
-    fun getCurrentUser() = authRepository.getCurrentUser()
+    fun getCurrentUser() = userRepository.getCurrentUser()
 }

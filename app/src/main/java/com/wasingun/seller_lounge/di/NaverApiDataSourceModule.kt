@@ -10,7 +10,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NaverApiModule {
+object NaverApiDataSourceModule {
 
     @Provides
     fun provideDataSource(apiClient: NaverApiClient): NaverApiDataSource {

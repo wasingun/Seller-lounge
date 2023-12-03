@@ -26,7 +26,7 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideLocalPostDao(localPostDatabase: RecentPostDatabase): RecentPostDao {
-        return localPostDatabase.recentPostDao()
+    fun provideLocalPostDao(recentPostDatabase: RecentPostDatabase): RecentPostDao {
+        return recentPostDatabase.recentPostDao()
     }
 }

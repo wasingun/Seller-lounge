@@ -1,6 +1,8 @@
 package com.wasingun.seller_lounge.data.repository
 
+import com.google.firebase.auth.FirebaseUser
 import com.wasingun.seller_lounge.R
+import com.wasingun.seller_lounge.data.datasource.AuthDataSource
 import com.wasingun.seller_lounge.data.datasource.PostDataSource
 import com.wasingun.seller_lounge.data.model.ProductCategory
 import com.wasingun.seller_lounge.data.model.attachedcontent.DocumentContent
@@ -13,7 +15,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PostContentRepository @Inject constructor(
-    private val postDataSource: PostDataSource
+    private val postDataSource: PostDataSource,
+    private val authDataSource: AuthDataSource
 ) {
 
     suspend fun postInfoUploadResult(
@@ -47,5 +50,9 @@ class PostContentRepository @Inject constructor(
                 emit(onComplete())
             }
         }
+    }
+
+    fun getCurrentUser(): FirebaseUser? {
+        return authDataSource.getCurrentUser()
     }
 }
