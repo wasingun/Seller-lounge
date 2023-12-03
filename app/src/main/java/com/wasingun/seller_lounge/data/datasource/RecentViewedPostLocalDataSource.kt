@@ -1,20 +1,20 @@
 package com.wasingun.seller_lounge.data.datasource
 
-import com.wasingun.seller_lounge.data.model.localpost.LocalPostInfo
+import com.wasingun.seller_lounge.data.model.localpost.RecentViewedPostInfo
 import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.local.RecentPostDao
 import javax.inject.Inject
 
-class RecentPostLocalDataSource @Inject constructor(private val dao: RecentPostDao) : RecentPostDataSource {
-    override suspend fun saveLocalPost(localPostInfo: LocalPostInfo) {
+class RecentViewedPostLocalDataSource @Inject constructor(private val dao: RecentPostDao) : RecentViewedPostDataSource {
+    override suspend fun saveRecentViewedPost(localPostInfo: RecentViewedPostInfo) {
         dao.insertPostInfo(localPostInfo)
     }
 
-    override suspend fun findLocalPost(postInfo: PostInfo): LocalPostInfo? {
+    override suspend fun findRecentViewedPost(postInfo: PostInfo): RecentViewedPostInfo? {
         return dao.findPostInfo(postInfo)
     }
 
-    override suspend fun getLocalPostList(): List<PostInfo> {
+    override suspend fun getRecentViewedPostList(): List<PostInfo> {
         val result = dao.getPostInfo()
         for (localPostInfo in result) {
             val currentTime = System.currentTimeMillis()

@@ -5,24 +5,24 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.wasingun.seller_lounge.data.model.localpost.LocalPostInfo
+import com.wasingun.seller_lounge.data.model.localpost.RecentViewedPostInfo
 import com.wasingun.seller_lounge.data.model.post.PostInfo
 
 @Dao
 interface RecentPostDao {
 
-    @Query("SELECT * FROM LocalPostInfo ORDER BY savedTime DESC")
-    suspend fun getPostInfo(): List<LocalPostInfo>
+    @Query("SELECT * FROM RecentViewedPostInfo ORDER BY savedTime DESC")
+    suspend fun getPostInfo(): List<RecentViewedPostInfo>
 
-    @Query("SELECT * FROM LocalPostInfo WHERE postInfo = :postInfo")
-    suspend fun findPostInfo(postInfo: PostInfo): LocalPostInfo?
+    @Query("SELECT * FROM RecentViewedPostInfo WHERE postInfo = :postInfo")
+    suspend fun findPostInfo(postInfo: PostInfo): RecentViewedPostInfo?
 
     @Update
-    suspend fun updatePostInfo(localPostInfo: LocalPostInfo)
+    suspend fun updatePostInfo(localPostInfo: RecentViewedPostInfo)
 
     @Insert
-    suspend fun insertPostInfo(localPostInfo: LocalPostInfo)
+    suspend fun insertPostInfo(localPostInfo: RecentViewedPostInfo)
 
     @Delete
-    suspend fun deletePostInfo(localPostInfo: LocalPostInfo)
+    suspend fun deletePostInfo(localPostInfo: RecentViewedPostInfo)
 }

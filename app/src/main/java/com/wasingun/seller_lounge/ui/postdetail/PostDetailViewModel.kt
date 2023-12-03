@@ -2,7 +2,7 @@ package com.wasingun.seller_lounge.ui.postdetail
 
 import androidx.lifecycle.ViewModel
 import com.wasingun.seller_lounge.R
-import com.wasingun.seller_lounge.data.model.localpost.LocalPostInfo
+import com.wasingun.seller_lounge.data.model.localpost.RecentViewedPostInfo
 import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.data.repository.PostDetailRepository
@@ -39,7 +39,7 @@ class PostDetailViewModel @Inject constructor(private val repository: PostDetail
     suspend fun saveLocalPost(postInfo: PostInfo) {
         val findLocalPost = repository.findLocalPost(postInfo)
         val savedTime = System.currentTimeMillis()
-        val localPostInfo = LocalPostInfo(postInfo = postInfo, savedTime = savedTime)
+        val localPostInfo = RecentViewedPostInfo(postInfo = postInfo, savedTime = savedTime)
         if (findLocalPost == null) {
             repository.saveLocalPost(localPostInfo)
         }
