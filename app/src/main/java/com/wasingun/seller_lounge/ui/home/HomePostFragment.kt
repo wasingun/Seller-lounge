@@ -11,6 +11,7 @@ import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.ProductCategory
 import com.wasingun.seller_lounge.databinding.LayoutHomePostBinding
 import com.wasingun.seller_lounge.extensions.showTextMessage
+import com.wasingun.seller_lounge.network.NetworkConnection
 import com.wasingun.seller_lounge.ui.BaseFragment
 import com.wasingun.seller_lounge.util.Constants
 import com.wasingun.seller_lounge.util.getSerializableCompat
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
 
-    private val adapter = HomePostAdapter{postInfo ->
+    private val adapter = HomePostAdapter { postInfo ->
         val action = HomeFragmentDirections.actionDestHomeToPostDetailFragment(postInfo)
         findNavController().navigate(action)
     }
@@ -35,11 +36,23 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         val category =
             arguments?.getSerializableCompat(Constants.KEY_CATEGORY, ProductCategory::class.java)
         binding.rvPostList.adapter = adapter
-        viewModel.getPost()
         getPostList(category)
+        observeRecentViewedPost(category)
         observeError()
         searchTitleKeyword(category)
         showLoadingState()
+    }
+
+    private fun getPostList(category: ProductCategory?) {
+        val networkConnect = NetworkConnection(requireContext())
+        networkConnect.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected) {
+                viewModel.getRemotePostList()
+                submitRemotePostList(category)
+            } else {
+                viewModel.getRecentViewedPostList()
+            }
+        }
     }
 
     private fun observeError() {
@@ -47,6 +60,21 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
             viewModel.isError.collect { errorMessage ->
                 if (errorMessage != 0) {
                     binding.root.showTextMessage(errorMessage)
+                }
+            }
+        }
+    }
+
+    private fun observeRecentViewedPost(category: ProductCategory?) {
+        lifecycleScope.launch {
+            viewModel.localPostList.collect { postList ->
+                if (category == ProductCategory.ALL) {
+                    adapter.submitPost(postList)
+                } else {
+                    val filteringPostList = postList.filter {
+                        it.category == category
+                    }
+                    adapter.submitPost(filteringPostList)
                 }
             }
         }
@@ -69,9 +97,9 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
             sharedViewModel.searchButtonState.collect { state ->
                 if (state) {
                     val currentList = if (category == ProductCategory.ALL) {
-                        viewModel.postList.value
+                        viewModel.remotePostList.value
                     } else {
-                        viewModel.postList.value.filter { it.category == category }
+                        viewModel.remotePostList.value.filter { it.category == category }
                     }
                     val currentKeyword = sharedViewModel.searchKeyword.value
 
@@ -85,9 +113,9 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         }
     }
 
-    private fun getPostList(category: ProductCategory?) {
+    private fun submitRemotePostList(category: ProductCategory?) {
         lifecycleScope.launch {
-            viewModel.postList.flowWithLifecycle(
+            viewModel.remotePostList.flowWithLifecycle(
                 viewLifecycleOwner.lifecycle,
                 Lifecycle.State.STARTED
             ).collect { postList ->
