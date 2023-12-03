@@ -1,4 +1,4 @@
-package com.wasingun.seller_lounge.data.enums
+package com.wasingun.seller_lounge.data.model
 
 enum class ProductCategory(val id: String, val categoryName: String) {
     ALL("0000", "전체"),

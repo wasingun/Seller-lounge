@@ -2,10 +2,10 @@ package com.wasingun.seller_lounge.data.datasource
 
 import com.wasingun.seller_lounge.data.model.localpost.LocalPostInfo
 import com.wasingun.seller_lounge.data.model.post.PostInfo
-import com.wasingun.seller_lounge.local.LocalPostDao
+import com.wasingun.seller_lounge.local.RecentPostDao
 import javax.inject.Inject
 
-class LocalDataPostSource @Inject constructor(private val dao: LocalPostDao) : LocalDataSource {
+class RecentPostLocalDataSource @Inject constructor(private val dao: RecentPostDao) : RecentPostDataSource {
     override suspend fun saveLocalPost(localPostInfo: LocalPostInfo) {
         dao.insertPostInfo(localPostInfo)
     }

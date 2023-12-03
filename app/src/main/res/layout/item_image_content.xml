@@ -7,7 +7,7 @@
 
         <variable
             name="imageContent"
-            type="com.wasingun.seller_lounge.data.model.ImageContent" />
+            type="com.wasingun.seller_lounge.data.model.attachedcontent.ImageContent" />
 
         <variable
             name="listener"

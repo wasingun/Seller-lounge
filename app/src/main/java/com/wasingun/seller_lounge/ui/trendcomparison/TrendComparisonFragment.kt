@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.wasingun.seller_lounge.R
-import com.wasingun.seller_lounge.data.enums.ProductCategory
+import com.wasingun.seller_lounge.data.model.ProductCategory
 import com.wasingun.seller_lounge.databinding.FragmentTrendComparisonBinding
 import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.ui.BaseFragment

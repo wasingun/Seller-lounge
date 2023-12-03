@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <ImageView
+            android:id="@+id/iv_product_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            style="@style/TextTitle16"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_product_image"
+            app:layout_constraintTop_toTopOf="@id/iv_product_image"
+            tools:text="남자 버킷햇 남성 벙거시 모자 여성 방수 캠핑" />
+
+        <TextView
+            android:id="@+id/tv_product_price"
+            style="@style/TextTitle20"
+            android:layout_width="150dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@id/iv_product_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_name"
+            tools:text="2,250,000,000원" />
+
+        <TextView
+            android:id="@+id/tv_shop_name"
+            style="@style/TextTitleGrey14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15sp"
+            android:layout_marginTop="5sp"
+            app:layout_constraintStart_toEndOf="@id/iv_product_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_price"
+            tools:text="세아몰" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -12,15 +13,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.wasingun.seller_lounge.BuildConfig
 import com.wasingun.seller_lounge.R
-import com.wasingun.seller_lounge.SellerLoungeApplication
 import com.wasingun.seller_lounge.databinding.FragmentLoginBinding
 import com.wasingun.seller_lounge.ui.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
+    private val viewModel: LoginViewModel by viewModels()
     private lateinit var signInClient: GoogleSignInClient
     private val googleSignInOption =
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -71,7 +76,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun updateUi(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        SellerLoungeApplication.auth.signInWithCredential(credential).addOnCompleteListener {
+        viewModel.getSignInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                 val action = LoginFragmentDirections.actionDestLoginToDestHome()
                 findNavController().navigate(action)

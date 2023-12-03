@@ -3,11 +3,11 @@ package com.wasingun.seller_lounge.ui.trendcomparison
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wasingun.seller_lounge.R
-import com.wasingun.seller_lounge.data.enums.ProductCategory
+import com.wasingun.seller_lounge.data.model.ProductCategory
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordDetail
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse
-import com.wasingun.seller_lounge.data.repository.GeneralRepository
+import com.wasingun.seller_lounge.data.repository.TrendComparisonRepository
 import com.wasingun.seller_lounge.util.Constants
 import com.wasingun.seller_lounge.util.latestDateFormat
 import com.wasingun.seller_lounge.util.thirtyDaysAgoDateFormat
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TrendComparisonViewModel @Inject constructor(private val repository: GeneralRepository) :
+class TrendComparisonViewModel @Inject constructor(private val repository: TrendComparisonRepository) :
     ViewModel() {
 
     private val _snackbarText = MutableStateFlow(0)

@@ -3,9 +3,9 @@ package com.wasingun.seller_lounge.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wasingun.seller_lounge.R
-import com.wasingun.seller_lounge.SellerLoungeApplication
 import com.wasingun.seller_lounge.data.model.post.UserInfo
-import com.wasingun.seller_lounge.data.repository.GeneralRepository
+import com.wasingun.seller_lounge.data.repository.AuthRepository
+import com.wasingun.seller_lounge.data.repository.UserRepository
 import com.wasingun.seller_lounge.network.onError
 import com.wasingun.seller_lounge.network.onException
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,15 +15,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeSharedViewModel @Inject constructor(private val repository: GeneralRepository) :
+class HomeSharedViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+    private val authRepository: AuthRepository) :
     ViewModel() {
 
     private val _isError = MutableStateFlow(0)
     val isError: StateFlow<Int> = _isError
     private val _searchButtonState = MutableStateFlow(false)
     val searchButtonState: StateFlow<Boolean> = _searchButtonState
-
     val searchKeyword = MutableStateFlow("")
+
+    private val currentUser = getCurrentUser()
 
     fun searchTitle() {
         _searchButtonState.value = true
@@ -32,12 +35,11 @@ class HomeSharedViewModel @Inject constructor(private val repository: GeneralRep
 
     fun updateUserInfo() {
         viewModelScope.launch {
-            val currentUser = SellerLoungeApplication.auth.currentUser
             val userId = currentUser?.uid ?: ""
             val userName = currentUser?.displayName ?: ""
             val userEmail = currentUser?.email ?: ""
             val userImage = currentUser?.photoUrl.toString() ?: ""
-            val result = repository.userInfoUploadResult(
+            val result = userRepository.userInfoUploadResult(
                 userId, UserInfo(userId, userName, userEmail, userImage)
             )
             result.onError { code, message ->
@@ -49,4 +51,6 @@ class HomeSharedViewModel @Inject constructor(private val repository: GeneralRep
             }
         }
     }
+
+    fun getCurrentUser() = authRepository.getCurrentUser()
 }

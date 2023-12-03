@@ -46,9 +46,8 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="TextTitle16" parent="TextAppearance.Material3.TitleMedium">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+    <style name="TextTitleGrey14" parent="TextTitle14">
+        <item name="android:textColor">@color/grey</item>
     </style>
 
     <style name="TextTitleBold14" parent="TextTitle14">
@@ -58,6 +57,19 @@
     <style name="TextBody14" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextTitle16" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextTitleBold16" parent="TextTitle16">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextTitle20" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TabLayoutText" parent="TextAppearance.Design.Tab">

@@ -1,10 +1,10 @@
-package com.wasingun.seller_lounge.data.model.localpost
+package com.wasingun.seller_lounge.local
 
 import androidx.room.TypeConverter
 import com.google.gson.GsonBuilder
 import com.wasingun.seller_lounge.data.model.post.PostInfo
 
-class LocalPostConverters {
+class RecentPostConverters {
     private val gson = GsonBuilder().create()
     private val adapter = gson.getAdapter(PostInfo::class.java)
 

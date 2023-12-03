@@ -1,9 +1,9 @@
 package com.wasingun.seller_lounge.data.datasource
 
 import com.google.firebase.storage.FirebaseStorage
-import com.wasingun.seller_lounge.data.enums.ProductCategory
-import com.wasingun.seller_lounge.data.model.DocumentContent
-import com.wasingun.seller_lounge.data.model.ImageContent
+import com.wasingun.seller_lounge.data.model.ProductCategory
+import com.wasingun.seller_lounge.data.model.attachedcontent.DocumentContent
+import com.wasingun.seller_lounge.data.model.attachedcontent.ImageContent
 import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.network.ApiResponse
@@ -21,8 +21,8 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
-class RemotePostFirebaseDataSource @Inject constructor(private val postDataClient: PostDataClient) :
-    RemotePostDataSource {
+class PostRemoteDataSource @Inject constructor(private val postDataClient: PostDataClient) :
+    PostDataSource {
 
     override suspend fun uploadPostInfo(
         postId: String,

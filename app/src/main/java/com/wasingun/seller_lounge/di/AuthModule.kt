@@ -1,7 +1,6 @@
 package com.wasingun.seller_lounge.di
 
-import com.wasingun.seller_lounge.SellerLoungeApplication
-import com.wasingun.seller_lounge.local.LocalPostDao
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,11 +9,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object LocalDatabaseModule {
+object AuthModule {
 
     @Singleton
     @Provides
-    fun provideLocalDatabase():LocalPostDao {
-        return SellerLoungeApplication.db.localPostDao()
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
     }
 }
