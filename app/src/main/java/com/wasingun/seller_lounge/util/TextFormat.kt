@@ -2,6 +2,7 @@ package com.wasingun.seller_lounge.util
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -40,4 +41,16 @@ fun TextView.convertDisplayedDate(postedTime: String) {
     } else {
         "${differenceInHours / 24} 일 전"
     }
+}
+
+@BindingAdapter("convertPrice")
+fun TextView.convertPrice(price: String) {
+    val priceFormat = DecimalFormat("###,###")
+    text = priceFormat.format(price.toLong()).toString()
+}
+
+@BindingAdapter("convertTitle")
+fun TextView.convertTitle(title: String) {
+    text = title.replace("<b>", "")
+                .replace("</b>", "")
 }
