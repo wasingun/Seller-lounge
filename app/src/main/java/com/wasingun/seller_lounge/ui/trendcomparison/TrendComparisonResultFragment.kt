@@ -80,6 +80,7 @@ class TrendComparisonResultFragment : BaseFragment<FragmentTrendComparisonResult
         yAxis.axisLineWidth = 2f
         yAxis.axisLineColor = Color.BLACK
         yAxis.labelCount = 10
+        lineChart.axisRight.isEnabled = false
     }
 
     override fun getFragmentView(): Int {
