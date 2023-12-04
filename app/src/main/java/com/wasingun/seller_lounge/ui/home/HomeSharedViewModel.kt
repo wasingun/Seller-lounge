@@ -44,9 +44,6 @@ class HomeSharedViewModel @Inject constructor(
             result.onError { code, message ->
                 _isError.value = R.string.error_user_info_update
                 _isError.value = 0
-            }.onException {
-                _isError.value = R.string.error_api_network
-                _isError.value = 0
             }
         }
     }

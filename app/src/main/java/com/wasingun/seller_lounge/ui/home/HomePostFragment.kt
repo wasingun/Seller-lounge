@@ -50,6 +50,7 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
                 viewModel.getRemotePostList()
                 submitRemotePostList(category)
             } else {
+                binding.root.showTextMessage(R.string.offline_mode)
                 viewModel.getRecentViewedPostList()
             }
         }
