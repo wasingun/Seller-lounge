@@ -42,6 +42,10 @@
     <string name="recently_viewed_post">최근 열람 게시물</string>
     <string name="logout">로그아웃</string>
     <string name="loading">로딩</string>
+    <string name="document_download">문서 다운로드</string>
+    <string name="announce_document_download">문서 다운로드가 진행됩니다. 진행 하시겠습니까?</string>
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
 
     <string-array name="sort_select">
         <item>정확도순</item>

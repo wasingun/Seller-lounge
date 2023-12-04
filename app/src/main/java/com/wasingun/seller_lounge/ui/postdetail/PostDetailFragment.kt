@@ -1,5 +1,6 @@
 package com.wasingun.seller_lounge.ui.postdetail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -37,7 +38,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         super.onViewCreated(view, savedInstanceState)
         val postInfo = args.post
         documentAdapter = PostDetailAttachedDocumentAdapter(AttachedFileClickListener { fileName ->
-            startDownloadDocument(postInfo, fileName)
+            setAlertDialog(postInfo, fileName)
         })
         getWriterInfo()
         setLayout(postInfo)
@@ -45,6 +46,20 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         saveLocalPost(postInfo)
         setErrorMessage()
         submitDocumentFileName(postInfo)
+    }
+
+    private fun setAlertDialog(
+        postInfo: PostInfo,
+        fileName: String?
+    ) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.document_download)
+            .setMessage(R.string.announce_document_download)
+            .setPositiveButton(
+                R.string.yes
+            ) { dialog, which -> startDownloadDocument(postInfo, fileName) }
+            .setNegativeButton(R.string.no) { _, _ -> }
+            .show()
     }
 
     private fun startDownloadDocument(
@@ -92,7 +107,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
     }
 
     private fun setErrorMessage() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isError.collect { errorMessage ->
                 if (errorMessage != 0) {
                     binding.root.showTextMessage(errorMessage)
@@ -114,7 +129,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
     }
 
     private fun setWriterInfo() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.writerInfo.collect { writerInfo ->
                 binding.tvUserName.text = writerInfo.userName
                 binding.ivProfileImage.setCircleImage(writerInfo.userImage)
