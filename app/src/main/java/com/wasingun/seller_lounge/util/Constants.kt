@@ -10,4 +10,5 @@ object Constants {
     const val KEY_FILE_NAME = "file_name"
     const val KEY_FILE_URI = "user_id"
     const val DOCUMENT_BASE_STORAGE_URL = "gs://seller-lounge.appspot.com/documents/"
+    const val CUSTOMER_FEEDBACK = "https://forms.gle/mQ3Ex9yWeZ2agvYf6"
 }

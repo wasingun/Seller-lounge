@@ -22,7 +22,7 @@
         <action
             android:id="@+id/action_dest_home_to_dest_login"
             app:destination="@id/dest_login"
-            app:popUpTo="@id/dest_login"
+            app:popUpTo="@id/dest_home"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_dest_home_to_post_content_fragment"
@@ -54,6 +54,11 @@
         <action
             android:id="@+id/action_dest_setting_to_recentlyViewedPostFragment"
             app:destination="@id/dest_recently_viewed_post" />
+        <action
+            android:id="@+id/action_dest_setting_to_dest_login"
+            app:destination="@id/dest_login"
+            app:popUpTo="@id/dest_home"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
