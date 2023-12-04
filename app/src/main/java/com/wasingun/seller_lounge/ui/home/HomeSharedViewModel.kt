@@ -18,7 +18,6 @@ class HomeSharedViewModel @Inject constructor(
     private val userRepository: HomeSharedRepository
 ) :
     ViewModel() {
-
     private val _isError = MutableStateFlow(0)
     val isError: StateFlow<Int> = _isError
     private val _searchButtonState = MutableStateFlow(false)

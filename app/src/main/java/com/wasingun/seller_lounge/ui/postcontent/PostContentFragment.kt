@@ -24,7 +24,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
-
     private val viewModel by viewModels<PostContentViewModel>()
     private val getImageContents = registerForImage()
     private val getDocumentContents = registerForDocuments()

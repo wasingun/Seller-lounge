@@ -8,7 +8,6 @@ import com.wasingun.seller_lounge.databinding.ItemHomePostBinding
 
 class HomePostAdapter(private val postClickListener: PostClickListener) :
     RecyclerView.Adapter<HomePostAdapter.HomePostViewHolder>() {
-
     private var postList: List<PostInfo> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomePostViewHolder {

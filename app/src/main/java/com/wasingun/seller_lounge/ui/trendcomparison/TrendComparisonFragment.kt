@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
-
     private val viewModel by viewModels<TrendComparisonViewModel>()
     private val inputErrorMessageList = listOf(
         R.string.announce_blank_category,

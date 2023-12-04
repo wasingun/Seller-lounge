@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
-
     private val adapter = HomePostAdapter { postInfo ->
         val action = HomeFragmentDirections.actionDestHomeToPostDetailFragment(postInfo)
         findNavController().navigate(action)
