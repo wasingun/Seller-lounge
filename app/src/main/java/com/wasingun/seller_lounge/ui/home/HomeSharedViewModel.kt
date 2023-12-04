@@ -6,7 +6,6 @@ import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.data.repository.HomeSharedRepository
 import com.wasingun.seller_lounge.network.onError
-import com.wasingun.seller_lounge.network.onException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,16 +19,9 @@ class HomeSharedViewModel @Inject constructor(
     ViewModel() {
     private val _isError = MutableStateFlow(0)
     val isError: StateFlow<Int> = _isError
-    private val _searchButtonState = MutableStateFlow(false)
-    val searchButtonState: StateFlow<Boolean> = _searchButtonState
     val searchKeyword = MutableStateFlow("")
 
     private val currentUser = getCurrentUser()
-
-    fun searchTitle() {
-        _searchButtonState.value = true
-        _searchButtonState.value = false
-    }
 
     fun updateUserInfo() {
         viewModelScope.launch {

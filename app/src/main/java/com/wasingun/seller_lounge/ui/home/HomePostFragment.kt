@@ -16,6 +16,8 @@ import com.wasingun.seller_lounge.ui.BaseFragment
 import com.wasingun.seller_lounge.util.Constants
 import com.wasingun.seller_lounge.util.getSerializableCompat
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -38,8 +40,8 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         getPostList(category)
         observeRecentViewedPost(category)
         observeError()
-        searchTitleKeyword(category)
         showLoadingState()
+        autoSearchTitleKeyword(category)
     }
 
     private fun getPostList(category: ProductCategory?) {
@@ -92,22 +94,46 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         }
     }
 
-    private fun searchTitleKeyword(category: ProductCategory?) {
-        lifecycleScope.launch {
-            sharedViewModel.searchButtonState.collect { state ->
-                if (state) {
-                    val currentList = if (category == ProductCategory.ALL) {
-                        viewModel.remotePostList.value
-                    } else {
-                        viewModel.remotePostList.value.filter { it.category == category }
-                    }
-                    val currentKeyword = sharedViewModel.searchKeyword.value
+    private fun autoSearchTitleKeyword(category: ProductCategory?) {
+        val networkConnection = NetworkConnection(requireContext())
+        networkConnection.observe(viewLifecycleOwner) {isConnected ->
+            if (isConnected) {
+                searchRemotePost(category)
+            } else {
+                searchRecentViewedPost(category)
+            }
+        }
+    }
 
-                    if (sharedViewModel.searchKeyword.value.isNotBlank()) {
-                        adapter.submitPost(currentList.filter { it.title.contains(currentKeyword) })
-                    } else {
-                        adapter.submitPost(currentList)
-                    }
+    private fun searchRemotePost(category: ProductCategory?) {
+        lifecycleScope.launch {
+            sharedViewModel.searchKeyword.debounce(500).distinctUntilChanged().collect { keyword ->
+                val currentList = if (category == ProductCategory.ALL) {
+                    viewModel.remotePostList.value
+                } else {
+                    viewModel.remotePostList.value.filter { it.category == category }
+                }
+                if (keyword.isNotBlank()) {
+                    adapter.submitPost(currentList.filter { it.title.contains(keyword) })
+                } else {
+                    adapter.submitPost(currentList)
+                }
+            }
+        }
+    }
+
+    private fun searchRecentViewedPost(category: ProductCategory?) {
+        lifecycleScope.launch {
+            sharedViewModel.searchKeyword.debounce(500).distinctUntilChanged().collect { keyword ->
+                val recentViewedList = if (category == ProductCategory.ALL) {
+                    viewModel.localPostList.value
+                } else {
+                    viewModel.localPostList.value.filter { it.category == category }
+                }
+                if (keyword.isNotBlank()) {
+                    adapter.submitPost(recentViewedList.filter { it.title.contains(keyword) })
+                } else {
+                    adapter.submitPost(recentViewedList)
                 }
             }
         }

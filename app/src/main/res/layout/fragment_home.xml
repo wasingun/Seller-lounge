@@ -45,16 +45,16 @@
             android:maxLines="1"
             android:text="@={viewModel.searchKeyword}"
             android:textSize="14sp"
+            android:layout_marginStart="10dp"
+            android:hint="@string/auto_search_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tl_tab_menu" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/search_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:background="@color/clear"
-            android:onClick="@{() -> viewModel.searchTitle()}"
             android:padding="0dp"
             android:src="@drawable/ic_search"
             app:layout_constraintBottom_toBottomOf="@id/et_search"

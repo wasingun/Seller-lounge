@@ -35,7 +35,7 @@
     <string name="message_wait">잠시만 기다려주세요</string>
     <string name="error_user_info_update">회원 정보를 갱신할 수 없습니다. 관리자에게 문의 부탁드립니다.</string>
     <string name="error_writer_info_load">"작성자 정보 로드 오류입니다. 관리자에게 문의 부탁드립니다."</string>
-    <string name="offline_mode">현재 오프라인 모드 입니다. 네트워크 연결 확인을 부탁드립니다.</string>
+    <string name="offline_mode">현재 오프라인 모드 입니다. 게시물 검색 및 게시물 작성자 확인 등 일부 기능이 제한됩니다.</string>
     <string name="nickname">닉네임</string>
     <string name="email">이메일</string>
     <string name="customer_feedback">고객의견</string>
@@ -46,6 +46,7 @@
     <string name="announce_document_download">문서 다운로드가 진행됩니다. 진행 하시겠습니까?</string>
     <string name="yes">예</string>
     <string name="no">아니오</string>
+    <string name="auto_search_title">게시물 자동완성 검색</string>
 
     <string-array name="sort_select">
         <item>정확도순</item>
