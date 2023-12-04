@@ -15,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeSharedViewModel @Inject constructor(
-    private val userRepository: HomeSharedRepository) :
+    private val userRepository: HomeSharedRepository
+) :
     ViewModel() {
 
     private val _isError = MutableStateFlow(0)
@@ -33,10 +34,10 @@ class HomeSharedViewModel @Inject constructor(
 
     fun updateUserInfo() {
         viewModelScope.launch {
-            val userId = currentUser?.uid ?: ""
+            val userId = currentUser?.uid ?: "None"
             val userName = currentUser?.displayName ?: ""
             val userEmail = currentUser?.email ?: ""
-            val userImage = currentUser?.photoUrl.toString() ?: ""
+            val userImage = currentUser?.photoUrl.toString()
             val result = userRepository.userInfoUploadResult(
                 userId, UserInfo(userId, userName, userEmail, userImage)
             )
