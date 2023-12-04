@@ -57,7 +57,7 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
     }
 
     private fun observeError() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isError.collect { errorMessage ->
                 if (errorMessage != 0) {
                     binding.root.showTextMessage(errorMessage)
@@ -82,7 +82,7 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
     }
 
     private fun showLoadingState() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isLoading.collect { state ->
                 if (state) {
                     binding.viewLoadingIndicator.visibility = View.VISIBLE
