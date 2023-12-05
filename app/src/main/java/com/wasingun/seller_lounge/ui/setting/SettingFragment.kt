@@ -26,20 +26,24 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
             findNavController().navigate(action)
         }
         binding.tvCustomerFeedback.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(Constants.CUSTOMER_FEEDBACK)
-            startActivity(intent)
+            moveFeedbackWebPage()
         }
         binding.tvLogout.setOnClickListener {
             setLogoutAlertDialog()
         }
     }
 
+    private fun moveFeedbackWebPage() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(Constants.CUSTOMER_FEEDBACK)
+        startActivity(intent)
+    }
+
     private fun setLogoutAlertDialog() {
         val action = SettingFragmentDirections.actionDestSettingToDestLogin()
         AlertDialog.Builder(requireContext())
-            .setTitle("로그아웃")
-            .setMessage("로그아웃 하시겠습니까?")
+            .setTitle(R.string.logout)
+            .setMessage(R.string.logout_message)
             .setPositiveButton(
                 R.string.yes
             ) { dialog, which ->

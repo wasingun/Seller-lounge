@@ -47,6 +47,10 @@
     <string name="yes">예</string>
     <string name="no">아니오</string>
     <string name="auto_search_title">게시물 자동완성 검색</string>
+    <string name="logout_message">로그아웃 하시겠습니까?</string>
+    <string name="announce_download_start">파일 다운로드를 진행합니다</string>
+    <string name="permission_allow">저장소 접근권한 허용 완료. 다운로드를 다시 진행해주세요.</string>
+    <string name="permission_deny">저장소 접근권한이 허용되지 않았습니다. 다운로드를 실행할 수 없습니다.</string>
 
     <string-array name="sort_select">
         <item>정확도순</item>
