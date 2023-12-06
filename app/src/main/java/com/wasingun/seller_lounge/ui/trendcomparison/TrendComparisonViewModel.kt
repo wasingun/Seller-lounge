@@ -21,7 +21,6 @@ import javax.inject.Inject
 @HiltViewModel
 class TrendComparisonViewModel @Inject constructor(private val repository: TrendComparisonRepository) :
     ViewModel() {
-
     private val _snackbarText = MutableStateFlow(0)
     val snackbarText: StateFlow<Int> = _snackbarText
     private val _isError = MutableStateFlow<Int>(0)

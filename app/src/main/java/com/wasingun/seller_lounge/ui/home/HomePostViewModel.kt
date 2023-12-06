@@ -20,7 +20,7 @@ class HomePostViewModel @Inject constructor(private val repository: PostListRepo
     val remotePostList: StateFlow<List<PostInfo>> = getRemotePostList().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(10000),
-        initialValue = listOf()
+        initialValue = listOf(),
     )
     private val _localPostList = MutableStateFlow(listOf<PostInfo>())
     val localPostList: StateFlow<List<PostInfo>> = _localPostList

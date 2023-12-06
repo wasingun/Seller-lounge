@@ -6,7 +6,6 @@ import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.data.repository.HomeSharedRepository
 import com.wasingun.seller_lounge.network.onError
-import com.wasingun.seller_lounge.network.onException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,36 +14,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeSharedViewModel @Inject constructor(
-    private val userRepository: HomeSharedRepository) :
+    private val userRepository: HomeSharedRepository
+) :
     ViewModel() {
-
     private val _isError = MutableStateFlow(0)
     val isError: StateFlow<Int> = _isError
-    private val _searchButtonState = MutableStateFlow(false)
-    val searchButtonState: StateFlow<Boolean> = _searchButtonState
     val searchKeyword = MutableStateFlow("")
 
     private val currentUser = getCurrentUser()
 
-    fun searchTitle() {
-        _searchButtonState.value = true
-        _searchButtonState.value = false
-    }
-
     fun updateUserInfo() {
         viewModelScope.launch {
-            val userId = currentUser?.uid ?: ""
+            val userId = currentUser?.uid ?: "None"
             val userName = currentUser?.displayName ?: ""
             val userEmail = currentUser?.email ?: ""
-            val userImage = currentUser?.photoUrl.toString() ?: ""
+            val userImage = currentUser?.photoUrl.toString()
             val result = userRepository.userInfoUploadResult(
                 userId, UserInfo(userId, userName, userEmail, userImage)
             )
             result.onError { code, message ->
                 _isError.value = R.string.error_user_info_update
-                _isError.value = 0
-            }.onException {
-                _isError.value = R.string.error_api_network
                 _isError.value = 0
             }
         }

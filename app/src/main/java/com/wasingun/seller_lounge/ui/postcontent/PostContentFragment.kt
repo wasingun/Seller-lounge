@@ -24,7 +24,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
-
     private val viewModel by viewModels<PostContentViewModel>()
     private val getImageContents = registerForImage()
     private val getDocumentContents = registerForDocuments()
@@ -45,7 +44,7 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
     }
 
     private fun setErrorMessage() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isInputError.collect { resourceId ->
                 when (resourceId) {
                     R.string.announce_image_attachment_limit -> {
@@ -70,7 +69,7 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
                 }
             }
         }
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isNetworkError.collect() { resourceId ->
                 when (resourceId) {
                     R.string.error_api_http_response -> {

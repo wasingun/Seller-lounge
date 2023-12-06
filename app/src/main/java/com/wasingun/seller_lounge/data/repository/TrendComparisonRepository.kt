@@ -15,6 +15,7 @@ import javax.inject.Inject
 class TrendComparisonRepository @Inject constructor(
     private val naverDataSource: NaverApiDataSource
 ) {
+
     fun requestComparisonResult(
         keywordRequest: KeywordRequest,
         onComplete: (KeywordResponse) -> Unit,

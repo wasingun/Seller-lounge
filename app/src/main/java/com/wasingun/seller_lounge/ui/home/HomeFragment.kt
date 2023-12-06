@@ -19,11 +19,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private lateinit var adapter: HomeViewPagerAdapter
     private val sharedViewModel by viewModels<HomeSharedViewModel>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        checkLoginState()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = HomeViewPagerAdapter(this)
         checkLoginState()
-        updateUserInfo()
         binding.vpHome.adapter = adapter
         binding.viewModel = sharedViewModel
         binding.btnPost.setOnClickListener {
@@ -34,7 +38,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun setErrorMessage() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             sharedViewModel.isError.collect { errorMessage ->
                 if (errorMessage != 0) {
                     binding.root.showTextMessage(errorMessage)
@@ -53,6 +57,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         if (sharedViewModel.getCurrentUser() == null) {
             val action = HomeFragmentDirections.actionDestHomeToDestLogin()
             findNavController().navigate(action)
+        } else {
+            updateUserInfo()
         }
     }
 

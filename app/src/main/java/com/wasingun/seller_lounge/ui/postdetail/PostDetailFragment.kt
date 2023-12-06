@@ -1,7 +1,12 @@
 package com.wasingun.seller_lounge.ui.postdetail
 
+import android.Manifest
+import android.app.AlertDialog
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -37,7 +42,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         super.onViewCreated(view, savedInstanceState)
         val postInfo = args.post
         documentAdapter = PostDetailAttachedDocumentAdapter(AttachedFileClickListener { fileName ->
-            startDownloadDocument(postInfo, fileName)
+            setAlertDialog(postInfo, fileName)
         })
         getWriterInfo()
         setLayout(postInfo)
@@ -47,10 +52,27 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         submitDocumentFileName(postInfo)
     }
 
+    private fun setAlertDialog(
+        postInfo: PostInfo,
+        fileName: String?
+    ) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.document_download)
+            .setMessage(R.string.announce_document_download)
+            .setPositiveButton(
+                R.string.yes
+            ) { dialog, which -> startDownloadDocument(postInfo, fileName) }
+            .setNegativeButton(R.string.no) { _, _ -> }
+            .show()
+    }
+
     private fun startDownloadDocument(
         postInfo: PostInfo,
         fileName: String?
     ) {
+        requestStoragePermission()
+
+        binding.root.showTextMessage(R.string.announce_download_start)
         lifecycleScope.launch {
             val storageUrl =
                 "documents/${postInfo.userId}/" + fileName
@@ -75,6 +97,23 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         }
     }
 
+    private fun requestStoragePermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            val permissionList = arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            if (!permissionList.all {
+                    ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        it
+                    ) == PackageManager.PERMISSION_GRANTED
+                }) {
+                requestPermissions(permissionList, Constants.REQUEST_PERMISSION_CODE)
+            }
+        }
+    }
+
     private suspend fun getDownloadUrl(location: String): String {
         val firebaseStorage = FirebaseStorage.getInstance()
         return firebaseStorage.getReference(location)
@@ -92,7 +131,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
     }
 
     private fun setErrorMessage() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isError.collect { errorMessage ->
                 if (errorMessage != 0) {
                     binding.root.showTextMessage(errorMessage)
@@ -114,7 +153,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
     }
 
     private fun setWriterInfo() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.writerInfo.collect { writerInfo ->
                 binding.tvUserName.text = writerInfo.userName
                 binding.ivProfileImage.setCircleImage(writerInfo.userImage)
@@ -142,6 +181,23 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         TabLayoutMediator(binding.tlCircleIndicator, binding.vpImageList) { tab, position ->
 
         }.attach()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode) {
+            Constants.REQUEST_PERMISSION_CODE -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    binding.root.showTextMessage(R.string.permission_allow)
+                } else {
+                    binding.root.showTextMessage(R.string.permission_deny)
+                }
+            }
+        }
     }
 
     override fun getFragmentView(): Int {

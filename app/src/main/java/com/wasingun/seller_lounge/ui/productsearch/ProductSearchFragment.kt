@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.localpost.SortSearchType
 import com.wasingun.seller_lounge.databinding.FragmentProductSearchBinding
+import com.wasingun.seller_lounge.extensions.setClickEvent
 import com.wasingun.seller_lounge.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -41,11 +42,15 @@ class ProductSearchFragment : BaseFragment<FragmentProductSearchBinding>() {
         binding.actvSelectedSort.setDropDownBackgroundDrawable(
             ColorDrawable(ContextCompat.getColor(requireContext(), R.color.white))
         )
-        binding.btnSearchIcon.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.getProductInfoList().collectLatest { pagingData ->
-                    adapter.submitData(pagingData)
-                }
+        binding.btnSearchIcon.setClickEvent(lifecycleScope) {
+            submitPagingData()
+        }
+    }
+
+    private fun submitPagingData() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getProductInfoList().collectLatest { pagingData ->
+                adapter.submitData(pagingData)
             }
         }
     }

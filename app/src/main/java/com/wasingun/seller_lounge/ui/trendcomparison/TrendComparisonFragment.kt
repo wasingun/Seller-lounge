@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.ProductCategory
 import com.wasingun.seller_lounge.databinding.FragmentTrendComparisonBinding
+import com.wasingun.seller_lounge.extensions.setClickEvent
 import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +19,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
-
     private val viewModel by viewModels<TrendComparisonViewModel>()
     private val inputErrorMessageList = listOf(
         R.string.announce_blank_category,
@@ -39,6 +39,7 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
         setInputErrorMessage()
         moveToResultScreen()
         setAPIErrorMessage()
+        requestResult()
     }
 
     private fun setDropdownMenu() {
@@ -74,6 +75,12 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
                     findNavController().navigate(action)
                 }
             }
+        }
+    }
+
+    private fun requestResult() {
+        binding.btnSearch.setClickEvent(lifecycleScope) {
+            viewModel.requestResult()
         }
     }
 
