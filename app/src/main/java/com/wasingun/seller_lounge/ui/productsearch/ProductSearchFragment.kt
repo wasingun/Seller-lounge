@@ -13,6 +13,7 @@ import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.localpost.SortSearchType
 import com.wasingun.seller_lounge.databinding.FragmentProductSearchBinding
 import com.wasingun.seller_lounge.extensions.setClickEvent
+import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -32,6 +33,25 @@ class ProductSearchFragment : BaseFragment<FragmentProductSearchBinding>() {
 
         binding.rvProductList.adapter = adapter
         binding.viewModel = viewModel
+        binding.etSearchKeyword.setOnEditorActionListener{v, id, event ->
+            if(id == 0 && binding.etSearchKeyword.text.isNotBlank()){
+                submitPagingData()
+            } else {
+                binding.root.showTextMessage(R.string.announce_input_text)
+            }
+            true
+        }
+        binding.btnSearchIcon.setClickEvent(lifecycleScope) {
+            submitPagingData()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setDropdownMenu()
+    }
+
+    private fun setDropdownMenu() {
         val sortTypeList = SortSearchType.values().map {
             it.sortType
         }
@@ -42,9 +62,6 @@ class ProductSearchFragment : BaseFragment<FragmentProductSearchBinding>() {
         binding.actvSelectedSort.setDropDownBackgroundDrawable(
             ColorDrawable(ContextCompat.getColor(requireContext(), R.color.white))
         )
-        binding.btnSearchIcon.setClickEvent(lifecycleScope) {
-            submitPagingData()
-        }
     }
 
     private fun submitPagingData() {

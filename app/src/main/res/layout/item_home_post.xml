@@ -76,6 +76,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_body" />
 
         <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_post"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:scrollbarSize="4dp"
@@ -85,6 +86,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
+            android:id="@+id/iv_main_image"
             setRoundCornerImage="@{postInfo.imageList[0]}"
             android:layout_width="60dp"
             android:layout_height="60dp"
