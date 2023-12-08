@@ -14,6 +14,7 @@ import com.wasingun.seller_lounge.network.onException
 import com.wasingun.seller_lounge.network.onSuccess
 import com.wasingun.seller_lounge.util.Constants
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onCompletion
@@ -74,24 +75,27 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
     ): Boolean {
         try {
             withTimeout(10000L) {
-                imageList.forEach { imageContent ->
-                    async {
-                        val storageRef = FirebaseStorage.getInstance().reference
-                        val location = getImageFileLocation(userId, imageContent)
-                        val imageRef = storageRef.child(location)
-                        imageRef.putFile(imageContent.uri).await()
-                        location
+                val uploadJob = listOf(
+                    imageList.map { imageContent ->
+                        async {
+                            val storageRef = FirebaseStorage.getInstance().reference
+                            val location = getImageFileLocation(userId, imageContent)
+                            val imageRef = storageRef.child(location)
+                            imageRef.putFile(imageContent.uri).await()
+                            location
+                        }
+                    },
+                    documentList.map { documentContent ->
+                        async {
+                            val storageRef = FirebaseStorage.getInstance().reference
+                            val location = getDocumentFileLocation(userId, documentContent)
+                            val documentRef = storageRef.child(location)
+                            documentRef.putFile(documentContent.uri).await()
+                            location
+                        }
                     }
-                }
-                documentList.forEach { documentContent ->
-                    async {
-                        val storageRef = FirebaseStorage.getInstance().reference
-                        val location = getDocumentFileLocation(userId, documentContent)
-                        val documentRef = storageRef.child(location)
-                        documentRef.putFile(documentContent.uri).await()
-                        location
-                    }
-                }
+                ).flatten()
+                uploadJob.awaitAll()
             }
         } catch (e: Exception) {
             return true
