@@ -33,13 +33,15 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        setDropdownMenu()
         setInputErrorMessage()
         moveToResultScreen()
         setAPIErrorMessage()
         requestResult()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setDropdownMenu()
     }
 
     private fun setDropdownMenu() {

@@ -45,6 +45,9 @@
                 android:id="@+id/tie_search_keyword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:imeOptions="actionDone"
+                android:lines="1"
+                android:singleLine="true"
                 android:text="@={viewModel.keyword}"
                 android:textSize="14sp" />
 
