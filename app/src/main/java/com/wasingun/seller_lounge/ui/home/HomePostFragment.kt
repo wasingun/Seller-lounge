@@ -71,12 +71,12 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         lifecycleScope.launch {
             viewModel.localPostList.collect { postList ->
                 if (category == ProductCategory.ALL) {
-                    adapter.submitPost(postList)
+                    adapter.submitList(postList)
                 } else {
                     val filteringPostList = postList.filter {
                         it.category == category
                     }
-                    adapter.submitPost(filteringPostList)
+                    adapter.submitList(filteringPostList)
                 }
             }
         }
@@ -96,7 +96,7 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
 
     private fun autoSearchTitleKeyword(category: ProductCategory?) {
         val networkConnection = NetworkConnection(requireContext())
-        networkConnection.observe(viewLifecycleOwner) {isConnected ->
+        networkConnection.observe(viewLifecycleOwner) { isConnected ->
             if (isConnected) {
                 searchRemotePost(category)
             } else {
@@ -114,9 +114,9 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
                     viewModel.remotePostList.value.filter { it.category == category }
                 }
                 if (keyword.isNotBlank()) {
-                    adapter.submitPost(currentList.filter { it.title.contains(keyword) })
+                    adapter.submitList(currentList.filter { it.title.contains(keyword) })
                 } else {
-                    adapter.submitPost(currentList)
+                    adapter.submitList(currentList)
                 }
             }
         }
@@ -131,9 +131,9 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
                     viewModel.localPostList.value.filter { it.category == category }
                 }
                 if (keyword.isNotBlank()) {
-                    adapter.submitPost(recentViewedList.filter { it.title.contains(keyword) })
+                    adapter.submitList(recentViewedList.filter { it.title.contains(keyword) })
                 } else {
-                    adapter.submitPost(recentViewedList)
+                    adapter.submitList(recentViewedList)
                 }
             }
         }
@@ -146,12 +146,12 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
                 Lifecycle.State.STARTED
             ).collect { postList ->
                 if (category == ProductCategory.ALL) {
-                    adapter.submitPost(postList)
+                    adapter.submitList(postList)
                 } else {
                     val filteringPostList = postList.filter {
                         it.category == category
                     }
-                    adapter.submitPost(filteringPostList)
+                    adapter.submitList(filteringPostList)
                 }
             }
         }

@@ -16,7 +16,8 @@ class MainActivity : AppCompatActivity() {
         R.id.dest_login,
         R.id.dest_trend_comparison_result,
         R.id.dest_post_content,
-        R.id.dest_post_detail
+        R.id.dest_post_detail,
+        R.id.dest_recently_viewed_post,
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -28,6 +28,6 @@ class ProductSearchViewModel @Inject constructor(private val repository: Product
         val sortTypeId = sortTypeList.firstOrNull {
             it.sortType == selectedSortType
         }?.id
-        return repository.getProductInfoList(inputSearchKeyword ?: "", sortTypeId ?: SortSearchType.BY_RELEVANCE.sortType, 20)
+        return repository.getProductInfoList(inputSearchKeyword ?: "", sortTypeId ?: SortSearchType.BY_RELEVANCE.id, 20)
     }
 }

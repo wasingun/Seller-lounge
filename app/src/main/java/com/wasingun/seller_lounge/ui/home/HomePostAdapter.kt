@@ -2,24 +2,21 @@ package com.wasingun.seller_lounge.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.databinding.ItemHomePostBinding
 
 class HomePostAdapter(private val postClickListener: PostClickListener) :
-    RecyclerView.Adapter<HomePostAdapter.HomePostViewHolder>() {
-    private var postList: List<PostInfo> = listOf()
+    ListAdapter<PostInfo, HomePostAdapter.HomePostViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomePostViewHolder {
         return HomePostViewHolder.from(parent)
     }
 
-    override fun getItemCount(): Int {
-        return postList.size
-    }
-
     override fun onBindViewHolder(holder: HomePostViewHolder, position: Int) {
-        holder.bind(postList[position], postClickListener)
+        holder.bind(getItem(position), postClickListener)
     }
 
     class HomePostViewHolder(private val binding: ItemHomePostBinding) :
@@ -43,8 +40,13 @@ class HomePostAdapter(private val postClickListener: PostClickListener) :
         }
     }
 
-    fun submitPost(posts: List<PostInfo>) {
-        postList = posts
-        notifyDataSetChanged()
+    private class DiffCallback : DiffUtil.ItemCallback<PostInfo>() {
+        override fun areItemsTheSame(oldItem: PostInfo, newItem: PostInfo): Boolean {
+            return oldItem.postId == newItem.postId
+        }
+
+        override fun areContentsTheSame(oldItem: PostInfo, newItem: PostInfo): Boolean {
+            return oldItem == newItem
+        }
     }
 }

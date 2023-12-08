@@ -3,6 +3,7 @@ package com.wasingun.seller_lounge.ui.trendcomparison
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
@@ -26,10 +27,16 @@ class TrendComparisonResultFragment : BaseFragment<FragmentTrendComparisonResult
         val lineData = LineData()
         val keywordResult = args.keywordResponse.results
         val dateList = keywordResult[0].data.map { removeYear(it.period)}
-
+        moveToBack()
         setAxis(lineChart, dateList)
         setChartData(keywordResult, lineData)
         setChartDescription(lineChart, lineData)
+    }
+
+    private fun moveToBack() {
+        binding.btnArrow.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun setChartDescription(
