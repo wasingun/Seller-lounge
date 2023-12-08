@@ -25,8 +25,8 @@ class PostDetailViewModel @Inject constructor(private val repository: PostDetail
 
     suspend fun getWriterInfo(userId: String) {
         val result = repository.getWriterInfo(userId)
-        result.onSuccess {
-            _writerInfo.value = it
+        result.onSuccess {userInfo ->
+            _writerInfo.value = userInfo
         }.onError { _, _ ->
             _isError.value = R.string.error_writer_info_load
             _isError.value = 0
