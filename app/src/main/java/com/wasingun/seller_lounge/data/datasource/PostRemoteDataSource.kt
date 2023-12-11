@@ -73,29 +73,24 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
         userId: String,
         documentList: List<DocumentContent>
     ): Boolean {
+        val storageRef = FirebaseStorage.getInstance().reference
         try {
-            withTimeout(10000L) {
-                val uploadJob = listOf(
-                    imageList.map { imageContent ->
-                        async {
-                            val storageRef = FirebaseStorage.getInstance().reference
-                            val location = getImageFileLocation(userId, imageContent)
-                            val imageRef = storageRef.child(location)
-                            imageRef.putFile(imageContent.uri).await()
-                            location
-                        }
-                    },
-                    documentList.map { documentContent ->
-                        async {
-                            val storageRef = FirebaseStorage.getInstance().reference
-                            val location = getDocumentFileLocation(userId, documentContent)
-                            val documentRef = storageRef.child(location)
-                            documentRef.putFile(documentContent.uri).await()
-                            location
-                        }
+            withTimeout(15000L) {
+                imageList.map { imageContent ->
+                    async {
+                        val location = getImageFileLocation(userId, imageContent)
+                        val imageRef = storageRef.child(location)
+                        imageRef.putFile(imageContent.uri).await()
+                        location
                     }
-                ).flatten()
-                uploadJob.awaitAll()
+                } + documentList.map { documentContent ->
+                    async {
+                        val location = getDocumentFileLocation(userId, documentContent)
+                        val documentRef = storageRef.child(location)
+                        documentRef.putFile(documentContent.uri).await()
+                        location
+                    }
+                }.awaitAll()
             }
         } catch (e: Exception) {
             return true

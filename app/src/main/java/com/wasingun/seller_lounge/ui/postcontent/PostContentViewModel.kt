@@ -67,7 +67,6 @@ class PostContentViewModel @Inject constructor(
                 },
                 onError = {
                     _isNetworkError.value = it
-                    _isNetworkError.value = 0
                     _isLoading.value = false
                 }
             ).collect()
@@ -132,5 +131,9 @@ class PostContentViewModel @Inject constructor(
 
     fun getCurrentUser(): FirebaseUser? {
         return repository.getCurrentUser()
+    }
+
+    fun resetNetworkErrorState() {
+        _isNetworkError.value = 0
     }
 }
