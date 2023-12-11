@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -70,18 +71,20 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isNetworkError.collect() { resourceId ->
+            viewModel.isNetworkError.collect { resourceId ->
                 when (resourceId) {
                     R.string.error_api_http_response -> {
                         delay(300)
                         findNavController().navigateUp()
                         binding.root.showTextMessage(R.string.error_api_http_response)
+                        viewModel.resetNetworkErrorState()
                     }
 
                     R.string.error_api_network -> {
                         delay(300)
                         findNavController().navigateUp()
                         binding.root.showTextMessage(R.string.error_api_network)
+                        viewModel.resetNetworkErrorState()
                     }
                 }
             }
@@ -142,7 +145,7 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
     }
 
     private fun registerForImage() =
-        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { imageUriList ->
+        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(10)) { imageUriList ->
             val imageList = mutableListOf<ImageContent>()
             for (uri in imageUriList) {
                 val fileName = getFileName(uri)
@@ -161,7 +164,7 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
         }
 
     private fun getImageContents() {
-        getImageContents.launch("image/*")
+        getImageContents.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     private fun getDocumentContents() {
