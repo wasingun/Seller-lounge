@@ -19,6 +19,10 @@ class HomePostAdapter(private val postClickListener: PostClickListener) :
         holder.bind(getItem(position), postClickListener)
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     class HomePostViewHolder(private val binding: ItemHomePostBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
