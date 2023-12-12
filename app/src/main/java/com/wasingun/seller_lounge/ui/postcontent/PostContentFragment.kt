@@ -46,27 +46,16 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
 
     private fun setErrorMessage() {
         viewLifecycleOwner.lifecycleScope.launch {
+            val announceMessageList = listOf(R.string.announce_image_attachment_limit,
+                R.string.announce_document_attachment_limit,
+                R.string.announce_input_title,
+                R.string.announce_blank_category,
+                R.string.announce_blank_body,
+                R.string.announce_duplicate_file)
             viewModel.isInputError.collect { resourceId ->
-                when (resourceId) {
-                    R.string.announce_image_attachment_limit -> {
-                        binding.btnAttachmentPhoto.showTextMessage(R.string.announce_image_attachment_limit)
-                    }
-
-                    R.string.announce_document_attachment_limit -> {
-                        binding.btnAttachmentDocument.showTextMessage(R.string.announce_document_attachment_limit)
-                    }
-
-                    R.string.announce_input_title -> {
-                        binding.btnComplete.showTextMessage(R.string.announce_input_title)
-                    }
-
-                    R.string.announce_blank_category -> {
-                        binding.btnComplete.showTextMessage(R.string.announce_blank_category)
-                    }
-
-                    R.string.announce_blank_body -> {
-                        binding.btnComplete.showTextMessage(R.string.announce_blank_body)
-                    }
+                if (announceMessageList.contains(resourceId)) {
+                    binding.root.showTextMessage(resourceId)
+                    viewModel.resetInputError()
                 }
             }
         }

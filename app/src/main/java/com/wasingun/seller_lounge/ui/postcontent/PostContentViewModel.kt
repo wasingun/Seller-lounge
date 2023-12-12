@@ -122,6 +122,8 @@ class PostContentViewModel @Inject constructor(
         val newList = mutableListOf<DocumentContent>()
         if (currentList.size >= 2) {
             _isInputError.value = R.string.announce_document_attachment_limit
+        } else if(currentList.contains(document)) {
+            _isInputError.value = R.string.announce_duplicate_file
         } else {
             newList.addAll(currentList)
             newList.add(document)
@@ -135,5 +137,9 @@ class PostContentViewModel @Inject constructor(
 
     fun resetNetworkErrorState() {
         _isNetworkError.value = 0
+    }
+
+    fun resetInputError() {
+        _isInputError.value = 0
     }
 }
