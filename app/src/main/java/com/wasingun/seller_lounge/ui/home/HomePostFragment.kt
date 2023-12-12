@@ -44,6 +44,13 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         autoSearchTitleKeyword(category)
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewLifecycleOwner.lifecycleScope.launch {
+            sharedViewModel.resetSearchKeyword()
+        }
+    }
+
     private fun getPostList(category: ProductCategory?) {
         val networkConnect = NetworkConnection(requireContext())
         networkConnect.observe(viewLifecycleOwner) { isConnected ->

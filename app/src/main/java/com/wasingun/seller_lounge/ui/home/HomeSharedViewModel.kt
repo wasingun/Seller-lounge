@@ -40,4 +40,8 @@ class HomeSharedViewModel @Inject constructor(
     }
 
     fun getCurrentUser() = userRepository.getCurrentUser()
+
+    fun resetSearchKeyword() {
+        searchKeyword.value = ""
+    }
 }
