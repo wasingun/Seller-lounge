@@ -1,6 +1,8 @@
 package com.wasingun.seller_lounge.ui.postdetail
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseUser
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.localpost.RecentViewedPostInfo
 import com.wasingun.seller_lounge.data.model.post.PostInfo
@@ -12,13 +14,23 @@ import com.wasingun.seller_lounge.network.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(private val repository: PostDetailRepository) :
     ViewModel() {
-    private val _isError = MutableStateFlow(0)
-    val isError: StateFlow<Int> = _isError
+    private val _isUserInfoLoadError = MutableStateFlow(0)
+    val isUserInfoLoadError: StateFlow<Int> = _isUserInfoLoadError
+
+    private val _isNetworkRequestError = MutableStateFlow(0)
+    val isNetworkRequestError: StateFlow<Int> = _isNetworkRequestError
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _isCompleted = MutableStateFlow(false)
+    val isCompleted: StateFlow<Boolean> = _isCompleted
 
     private val _writerInfo = MutableStateFlow<UserInfo>(UserInfo("", "", "", ""))
     val writerInfo: StateFlow<UserInfo> = _writerInfo
@@ -28,11 +40,11 @@ class PostDetailViewModel @Inject constructor(private val repository: PostDetail
         result.onSuccess {userInfo ->
             _writerInfo.value = userInfo
         }.onError { _, _ ->
-            _isError.value = R.string.error_writer_info_load
-            _isError.value = 0
+            _isUserInfoLoadError.value = R.string.error_writer_info_load
+            _isUserInfoLoadError.value = 0
         }.onException {
-            _isError.value = R.string.offline_mode
-            _isError.value = 0
+            _isUserInfoLoadError.value = R.string.offline_mode
+            _isUserInfoLoadError.value = 0
         }
     }
 
@@ -43,5 +55,26 @@ class PostDetailViewModel @Inject constructor(private val repository: PostDetail
         if (findLocalPost == null) {
             repository.saveLocalPost(localPostInfo)
         }
+    }
+
+    fun getUserInfo(): FirebaseUser? {
+        return repository.getUserInfo()
+    }
+
+    fun deletePostContent(postId: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            val result = repository.deletePostContent(postId)
+            result.onSuccess {
+                _isCompleted.value = true
+            }.onError { code, message ->
+                _isNetworkRequestError.value = R.string.error_api_http_response
+            }.onException {
+                _isNetworkRequestError.value = R.string.error_api_network
+            }
+        }
+    }
+    fun resetNetworkRequestErrorState() {
+        _isNetworkRequestError.value = 0
     }
 }

@@ -17,6 +17,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.storage.FirebaseStorage
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.post.PostInfo
@@ -28,6 +29,7 @@ import com.wasingun.seller_lounge.ui.BaseFragment
 import com.wasingun.seller_lounge.util.Constants
 import com.wasingun.seller_lounge.util.convertDisplayedDate
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -42,17 +44,71 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         super.onViewCreated(view, savedInstanceState)
         val postInfo = args.post
         documentAdapter = PostDetailAttachedDocumentAdapter(AttachedFileClickListener { fileName ->
-            setAlertDialog(postInfo, fileName)
+            setDownloadAlertDialog(postInfo, fileName)
         })
+        val userInfo = viewModel.getUserInfo()
         getWriterInfo()
-        setLayout(postInfo)
+        setLayout(postInfo, userInfo)
         setWriterInfo()
         saveLocalPost(postInfo)
         setErrorMessage()
         submitDocumentFileName(postInfo)
+        updateButtonVisibility(userInfo)
+        collectLoadingState()
+        collectCompletedState()
+        collectNetworkRequestErrorState()
     }
 
-    private fun setAlertDialog(
+    private fun collectNetworkRequestErrorState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isNetworkRequestError.collect { resourceId ->
+                val announceMessageList = listOf(
+                    R.string.error_api_network,
+                    R.string.error_api_http_response
+                )
+                if (announceMessageList.contains(resourceId)) {
+                    delay(300)
+                    findNavController().navigateUp()
+                    binding.root.showTextMessage(resourceId)
+                    viewModel.resetNetworkRequestErrorState()
+                }
+            }
+        }
+    }
+
+    private fun collectCompletedState() {
+        lifecycleScope.launch {
+            viewModel.isCompleted.collect {
+                if (it) {
+                    delay(300)
+                    val action = PostDetailFragmentDirections.actionDestPostDetailToDestHome()
+                    findNavController().navigateUp()
+                    findNavController().navigate(action)
+                }
+            }
+        }
+    }
+
+    private fun collectLoadingState() {
+        lifecycleScope.launch {
+            viewModel.isLoading.collect {
+                if (it) {
+                    val action =
+                        PostDetailFragmentDirections.actionDestPostDetailToDestLoadingDialog()
+                    findNavController().navigate(action)
+                }
+            }
+        }
+    }
+
+    private fun updateButtonVisibility(userInfo: FirebaseUser?) {
+        if (userInfo?.uid == args.post.userId) {
+            binding.tvDelete.visibility = View.VISIBLE
+            binding.tvEdit.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setDownloadAlertDialog(
         postInfo: PostInfo,
         fileName: String?
     ) {
@@ -132,7 +188,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
 
     private fun setErrorMessage() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isError.collect { errorMessage ->
+            viewModel.isUserInfoLoadError.collect { errorMessage ->
                 if (errorMessage != 0) {
                     binding.root.showTextMessage(errorMessage)
                 }
@@ -161,15 +217,18 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         }
     }
 
-    private fun setLayout(postInfo: PostInfo) {
+    private fun setLayout(postInfo: PostInfo, userInfo: FirebaseUser?) {
         with(binding) {
             tvTitle.text = postInfo.title
             tvCategory.text = postInfo.category.categoryName
             tvBody.text = postInfo.body
             tvTime.convertDisplayedDate(postInfo.createTime)
             vpImageList.adapter = postImageAdapter
-            btnArrow.setOnClickListener {
+            mtbPostDetail.setNavigationOnClickListener {
                 findNavController().navigateUp()
+            }
+            tvDelete.setOnClickListener {
+                setDeleteAlertDialog(userInfo)
             }
         }
         if (postInfo.imageList.isNullOrEmpty()) {
@@ -183,13 +242,26 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         }.attach()
     }
 
+    private fun setDeleteAlertDialog(userInfo: FirebaseUser?) {
+        if (userInfo?.uid == args.post.userId) {
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.delete_post)
+                .setMessage(R.string.announce_delete_post)
+                .setPositiveButton(
+                    R.string.yes
+                ) { dialog, which -> viewModel.deletePostContent(args.post.postId) }
+                .setNegativeButton(R.string.no) { _, _ -> }
+                .show()
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode) {
+        when (requestCode) {
             Constants.REQUEST_PERMISSION_CODE -> {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     binding.root.showTextMessage(R.string.permission_allow)

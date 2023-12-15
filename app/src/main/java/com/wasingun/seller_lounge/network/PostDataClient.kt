@@ -3,6 +3,7 @@ package com.wasingun.seller_lounge.network
 import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -25,4 +26,9 @@ interface PostDataClient {
 
     @GET("postInfo.json")
     suspend fun getPostList(): ApiResponse<Map<String, PostInfo>>
+
+    @DELETE("postInfo/{postId}.json")
+    suspend fun deletePostContent(
+        @Path("postId") postId: String,
+    ): ApiResponse<Unit>
 }
