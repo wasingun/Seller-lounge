@@ -31,4 +31,15 @@ interface PostDataClient {
     suspend fun deletePostContent(
         @Path("postId") postId: String,
     ): ApiResponse<Unit>
+
+    @PUT("postInfo/{postId}.json")
+    suspend fun updatePostContent(
+        @Path("postId") postId: String,
+        @Body postInfo: PostInfo
+    ): ApiResponse<Unit>
+
+    @GET("postInfo/{postId}.json")
+    suspend fun getPostContent(
+        @Path("postId") postId: String,
+    ): ApiResponse<PostInfo>
 }

@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         R.id.dest_post_content,
         R.id.dest_post_detail,
         R.id.dest_recently_viewed_post,
+        R.id.dest_edit_post,
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

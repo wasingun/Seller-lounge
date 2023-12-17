@@ -57,6 +57,10 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         collectLoadingState()
         collectCompletedState()
         collectNetworkRequestErrorState()
+        binding.tvEdit.setOnClickListener {
+            val action = PostDetailFragmentDirections.actionDestPostDetailToDestEditPost(postInfo)
+            findNavController().navigate(action)
+        }
     }
 
     private fun collectNetworkRequestErrorState() {

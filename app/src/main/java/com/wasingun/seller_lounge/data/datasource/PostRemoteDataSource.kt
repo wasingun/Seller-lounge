@@ -136,6 +136,14 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
         return postDataClient.deletePostContent(postId)
     }
 
+    override suspend fun updatePostContent(postId: String, postInfo: PostInfo): ApiResponse<Unit> {
+        return postDataClient.updatePostContent(postId, postInfo)
+    }
+
+    override suspend fun getPostInfo(postId: String): ApiResponse<PostInfo> {
+        return postDataClient.getPostContent(postId)
+    }
+
     private suspend fun getDownloadUrl(location: String): String {
         val firebaseStorage = FirebaseStorage.getInstance()
         return firebaseStorage.getReference(location)
