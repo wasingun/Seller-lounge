@@ -7,7 +7,9 @@ interface RecentViewedPostDataSource {
 
     suspend fun saveRecentViewedPost(localPostInfo: RecentViewedPostInfo)
 
-    suspend fun findRecentViewedPost(postInfo: PostInfo): RecentViewedPostInfo?
+    suspend fun findRecentViewedPost(postId: String): RecentViewedPostInfo?
 
     suspend fun getRecentViewedPostList(): List<PostInfo>
+
+    suspend fun deleteRecentViewedPostList(localPostInfo: RecentViewedPostInfo)
 }

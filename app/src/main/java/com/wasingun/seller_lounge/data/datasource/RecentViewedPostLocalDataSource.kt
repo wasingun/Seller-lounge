@@ -10,8 +10,8 @@ class RecentViewedPostLocalDataSource @Inject constructor(private val dao: Recen
         dao.insertPostInfo(localPostInfo)
     }
 
-    override suspend fun findRecentViewedPost(postInfo: PostInfo): RecentViewedPostInfo? {
-        return dao.findPostInfo(postInfo)
+    override suspend fun findRecentViewedPost(postId: String): RecentViewedPostInfo? {
+        return dao.findPostInfo(postId)
     }
 
     override suspend fun getRecentViewedPostList(): List<PostInfo> {
@@ -25,5 +25,9 @@ class RecentViewedPostLocalDataSource @Inject constructor(private val dao: Recen
         return dao.getPostInfo().map { localPostInfo ->
             localPostInfo.postInfo
         }
+    }
+
+    override suspend fun deleteRecentViewedPostList(localPostInfo: RecentViewedPostInfo) {
+        dao.deletePostInfo(localPostInfo)
     }
 }
