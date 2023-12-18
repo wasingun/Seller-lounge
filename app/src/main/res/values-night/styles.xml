@@ -2,14 +2,15 @@
 <resources>
 
     <style name="TextHeadLine" parent="TextAppearance.Material3.HeadlineSmall">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="BottomNavigationStyle" parent="Widget.Design.BottomNavigationView">
-        <item name="itemTextColor">@color/deep_grey</item>
-        <item name="itemIconTint">@color/deep_grey</item>
+        <item name="backgroundTint">@color/black</item>
+        <item name="itemTextColor">@color/light_grey</item>
+        <item name="itemIconTint">@color/light_grey</item>
     </style>
 
     <style name="ButtonStyle" parent="TextAppearance.AppCompat.Button">
@@ -57,7 +58,7 @@
 
     <style name="TextBody14" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="TextTitle16" parent="TextAppearance.Material3.TitleMedium">
@@ -78,7 +79,7 @@
     </style>
 
     <style name="TabLayoutStyle" parent="Widget.Material3.TabLayout">
-        <item name="tabTextColor">@color/black</item>
+        <item name="tabTextColor">@color/white</item>
         <item name="tabRippleColor">@color/light_grey</item>
         <item name="indicatorColor">@color/black</item>
     </style>

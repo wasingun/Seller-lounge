@@ -33,6 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             app:tabGravity="center"
+            app:tabIndicatorColor="@color/sky_blue"
             app:tabIndicatorHeight="1dp"
             app:tabMode="scrollable"
             app:tabTextAppearance="@style/TabLayoutText" />

@@ -3,6 +3,7 @@ package com.wasingun.seller_lounge.ui.trendcomparison
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.mikephil.charting.charts.LineChart
@@ -26,7 +27,7 @@ class TrendComparisonResultFragment : BaseFragment<FragmentTrendComparisonResult
         val lineChart = binding.chart
         val lineData = LineData()
         val keywordResult = args.keywordResponse.results
-        val dateList = keywordResult[0].data.map { removeYear(it.period)}
+        val dateList = keywordResult[0].data.map { removeYear(it.period) }
         moveToBack()
         setAxis(lineChart, dateList)
         setChartData(keywordResult, lineData)
@@ -47,6 +48,7 @@ class TrendComparisonResultFragment : BaseFragment<FragmentTrendComparisonResult
             data = lineData
             setVisibleXRangeMaximum(7f)
             description.isEnabled = false
+            legend.textColor = ContextCompat.getColor(requireContext(), R.color.background_contrast)
         }
     }
 
@@ -66,6 +68,9 @@ class TrendComparisonResultFragment : BaseFragment<FragmentTrendComparisonResult
 
             val dataSet = LineDataSet(entries, title)
             dataSet.color = colorList[i]
+            dataSet.valueTextColor =
+                ContextCompat.getColor(requireContext(), R.color.background_contrast)
+            dataSet.valueTextSize = 10f
             lineData.addDataSet(dataSet)
         }
     }
@@ -80,6 +85,7 @@ class TrendComparisonResultFragment : BaseFragment<FragmentTrendComparisonResult
         xAxis.labelCount = dateList.size
         xAxis.granularity = 1f
         xAxis.axisLineColor = Color.BLACK
+        xAxis.textColor = ContextCompat.getColor(requireContext(), R.color.background_contrast)
 
         val yAxis = lineChart.axisLeft
         yAxis.axisMinimum = 0f
@@ -87,6 +93,7 @@ class TrendComparisonResultFragment : BaseFragment<FragmentTrendComparisonResult
         yAxis.axisLineWidth = 2f
         yAxis.axisLineColor = Color.BLACK
         yAxis.labelCount = 10
+        yAxis.textColor = ContextCompat.getColor(requireContext(), R.color.background_contrast)
         lineChart.axisRight.isEnabled = false
     }
 

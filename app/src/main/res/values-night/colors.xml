@@ -7,6 +7,6 @@
     <color name="grey">#929292</color>
     <color name="clear">#00FFFFFF</color>
     <color name="light_grey">#EDEDED</color>
-    <color name="dropbox_stroke_color">#5C5C5C</color>
-    <color name="background_contrast">#FF000000</color>
+    <color name="dropbox_stroke_color">#EDEDED</color>
+    <color name="background_contrast">#FFFFFFFF</color>
 </resources>
