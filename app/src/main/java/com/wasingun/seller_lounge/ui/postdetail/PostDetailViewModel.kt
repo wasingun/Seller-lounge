@@ -49,10 +49,14 @@ class PostDetailViewModel @Inject constructor(private val repository: PostDetail
     }
 
     suspend fun saveLocalPost(postInfo: PostInfo) {
-        val findLocalPost = repository.findLocalPost(postInfo)
+        val findLocalPost = repository.findLocalPost(postInfo.postId)
+        val findLocalPostId = findLocalPost?.postId ?: ""
         val savedTime = System.currentTimeMillis()
-        val localPostInfo = RecentViewedPostInfo(postInfo = postInfo, savedTime = savedTime)
-        if (findLocalPost == null) {
+        val localPostInfo = RecentViewedPostInfo(postId = postInfo.postId, postInfo = postInfo, savedTime = savedTime)
+        if (findLocalPost != null && findLocalPostId == postInfo.postId) {
+            repository.deleteRecentViewedPost(findLocalPost)
+            repository.saveLocalPost(localPostInfo)
+        } else if (findLocalPost == null) {
             repository.saveLocalPost(localPostInfo)
         }
     }
@@ -64,6 +68,7 @@ class PostDetailViewModel @Inject constructor(private val repository: PostDetail
     fun deletePostContent(postId: String) {
         viewModelScope.launch {
             _isLoading.value = true
+            val findLocalPost = repository.findLocalPost(postId)
             val result = repository.deletePostContent(postId)
             result.onSuccess {
                 _isCompleted.value = true
@@ -71,6 +76,9 @@ class PostDetailViewModel @Inject constructor(private val repository: PostDetail
                 _isNetworkRequestError.value = R.string.error_api_http_response
             }.onException {
                 _isNetworkRequestError.value = R.string.error_api_network
+            }
+            if (findLocalPost != null) {
+                repository.deleteRecentViewedPost(findLocalPost)
             }
         }
     }

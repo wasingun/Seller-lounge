@@ -30,33 +30,33 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>() {
         val postId = postInfo.postId
         setWrittenPost(postInfo)
         setDropdownMenu()
-        binding.btnComplete.setOnClickListener {
-            val editedCategoryName = binding.actvCategoryList.text.toString()
-            val editedCategory = ProductCategory.values().firstOrNull() {
-                editedCategoryName == it.categoryName
-            } ?: ProductCategory.ALL
-            val editedTitle = binding.etTitle.text.toString()
-            val editedBody = binding.etBody.text.toString()
-            viewModel.updatePostContent(postId, editedCategory, editedTitle, editedBody)
-        }
-        lifecycleScope.launch {
-            viewModel.isLoading.collect {
-                if (it) {
-                    val action = EditPostFragmentDirections.actionDestEditPostToDestLoadingDialog()
-                    findNavController().navigate(action)
+        setCompleteButtonAction(postId)
+        collectLoadingState()
+        collectCompleteState()
+        collectNetworkErrorState()
+        setInputErrorState()
+    }
+
+    private fun setInputErrorState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val announceMessageList = listOf(
+                R.string.announce_image_attachment_limit,
+                R.string.announce_document_attachment_limit,
+                R.string.announce_input_title,
+                R.string.announce_blank_category,
+                R.string.announce_blank_body,
+                R.string.announce_duplicate_file
+            )
+            viewModel.isInputError.collect { resourceId ->
+                if (announceMessageList.contains(resourceId)) {
+                    binding.root.showTextMessage(resourceId)
+                    viewModel.resetInputErrorState()
                 }
             }
         }
-        lifecycleScope.launch {
-            viewModel.isCompleted.collect {
-                if (it) {
-                    findNavController().navigateUp()
-                    delay(300)
-                    val action = EditPostFragmentDirections.actionDestEditPostToDestHome()
-                    findNavController().navigate(action)
-                }
-            }
-        }
+    }
+
+    private fun collectNetworkErrorState() {
         viewLifecycleOwner.lifecycleScope.launch {
             val announceMessageList = listOf(
                 R.string.error_api_http_response,
@@ -71,19 +71,41 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>() {
                 }
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            val announceMessageList = listOf(R.string.announce_image_attachment_limit,
-                R.string.announce_document_attachment_limit,
-                R.string.announce_input_title,
-                R.string.announce_blank_category,
-                R.string.announce_blank_body,
-                R.string.announce_duplicate_file)
-            viewModel.isInputError.collect { resourceId ->
-                if (announceMessageList.contains(resourceId)) {
-                    binding.root.showTextMessage(resourceId)
-                    viewModel.resetInputErrorState()
+    }
+
+    private fun collectCompleteState() {
+        lifecycleScope.launch {
+            viewModel.isCompleted.collect { completeState ->
+                if (completeState) {
+                    findNavController().navigateUp()
+                    delay(300)
+                    val action = EditPostFragmentDirections.actionDestEditPostToDestHome()
+                    findNavController().navigate(action)
                 }
             }
+        }
+    }
+
+    private fun collectLoadingState() {
+        lifecycleScope.launch {
+            viewModel.isLoading.collect { loadingState ->
+                if (loadingState) {
+                    val action = EditPostFragmentDirections.actionDestEditPostToDestLoadingDialog()
+                    findNavController().navigate(action)
+                }
+            }
+        }
+    }
+
+    private fun setCompleteButtonAction(postId: String) {
+        binding.btnComplete.setOnClickListener {
+            val editedCategoryName = binding.actvCategoryList.text.toString()
+            val editedCategory = ProductCategory.values().firstOrNull() {
+                editedCategoryName == it.categoryName
+            } ?: ProductCategory.ALL
+            val editedTitle = binding.etTitle.text.toString()
+            val editedBody = binding.etBody.text.toString()
+            viewModel.updatePostContent(postId, editedCategory, editedTitle, editedBody)
         }
     }
 

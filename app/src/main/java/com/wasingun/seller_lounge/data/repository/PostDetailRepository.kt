@@ -5,7 +5,6 @@ import com.wasingun.seller_lounge.data.datasource.AuthFirebaseDataSource
 import com.wasingun.seller_lounge.data.datasource.PostDataSource
 import com.wasingun.seller_lounge.data.datasource.RecentViewedPostDataSource
 import com.wasingun.seller_lounge.data.model.localpost.RecentViewedPostInfo
-import com.wasingun.seller_lounge.data.model.post.PostInfo
 import com.wasingun.seller_lounge.data.model.post.UserInfo
 import com.wasingun.seller_lounge.network.ApiResponse
 import javax.inject.Inject
@@ -19,8 +18,8 @@ class PostDetailRepository @Inject constructor(
         return postDataSource.getWriterInfo(userId)
     }
 
-    suspend fun findLocalPost(postInfo: PostInfo): RecentViewedPostInfo? {
-        return recentPostDataSource.findRecentViewedPost(postInfo)
+    suspend fun findLocalPost(postId: String): RecentViewedPostInfo? {
+        return recentPostDataSource.findRecentViewedPost(postId)
     }
 
     suspend fun saveLocalPost(localPostInfo: RecentViewedPostInfo) {
@@ -33,5 +32,9 @@ class PostDetailRepository @Inject constructor(
 
     fun getUserInfo(): FirebaseUser? {
         return authDataSource.getCurrentUser()
+    }
+
+    suspend fun deleteRecentViewedPost(recentViewedPostInfo: RecentViewedPostInfo) {
+        return recentPostDataSource.deleteRecentViewedPostList(recentViewedPostInfo)
     }
 }

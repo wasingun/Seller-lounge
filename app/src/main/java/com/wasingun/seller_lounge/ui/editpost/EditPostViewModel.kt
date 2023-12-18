@@ -1,11 +1,10 @@
 package com.wasingun.seller_lounge.ui.editpost
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.ProductCategory
-import com.wasingun.seller_lounge.data.model.post.PostInfo
+import com.wasingun.seller_lounge.data.model.localpost.RecentViewedPostInfo
 import com.wasingun.seller_lounge.data.repository.EditPostRepository
 import com.wasingun.seller_lounge.network.onError
 import com.wasingun.seller_lounge.network.onException
@@ -20,10 +19,6 @@ import javax.inject.Inject
 class EditPostViewModel @Inject constructor(
     private val repository: EditPostRepository
 ) : ViewModel() {
-    val postTitle = MutableStateFlow<String?>(null)
-    val postBody = MutableStateFlow<String?>(null)
-    val postCategory = MutableStateFlow<String?>(null)
-
     private val _isCompleted = MutableStateFlow<Boolean>(false)
     val isCompleted: StateFlow<Boolean> = _isCompleted
     private val _isInputError = MutableStateFlow(0)
@@ -51,7 +46,16 @@ class EditPostViewModel @Inject constructor(
                 )
                 val result = repository.updatePostContent(postId, editedPostInfo)
                 result.onSuccess {
-
+                    val editedRecentViewedPostInfo = RecentViewedPostInfo(
+                        postId = editedPostInfo.postId,
+                        postInfo = editedPostInfo,
+                        savedTime = System.currentTimeMillis()
+                    )
+                    val findRecentViewedPostInfo = repository.findRecentViewedPost(postId)
+                    if (findRecentViewedPostInfo != null) {
+                        repository.deleteRecentViewedPost(findRecentViewedPostInfo)
+                        repository.saveRecentViewedPost(editedRecentViewedPostInfo)
+                    }
                     _isLoading.value = false
                     _isCompleted.value = true
                 }
