@@ -38,7 +38,6 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
             arguments?.getSerializableCompat(Constants.KEY_CATEGORY, ProductCategory::class.java)
         binding.rvPostList.adapter = adapter
         getPostList(category)
-        observeRecentViewedPost(category)
         observeError()
         showLoadingState()
         autoSearchTitleKeyword(category)
@@ -55,11 +54,13 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         val networkConnect = NetworkConnection(requireContext())
         networkConnect.observe(viewLifecycleOwner) { isConnected ->
             if (isConnected) {
+                sharedViewModel.resetNetworkErrorMessage()
                 viewModel.getRemotePostList()
                 submitRemotePostList(category)
             } else {
-                binding.root.showTextMessage(R.string.offline_mode)
+                sharedViewModel.setNetworkErrorMessage(R.string.offline_mode)
                 viewModel.getRecentViewedPostList()
+                observeRecentViewedPost(category)
             }
         }
     }
@@ -122,7 +123,7 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
                 }
                 if (keyword.isNotBlank()) {
                     adapter.submitList(currentList.filter { it.title.contains(keyword) })
-                } else {
+                } else  {
                     adapter.submitList(currentList)
                 }
             }
