@@ -41,12 +41,14 @@
             android:id="@+id/et_search"
             android:layout_width="360dp"
             android:layout_height="40dp"
+            android:layout_marginStart="10dp"
             android:background="@color/clear"
-            android:maxLines="1"
+            android:hint="@string/auto_search_title"
+            android:imeOptions="actionDone"
+            android:lines="1"
+            android:singleLine="true"
             android:text="@={viewModel.searchKeyword}"
             android:textSize="14sp"
-            android:layout_marginStart="10dp"
-            android:hint="@string/auto_search_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tl_tab_menu" />
 

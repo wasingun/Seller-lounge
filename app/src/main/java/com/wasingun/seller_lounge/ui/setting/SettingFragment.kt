@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.wasingun.seller_lounge.BuildConfig
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.databinding.FragmentSettingBinding
 import com.wasingun.seller_lounge.ui.BaseFragment
@@ -47,7 +50,15 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
             .setPositiveButton(
                 R.string.yes
             ) { dialog, which ->
-                FirebaseAuth.getInstance().signOut()
+                val firebaseAuth = FirebaseAuth.getInstance()
+                val googleSignInOption =
+                    GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(BuildConfig.GOOGLE_CLIENT_ID)
+                        .requestEmail()
+                        .build()
+                val googleSignInClient = GoogleSignIn.getClient(requireContext(),googleSignInOption)
+                firebaseAuth.signOut()
+                googleSignInClient.signOut()
                 findNavController().navigate(action) }
             .setNegativeButton(R.string.no) { _, _ -> }
             .show()

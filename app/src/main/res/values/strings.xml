@@ -52,6 +52,7 @@
     <string name="permission_allow">저장소 접근권한 허용 완료. 다운로드를 다시 진행해주세요.</string>
     <string name="permission_deny">저장소 접근권한이 허용되지 않았습니다. 다운로드를 실행할 수 없습니다.</string>
     <string name="announce_input_text">검색할 키워드를 입력해주세요.</string>
+    <string name="announce_duplicate_file">중복된 첨부파일 입니다.</string>
 
     <string-array name="sort_select">
         <item>정확도순</item>

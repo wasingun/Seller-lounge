@@ -13,8 +13,18 @@ plugins {
 
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
+val keystoreProperties = Properties()
+keystoreProperties.load(project.rootProject.file("keystore.properties").inputStream())
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file(keystoreProperties["storeFile"].toString())
+            storePassword = keystoreProperties["storePassword"].toString()
+            keyAlias = keystoreProperties["keyAlias"].toString()
+            keyPassword = keystoreProperties["keyPassword"].toString()
+        }
+    }
     namespace = "com.wasingun.seller_lounge"
     compileSdk = 34
 
@@ -23,7 +33,8 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.2"
+        setProperty("archivesBaseName", "${applicationId}-v${versionName}")
 
         buildConfigField("String", "GOOGLE_CLIENT_ID", properties["google_client_id"].toString())
         buildConfigField("String", "NAVER_CLIENT_ID", properties["naver_client_id"].toString())
@@ -42,12 +53,19 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            versionNameSuffix = "-release"
+        }
+        getByName("debug") {
+            isDebuggable = true
+            versionNameSuffix = "-debug"
         }
     }
     compileOptions {
