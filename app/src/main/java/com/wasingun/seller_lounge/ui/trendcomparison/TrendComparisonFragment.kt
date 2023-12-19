@@ -71,7 +71,7 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
             viewModel.keywordResponseResult.collect {
                 if (it?.endDate != null) {
                     val action =
-                        TrendComparisonFragmentDirections.actionDestTrendComparisonToTrendComparisonResultFragment(
+                        TrendComparisonFragmentDirections.actionDestTrendComparisonToDestTrendComparisonResult(
                             it
                         )
                     viewModel.resetKeywordResponse()

@@ -105,7 +105,7 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>() {
             } ?: ProductCategory.ALL
             val editedTitle = binding.etTitle.text.toString()
             val editedBody = binding.etBody.text.toString()
-            viewModel.updatePostContent(postId, editedCategory, editedTitle, editedBody)
+            viewModel.updatePost(postId, editedCategory, editedTitle, editedBody)
         }
     }
 

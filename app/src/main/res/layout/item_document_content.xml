@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.wasingun.seller_lounge.ui.postcontent.DocumentDeleteListener" />
+            type="com.wasingun.seller_lounge.ui.postupload.DocumentDeleteListener" />
 
         <variable
             name="documentContent"

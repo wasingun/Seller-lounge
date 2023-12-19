@@ -19,7 +19,7 @@ interface PostDataClient {
     suspend fun getUserInfo(@Path("userId") userId: String): ApiResponse<UserInfo>
 
     @PUT("postInfo/{postId}.json")
-    suspend fun uploadPostContent(
+    suspend fun uploadPost(
         @Path("postId") postId: String,
         @Body postInfo: PostInfo
     ): ApiResponse<Unit>
@@ -28,18 +28,18 @@ interface PostDataClient {
     suspend fun getPostList(): ApiResponse<Map<String, PostInfo>>
 
     @DELETE("postInfo/{postId}.json")
-    suspend fun deletePostContent(
+    suspend fun deletePost(
         @Path("postId") postId: String,
     ): ApiResponse<Unit>
 
     @PUT("postInfo/{postId}.json")
-    suspend fun updatePostContent(
+    suspend fun updatePost(
         @Path("postId") postId: String,
         @Body postInfo: PostInfo
     ): ApiResponse<Unit>
 
     @GET("postInfo/{postId}.json")
-    suspend fun getPostContent(
+    suspend fun getPost(
         @Path("postId") postId: String,
     ): ApiResponse<PostInfo>
 }

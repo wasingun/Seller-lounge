@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class PostContentRepository @Inject constructor(
+class PostUploadRepository @Inject constructor(
     private val postDataSource: PostDataSource,
     private val authDataSource: AuthDataSource
 ) {

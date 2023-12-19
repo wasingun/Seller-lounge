@@ -30,9 +30,9 @@ interface PostDataSource {
 
     suspend fun getWriterInfo(userId: String):ApiResponse<UserInfo>
 
-    suspend fun deletePostContent(postId: String): ApiResponse<Unit>
+    suspend fun deletePost(postId: String): ApiResponse<Unit>
 
-    suspend fun updatePostContent(postId: String, postInfo: PostInfo): ApiResponse<Unit>
+    suspend fun updatePost(postId: String, postInfo: PostInfo): ApiResponse<Unit>
 
     suspend fun getPostInfo(postId: String): ApiResponse<PostInfo>
 }

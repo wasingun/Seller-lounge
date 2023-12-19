@@ -29,7 +29,7 @@ class EditPostViewModel @Inject constructor(
     val isLoading: StateFlow<Boolean> = _isLoading
 
 
-    fun updatePostContent(
+    fun updatePost(
         postId: String,
         editedCategory: ProductCategory,
         editedTitle: String,
@@ -44,7 +44,7 @@ class EditPostViewModel @Inject constructor(
                     body = editedBody,
                     category = editedCategory
                 )
-                val result = repository.updatePostContent(postId, editedPostInfo)
+                val result = repository.updatePost(postId, editedPostInfo)
                 result.onSuccess {
                     val editedRecentViewedPostInfo = RecentViewedPostInfo(
                         postId = editedPostInfo.postId,

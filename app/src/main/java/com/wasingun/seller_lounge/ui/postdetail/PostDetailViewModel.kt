@@ -65,11 +65,11 @@ class PostDetailViewModel @Inject constructor(private val repository: PostDetail
         return repository.getUserInfo()
     }
 
-    fun deletePostContent(postId: String) {
+    fun deletePost(postId: String) {
         viewModelScope.launch {
             _isLoading.value = true
             val findLocalPost = repository.findLocalPost(postId)
-            val result = repository.deletePostContent(postId)
+            val result = repository.deletePost(postId)
             result.onSuccess {
                 _isCompleted.value = true
             }.onError { code, message ->

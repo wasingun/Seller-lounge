@@ -26,8 +26,8 @@ class PostDetailRepository @Inject constructor(
         recentPostDataSource.saveRecentViewedPost(localPostInfo)
     }
 
-    suspend fun deletePostContent(postId: String): ApiResponse<Unit> {
-        return postDataSource.deletePostContent(postId)
+    suspend fun deletePost(postId: String): ApiResponse<Unit> {
+        return postDataSource.deletePost(postId)
     }
 
     fun getUserInfo(): FirebaseUser? {

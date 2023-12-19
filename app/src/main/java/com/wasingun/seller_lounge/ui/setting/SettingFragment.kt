@@ -25,7 +25,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.firebaseUser = viewModel.getCurrentUser()
         binding.tvRecentlyViewedPost.setOnClickListener {
-            val action = SettingFragmentDirections.actionDestSettingToRecentlyViewedPostFragment()
+            val action = SettingFragmentDirections.actionDestSettingToDestRecentlyViewedPost()
             findNavController().navigate(action)
         }
         binding.tvCustomerFeedback.setOnClickListener {

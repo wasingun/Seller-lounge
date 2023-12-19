@@ -1,4 +1,4 @@
-package com.wasingun.seller_lounge.ui.postcontent
+package com.wasingun.seller_lounge.ui.postupload
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,7 +7,7 @@ import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.ProductCategory
 import com.wasingun.seller_lounge.data.model.attachedcontent.DocumentContent
 import com.wasingun.seller_lounge.data.model.attachedcontent.ImageContent
-import com.wasingun.seller_lounge.data.repository.PostContentRepository
+import com.wasingun.seller_lounge.data.repository.PostUploadRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostContentViewModel @Inject constructor(
-    private val repository: PostContentRepository
+class PostUploadViewModel @Inject constructor(
+    private val repository: PostUploadRepository
 ) : ViewModel() {
     private val _postImageList = MutableStateFlow<List<ImageContent>?>(null)
     val postImageList: StateFlow<List<ImageContent>?> = _postImageList

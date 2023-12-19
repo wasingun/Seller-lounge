@@ -1,4 +1,4 @@
-package com.wasingun.seller_lounge.ui.postcontent
+package com.wasingun.seller_lounge.ui.postupload
 
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -16,7 +16,7 @@ import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.ProductCategory
 import com.wasingun.seller_lounge.data.model.attachedcontent.DocumentContent
 import com.wasingun.seller_lounge.data.model.attachedcontent.ImageContent
-import com.wasingun.seller_lounge.databinding.FragmentPostContentBinding
+import com.wasingun.seller_lounge.databinding.FragmentPostUploadBinding
 import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,8 +24,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
-    private val viewModel by viewModels<PostContentViewModel>()
+class PostUploadFragment : BaseFragment<FragmentPostUploadBinding>() {
+    private val viewModel by viewModels<PostUploadViewModel>()
     private val getImageContents = registerForImage()
     private val getDocumentContents = registerForDocuments()
     private val imageListAdapter = ImageContentAdapter(ImageDeleteListener { imageContent ->
@@ -104,7 +104,7 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
             viewModel.isLoading.collect {
                 if (it) {
                     val action =
-                        PostContentFragmentDirections.actionDestPostContentToLoadingDialogFragment()
+                        PostUploadFragmentDirections.actionDestPostUploadToDestLoadingDialog()
                     findNavController().navigate(action)
                 }
             }
@@ -181,6 +181,6 @@ class PostContentFragment : BaseFragment<FragmentPostContentBinding>() {
     }
 
     override fun getFragmentView(): Int {
-        return R.layout.fragment_post_content
+        return R.layout.fragment_post_upload
     }
 }

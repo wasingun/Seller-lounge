@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.wasingun.seller_lounge.ui.postcontent.ImageDeleteListener" />
+            type="com.wasingun.seller_lounge.ui.postupload.ImageDeleteListener" />
 
     </data>
 

@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private val hideOnDestinationList = listOf(
         R.id.dest_login,
         R.id.dest_trend_comparison_result,
-        R.id.dest_post_content,
+        R.id.dest_post_upload,
         R.id.dest_post_detail,
         R.id.dest_recently_viewed_post,
         R.id.dest_edit_post,

@@ -11,8 +11,8 @@ class EditPostRepository @Inject constructor(
     private val postDataSource: PostDataSource,
     private val recentViewedPostDataSource: RecentViewedPostDataSource) {
 
-    suspend fun updatePostContent(postId: String, postInfo: PostInfo): ApiResponse<Unit> {
-        return postDataSource.updatePostContent(postId, postInfo)
+    suspend fun updatePost(postId: String, postInfo: PostInfo): ApiResponse<Unit> {
+        return postDataSource.updatePost(postId, postInfo)
     }
 
     suspend fun getPostInfo(postId:String): ApiResponse<PostInfo> {

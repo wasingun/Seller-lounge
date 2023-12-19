@@ -56,7 +56,7 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
             createdTime,
             userId
         )
-        return postDataClient.uploadPostContent(postId, postInfo)
+        return postDataClient.uploadPost(postId, postInfo)
     }
 
     private suspend fun uploadAttachedFile(
@@ -132,16 +132,16 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
         return postDataClient.getUserInfo(userId)
     }
 
-    override suspend fun deletePostContent(postId: String): ApiResponse<Unit> {
-        return postDataClient.deletePostContent(postId)
+    override suspend fun deletePost(postId: String): ApiResponse<Unit> {
+        return postDataClient.deletePost(postId)
     }
 
-    override suspend fun updatePostContent(postId: String, postInfo: PostInfo): ApiResponse<Unit> {
-        return postDataClient.updatePostContent(postId, postInfo)
+    override suspend fun updatePost(postId: String, postInfo: PostInfo): ApiResponse<Unit> {
+        return postDataClient.updatePost(postId, postInfo)
     }
 
     override suspend fun getPostInfo(postId: String): ApiResponse<PostInfo> {
-        return postDataClient.getPostContent(postId)
+        return postDataClient.getPost(postId)
     }
 
     private suspend fun getDownloadUrl(location: String): String {

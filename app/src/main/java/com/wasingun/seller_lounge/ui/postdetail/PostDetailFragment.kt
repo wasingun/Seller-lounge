@@ -253,7 +253,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
                 .setMessage(R.string.announce_delete_post)
                 .setPositiveButton(
                     R.string.yes
-                ) { dialog, which -> viewModel.deletePostContent(args.post.postId) }
+                ) { dialog, which -> viewModel.deletePost(args.post.postId) }
                 .setNegativeButton(R.string.no) { _, _ -> }
                 .show()
         }
