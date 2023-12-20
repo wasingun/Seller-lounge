@@ -64,7 +64,7 @@ class CoroutineDownloadWorker(private val context: Context, private val params: 
                 .setContentTitle(title)
                 .setTicker(ticker)
                 .setContentText(contentText)
-                .setSmallIcon(R.drawable.ic_logo_black)
+                .setSmallIcon(R.drawable.ic_notification_logo)
                 .setOngoing(false)
                 .build()
 
