@@ -6,6 +6,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,13 +23,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.storage.FirebaseStorage
 import com.wasingun.seller_lounge.R
+import com.wasingun.seller_lounge.SellerLoungeApplication
 import com.wasingun.seller_lounge.data.model.post.PostInfo
+import com.wasingun.seller_lounge.data.preferencemanager.DataStore
 import com.wasingun.seller_lounge.databinding.FragmentPostDetailBinding
 import com.wasingun.seller_lounge.extensions.setCircleImage
 import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.workmanager.CoroutineDownloadWorker
 import com.wasingun.seller_lounge.ui.BaseFragment
-import com.wasingun.seller_lounge.util.Constants
+import com.wasingun.seller_lounge.constants.Constants
 import com.wasingun.seller_lounge.util.convertDisplayedDate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -39,6 +44,13 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
     private val postImageAdapter = PostImageAdapter()
     private lateinit var documentAdapter: PostDetailAttachedDocumentAdapter
     private val viewModel: PostDetailViewModel by viewModels()
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestPermissionLauncher =
+            setNotificationPermissionMessage()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -131,6 +143,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         fileName: String?
     ) {
         requestStoragePermission()
+        requestNotificationPermission()
 
         binding.root.showTextMessage(R.string.announce_download_start)
         lifecycleScope.launch {
@@ -157,11 +170,50 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
         }
     }
 
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            val permissionCheck = DataStore.permissionCheck
+            if (!permissionCheck) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                SellerLoungeApplication.preferenceManager.putBoolean(
+                    Constants.KEY_PERMISSION_CHECK,
+                    true
+                )
+            }
+        }
+    }
+
+    private fun setNotificationPermissionMessage() =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            when (it) {
+                true -> {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.download_permission_admit),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                false -> {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.download_permission_deny),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
     private fun requestStoragePermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             val permissionList = arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
             )
             if (!permissionList.all {
                     ContextCompat.checkSelfPermission(
@@ -170,6 +222,23 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
                     ) == PackageManager.PERMISSION_GRANTED
                 }) {
                 requestPermissions(permissionList, Constants.REQUEST_PERMISSION_CODE)
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            Constants.REQUEST_PERMISSION_CODE -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    binding.root.showTextMessage(R.string.permission_allow)
+                } else {
+                    binding.root.showTextMessage(R.string.permission_deny)
+                }
             }
         }
     }
@@ -256,23 +325,6 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
                 ) { dialog, which -> viewModel.deletePost(args.post.postId) }
                 .setNegativeButton(R.string.no) { _, _ -> }
                 .show()
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            Constants.REQUEST_PERMISSION_CODE -> {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    binding.root.showTextMessage(R.string.permission_allow)
-                } else {
-                    binding.root.showTextMessage(R.string.permission_deny)
-                }
-            }
         }
     }
 

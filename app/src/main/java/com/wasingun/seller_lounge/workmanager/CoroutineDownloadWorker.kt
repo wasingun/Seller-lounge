@@ -1,16 +1,23 @@
 package com.wasingun.seller_lounge.workmanager
 
+import android.Manifest
 import android.content.ContentValues
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.wasingun.seller_lounge.util.Constants
+import com.wasingun.seller_lounge.R
+import com.wasingun.seller_lounge.constants.Constants
+import com.wasingun.seller_lounge.constants.NotificationConstants
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -28,9 +35,54 @@ class CoroutineDownloadWorker(private val context: Context, private val params: 
             fileName = fileName, url = documentUrl, context = context
         )
         return if (uri != null) {
+            setNotification(
+                NotificationConstants.CHANNEL_ID_DOCUMENT_DOWNLOAD,
+                NotificationConstants.CHANNEL_ID_INITIAL_DOCUMENT_DOWNLOAD,
+                context.getString(R.string.notification_document_download_title),
+                context.getString(R.string.notification_document_download_ticker),
+                context.getString(R.string.notification_document_download_content),
+                Build.VERSION_CODES.TIRAMISU,
+                Manifest.permission.POST_NOTIFICATIONS,
+            )
             Result.success(workDataOf(Constants.KEY_FILE_URI to uri.toString()))
         } else {
             Result.failure()
+        }
+    }
+
+    private fun setNotification(
+        channelId: String,
+        notificationId: Int,
+        title: String,
+        ticker: String,
+        contentText: String,
+        permissionBuildVersion: Int,
+        permissionType: String
+    ) {
+        val notification =
+            NotificationCompat.Builder(context, channelId)
+                .setContentTitle(title)
+                .setTicker(ticker)
+                .setContentText(contentText)
+                .setSmallIcon(R.drawable.ic_logo_black)
+                .setOngoing(false)
+                .build()
+
+        if (Build.VERSION.SDK_INT >= permissionBuildVersion) {
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    permissionType
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                NotificationManagerCompat.from(context)
+                    .notify(
+                        notificationId,
+                        notification
+                    )
+            }
+        } else {
+            NotificationManagerCompat.from(context)
+                .notify(notificationId, notification)
         }
     }
 
