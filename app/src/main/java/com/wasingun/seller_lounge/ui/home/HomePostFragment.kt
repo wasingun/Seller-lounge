@@ -13,7 +13,7 @@ import com.wasingun.seller_lounge.databinding.LayoutHomePostBinding
 import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.network.NetworkConnection
 import com.wasingun.seller_lounge.ui.BaseFragment
-import com.wasingun.seller_lounge.util.Constants
+import com.wasingun.seller_lounge.constants.Constants
 import com.wasingun.seller_lounge.util.getSerializableCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.debounce

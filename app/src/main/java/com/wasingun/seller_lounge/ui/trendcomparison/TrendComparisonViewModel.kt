@@ -8,7 +8,7 @@ import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordDetail
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse
 import com.wasingun.seller_lounge.data.repository.TrendComparisonRepository
-import com.wasingun.seller_lounge.util.Constants
+import com.wasingun.seller_lounge.constants.Constants
 import com.wasingun.seller_lounge.util.latestDateFormat
 import com.wasingun.seller_lounge.util.thirtyDaysAgoDateFormat
 import dagger.hilt.android.lifecycle.HiltViewModel

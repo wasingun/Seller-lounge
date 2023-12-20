@@ -14,7 +14,7 @@ import com.wasingun.seller_lounge.BuildConfig
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.databinding.FragmentSettingBinding
 import com.wasingun.seller_lounge.ui.BaseFragment
-import com.wasingun.seller_lounge.util.Constants
+import com.wasingun.seller_lounge.constants.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
