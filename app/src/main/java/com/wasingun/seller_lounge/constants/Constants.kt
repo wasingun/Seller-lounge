@@ -1,4 +1,4 @@
-package com.wasingun.seller_lounge.util
+package com.wasingun.seller_lounge.constants
 
 object Constants {
     const val DATE = "date"
@@ -12,4 +12,6 @@ object Constants {
     const val CUSTOMER_FEEDBACK = "https://forms.gle/mQ3Ex9yWeZ2agvYf6"
     const val THROTTLE_DURATION = 1000L
     const val REQUEST_PERMISSION_CODE = 1000
+    const val KEY_SHARED_PREFERENCE = "com.wasingun.seller_lounge.PREFERENCE_KEY"
+    const val KEY_PERMISSION_CHECK = "permission_check"
 }
