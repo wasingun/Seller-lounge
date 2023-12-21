@@ -54,12 +54,16 @@ android {
 
     buildTypes {
         getByName("release") {
+            isShrinkResources = true
+            isMinifyEnabled = true
             signingConfig = signingConfigs.getByName("release")
-            isMinifyEnabled = false
             isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
+                "firebase.pro",
+                "gson.pro",
+                "retrofit2.pro"
             )
             versionNameSuffix = "-release"
         }

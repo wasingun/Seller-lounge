@@ -56,7 +56,7 @@ class ProductSearchFragment : BaseFragment<FragmentProductSearchBinding>() {
             it.sortType
         }
         val sortTypeArrayAdapter =
-            ArrayAdapter(requireContext(), R.layout.dropdown_sort, sortTypeList)
+            ArrayAdapter(requireContext(), R.layout.layout_dropdown, sortTypeList)
         binding.actvSelectedSort.setAdapter(sortTypeArrayAdapter)
 
         binding.actvSelectedSort.setDropDownBackgroundDrawable(

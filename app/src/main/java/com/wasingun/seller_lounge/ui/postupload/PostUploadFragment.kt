@@ -94,9 +94,9 @@ class PostUploadFragment : BaseFragment<FragmentPostUploadBinding>() {
         lifecycleScope.launch {
             viewModel.isCompleted.collect {
                 if (it) {
-                    delay(300)
                     findNavController().navigateUp()
-                    findNavController().navigateUp()
+                    val action = PostUploadFragmentDirections.actionDestPostUploadToDestHome()
+                    findNavController().navigate(action)
                 }
             }
         }
@@ -126,7 +126,7 @@ class PostUploadFragment : BaseFragment<FragmentPostUploadBinding>() {
     private fun setDropdownMenu() {
         val categoryList = ProductCategory.values().map { it.categoryName }.slice(1..10)
         val categoryArrayAdapter =
-            ArrayAdapter(requireContext(), R.layout.dropdown_sort, categoryList)
+            ArrayAdapter(requireContext(), R.layout.layout_dropdown, categoryList)
         binding.actvCategoryList.setAdapter(categoryArrayAdapter)
         binding.actvCategoryList.setDropDownBackgroundDrawable(
             ColorDrawable(ContextCompat.getColor(requireContext(), R.color.white))
