@@ -47,7 +47,7 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
     private fun setDropdownMenu() {
         val categoryList = ProductCategory.values().map { it.categoryName }.slice(1..10)
         val categoryArrayAdapter =
-            ArrayAdapter(requireContext(), R.layout.dropdown_sort, categoryList)
+            ArrayAdapter(requireContext(), R.layout.layout_dropdown, categoryList)
         binding.actvCategoryList.setAdapter(categoryArrayAdapter)
 
         binding.actvCategoryList.setDropDownBackgroundDrawable(
