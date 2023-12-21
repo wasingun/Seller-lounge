@@ -57,9 +57,10 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
 
     private fun setInputErrorMessage() {
         lifecycleScope.launch {
-            viewModel.snackbarText.collect { resourceId ->
+            viewModel.isInputError.collect { resourceId ->
                 if (resourceId in inputErrorMessageList) {
                     binding.btnSearch.showTextMessage(resourceId)
+                    viewModel.resetInputErrorMessage()
                 }
             }
         }
@@ -70,7 +71,7 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
             viewModel.keywordResponseResult.collect {
                 if (it?.endDate != null) {
                     val action =
-                        TrendComparisonFragmentDirections.actionDestTrendComparisonToTrendComparisonResultFragment(
+                        TrendComparisonFragmentDirections.actionDestTrendComparisonToDestTrendComparisonResult(
                             it
                         )
                     viewModel.resetKeywordResponse()
@@ -88,9 +89,10 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
 
     private fun setAPIErrorMessage() {
         lifecycleScope.launch {
-            viewModel.isError.collect { resourceId ->
+            viewModel.isNetworkError.collect { resourceId ->
                 if (resourceId in apiErrorMessage) {
                     binding.btnSearch.showTextMessage(resourceId)
+                    viewModel.resetNetworkErrorMessage()
                 }
             }
         }

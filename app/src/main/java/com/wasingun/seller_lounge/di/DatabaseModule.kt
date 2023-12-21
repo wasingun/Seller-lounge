@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.wasingun.seller_lounge.local.RecentPostDao
 import com.wasingun.seller_lounge.local.RecentPostDatabase
-import com.wasingun.seller_lounge.util.Constants
+import com.wasingun.seller_lounge.constants.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

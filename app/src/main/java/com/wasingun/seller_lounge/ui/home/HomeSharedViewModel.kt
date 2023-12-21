@@ -34,7 +34,6 @@ class HomeSharedViewModel @Inject constructor(
             )
             result.onError { code, message ->
                 _isError.value = R.string.error_user_info_update
-                _isError.value = 0
             }
         }
     }
@@ -43,5 +42,13 @@ class HomeSharedViewModel @Inject constructor(
 
     fun resetSearchKeyword() {
         searchKeyword.value = ""
+    }
+
+    fun setNetworkErrorMessage(message: Int) {
+        _isError.value = message
+    }
+
+    fun resetNetworkErrorMessage() {
+        _isError.value = 0
     }
 }

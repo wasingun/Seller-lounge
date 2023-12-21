@@ -34,8 +34,8 @@ class HomePostViewModel @Inject constructor(private val repository: PostListRepo
             onComplete = {
                 _isLoading.value = false
             },
-            onError = {
-                _isError.value = it
+            onError = {errorMessage ->
+                _isError.value = errorMessage
                 _isError.value = 0
                 _isLoading.value = false
             }

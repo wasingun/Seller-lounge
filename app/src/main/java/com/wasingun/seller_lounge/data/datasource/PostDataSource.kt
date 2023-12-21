@@ -29,4 +29,10 @@ interface PostDataSource {
     suspend fun uploadUserInfo(userId: String, userInfo: UserInfo): ApiResponse<Unit>
 
     suspend fun getWriterInfo(userId: String):ApiResponse<UserInfo>
+
+    suspend fun deletePost(postId: String): ApiResponse<Unit>
+
+    suspend fun updatePost(postId: String, postInfo: PostInfo): ApiResponse<Unit>
+
+    suspend fun getPostInfo(postId: String): ApiResponse<PostInfo>
 }

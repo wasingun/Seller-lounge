@@ -12,7 +12,7 @@ import com.wasingun.seller_lounge.network.PostDataClient
 import com.wasingun.seller_lounge.network.onError
 import com.wasingun.seller_lounge.network.onException
 import com.wasingun.seller_lounge.network.onSuccess
-import com.wasingun.seller_lounge.util.Constants
+import com.wasingun.seller_lounge.constants.Constants
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
@@ -56,7 +56,7 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
             createdTime,
             userId
         )
-        return postDataClient.uploadPostContent(postId, postInfo)
+        return postDataClient.uploadPost(postId, postInfo)
     }
 
     private suspend fun uploadAttachedFile(
@@ -130,6 +130,18 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
 
     override suspend fun getWriterInfo(userId: String): ApiResponse<UserInfo> {
         return postDataClient.getUserInfo(userId)
+    }
+
+    override suspend fun deletePost(postId: String): ApiResponse<Unit> {
+        return postDataClient.deletePost(postId)
+    }
+
+    override suspend fun updatePost(postId: String, postInfo: PostInfo): ApiResponse<Unit> {
+        return postDataClient.updatePost(postId, postInfo)
+    }
+
+    override suspend fun getPostInfo(postId: String): ApiResponse<PostInfo> {
+        return postDataClient.getPost(postId)
     }
 
     private suspend fun getDownloadUrl(location: String): String {

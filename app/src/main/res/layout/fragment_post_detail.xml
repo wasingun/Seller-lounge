@@ -16,14 +16,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/btn_arrow"
-                android:layout_width="wrap_content"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mtb_post_detail"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="14dp"
-                android:backgroundTint="@color/clear"
-                android:padding="0dp"
-                android:src="@drawable/ic_arrow" />
+                app:navigationIcon="@drawable/ic_arrow">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_delete"
+                        style="@style/TextTitle16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/delete"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_edit"
+                        style="@style/TextTitle16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/edit"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_delete"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -107,9 +136,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:background="@color/clear"
-                    app:layout_constraintTop_toBottomOf="@id/vp_image_list"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vp_image_list"
                     app:tabBackground="@drawable/selector_indicator"
                     app:tabGravity="center"
                     app:tabIndicatorHeight="0dp" />

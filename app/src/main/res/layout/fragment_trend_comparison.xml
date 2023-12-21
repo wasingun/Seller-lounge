@@ -33,7 +33,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginEnd="11dp"
             android:hint="@string/enter_shopping_keyword"
-            app:boxStrokeColor="@color/sky_blue"
+            app:boxStrokeColor="@color/selector_dropdown_stroke_color"
             app:errorIconDrawable="@null"
             app:helperText="@string/search_helper_text"
             app:hintTextColor="@color/deep_grey"

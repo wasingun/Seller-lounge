@@ -8,7 +8,7 @@ import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordDetail
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordRequest
 import com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse
 import com.wasingun.seller_lounge.data.repository.TrendComparisonRepository
-import com.wasingun.seller_lounge.util.Constants
+import com.wasingun.seller_lounge.constants.Constants
 import com.wasingun.seller_lounge.util.latestDateFormat
 import com.wasingun.seller_lounge.util.thirtyDaysAgoDateFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,10 +21,10 @@ import javax.inject.Inject
 @HiltViewModel
 class TrendComparisonViewModel @Inject constructor(private val repository: TrendComparisonRepository) :
     ViewModel() {
-    private val _snackbarText = MutableStateFlow(0)
-    val snackbarText: StateFlow<Int> = _snackbarText
-    private val _isError = MutableStateFlow<Int>(0)
-    val isError: StateFlow<Int> = _isError
+    private val _isInputError = MutableStateFlow(0)
+    val isInputError: StateFlow<Int> = _isInputError
+    private val _isNetworkError = MutableStateFlow<Int>(0)
+    val isNetworkError: StateFlow<Int> = _isNetworkError
     private val _keywordResponseResult = MutableStateFlow<KeywordResponse?>(null)
     val keywordResponseResult: StateFlow<KeywordResponse?> = _keywordResponseResult
 
@@ -60,20 +60,20 @@ class TrendComparisonViewModel @Inject constructor(private val repository: Trend
                 onComplete = {
                     _keywordResponseResult.value = it
                 },
-                onError = { _isError.value = it }
+                onError = { _isNetworkError.value = it }
             ).collect()
         }
     }
 
     private fun isValidInfo(keyword: String, category: String, keywordCount: Int): Boolean {
         if (keyword.isBlank()) {
-            _snackbarText.value = R.string.announce_blank_keyword
+            _isInputError.value = R.string.announce_blank_keyword
             return true
         } else if (category.isBlank()) {
-            _snackbarText.value = R.string.announce_blank_category
+            _isInputError.value = R.string.announce_blank_category
             return true
         } else if (keywordCount > 5) {
-            _snackbarText.value = R.string.keyword_count_over
+            _isInputError.value = R.string.keyword_count_over
             return true
         }
         return false
@@ -81,5 +81,13 @@ class TrendComparisonViewModel @Inject constructor(private val repository: Trend
 
     fun resetKeywordResponse() {
         _keywordResponseResult.value = null
+    }
+
+    fun resetInputErrorMessage() {
+        _isInputError.value = 0
+    }
+
+    fun resetNetworkErrorMessage() {
+        _isNetworkError.value = 0
     }
 }

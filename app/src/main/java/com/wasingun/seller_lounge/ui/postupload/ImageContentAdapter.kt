@@ -1,4 +1,4 @@
-package com.wasingun.seller_lounge.ui.postcontent
+package com.wasingun.seller_lounge.ui.postupload
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -8,7 +8,8 @@ import com.wasingun.seller_lounge.data.model.post.PostInfo
 @Entity
 data class RecentViewedPostInfo(
     @PrimaryKey(autoGenerate = true)
-    val postId: Int = 0,
+    val recentViewedPostId: Int = 0,
+    @ColumnInfo val postId: String,
     @ColumnInfo val postInfo: PostInfo,
     @ColumnInfo val savedTime: Long,
 )

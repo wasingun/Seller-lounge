@@ -30,12 +30,13 @@
     </style>
 
     <style name="DropdownBoxStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-        <item name="boxStrokeColor">@color/sky_blue</item>
+        <item name="boxStrokeColor">@color/selector_dropdown_stroke_color</item>
         <item name="hintTextColor">@color/deep_grey</item>
     </style>
 
     <style name="TextLabel11" parent="TextAppearance.Material3.LabelSmall">
         <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="TextLabelGrey11" parent="TextLabel11">

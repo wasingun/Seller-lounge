@@ -4,7 +4,7 @@ import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.datasource.PostDataSource
 import com.wasingun.seller_lounge.data.datasource.RecentViewedPostDataSource
 import com.wasingun.seller_lounge.data.model.post.PostInfo
-import com.wasingun.seller_lounge.util.Constants
+import com.wasingun.seller_lounge.constants.Constants
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

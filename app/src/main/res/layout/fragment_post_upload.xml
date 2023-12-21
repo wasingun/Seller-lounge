@@ -7,15 +7,15 @@
 
         <variable
             name="imageRequestListener"
-            type="com.wasingun.seller_lounge.ui.postcontent.ImageRequestListener" />
+            type="com.wasingun.seller_lounge.ui.postupload.ImageRequestListener" />
 
         <variable
             name="documentRequestListener"
-            type="com.wasingun.seller_lounge.ui.postcontent.DocumentRequestListener" />
+            type="com.wasingun.seller_lounge.ui.postupload.DocumentRequestListener" />
 
         <variable
             name="viewModel"
-            type="com.wasingun.seller_lounge.ui.postcontent.PostContentViewModel" />
+            type="com.wasingun.seller_lounge.ui.postupload.PostUploadViewModel" />
 
     </data>
 

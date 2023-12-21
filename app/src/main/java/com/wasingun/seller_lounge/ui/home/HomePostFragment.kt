@@ -13,7 +13,7 @@ import com.wasingun.seller_lounge.databinding.LayoutHomePostBinding
 import com.wasingun.seller_lounge.extensions.showTextMessage
 import com.wasingun.seller_lounge.network.NetworkConnection
 import com.wasingun.seller_lounge.ui.BaseFragment
-import com.wasingun.seller_lounge.util.Constants
+import com.wasingun.seller_lounge.constants.Constants
 import com.wasingun.seller_lounge.util.getSerializableCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.debounce
@@ -38,7 +38,6 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
             arguments?.getSerializableCompat(Constants.KEY_CATEGORY, ProductCategory::class.java)
         binding.rvPostList.adapter = adapter
         getPostList(category)
-        observeRecentViewedPost(category)
         observeError()
         showLoadingState()
         autoSearchTitleKeyword(category)
@@ -55,11 +54,13 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         val networkConnect = NetworkConnection(requireContext())
         networkConnect.observe(viewLifecycleOwner) { isConnected ->
             if (isConnected) {
+                sharedViewModel.resetNetworkErrorMessage()
                 viewModel.getRemotePostList()
                 submitRemotePostList(category)
             } else {
-                binding.root.showTextMessage(R.string.offline_mode)
+                sharedViewModel.setNetworkErrorMessage(R.string.offline_mode)
                 viewModel.getRecentViewedPostList()
+                observeRecentViewedPost(category)
             }
         }
     }
@@ -122,7 +123,7 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
                 }
                 if (keyword.isNotBlank()) {
                     adapter.submitList(currentList.filter { it.title.contains(keyword) })
-                } else {
+                } else  {
                     adapter.submitList(currentList)
                 }
             }

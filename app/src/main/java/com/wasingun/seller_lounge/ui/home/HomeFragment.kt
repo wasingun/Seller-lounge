@@ -63,7 +63,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun moveToPost() {
-        val action = HomeFragmentDirections.actionDestHomeToPostContentFragment()
+        val action = HomeFragmentDirections.actionDestHomeToPostUploadFragment()
         findNavController().navigate(action)
     }
 

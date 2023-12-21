@@ -25,10 +25,10 @@
             app:popUpTo="@id/dest_home"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_dest_home_to_post_content_fragment"
-            app:destination="@id/dest_post_content" />
+            android:id="@+id/action_dest_home_to_post_upload_fragment"
+            app:destination="@id/dest_post_upload" />
         <action
-            android:id="@+id/action_dest_home_to_postDetailFragment"
+            android:id="@+id/action_dest_home_to_post_detail_fragment"
             app:destination="@id/dest_post_detail" />
 
     </fragment>
@@ -43,7 +43,7 @@
         android:name="com.wasingun.seller_lounge.ui.trendcomparison.TrendComparisonFragment"
         android:label="@string/trend_comparison">
         <action
-            android:id="@+id/action_dest_trend_comparison_to_trendComparisonResultFragment"
+            android:id="@+id/action_dest_trend_comparison_to_dest_trend_comparison_result"
             app:destination="@id/dest_trend_comparison_result" />
     </fragment>
 
@@ -52,7 +52,7 @@
         android:name="com.wasingun.seller_lounge.ui.setting.SettingFragment"
         android:label="@string/setting" >
         <action
-            android:id="@+id/action_dest_setting_to_recentlyViewedPostFragment"
+            android:id="@+id/action_dest_setting_to_dest_recently_viewed_post"
             app:destination="@id/dest_recently_viewed_post" />
         <action
             android:id="@+id/action_dest_setting_to_dest_login"
@@ -71,11 +71,11 @@
     </fragment>
 
     <fragment
-        android:id="@+id/dest_post_content"
-        android:name="com.wasingun.seller_lounge.ui.postcontent.PostContentFragment"
+        android:id="@+id/dest_post_upload"
+        android:name="com.wasingun.seller_lounge.ui.postupload.PostUploadFragment"
         android:label="@string/post">
         <action
-            android:id="@+id/action_dest_post_content_to_loadingDialogFragment"
+            android:id="@+id/action_dest_post_upload_to_dest_loading_dialog"
             app:destination="@id/dest_loading_dialog" />
     </fragment>
 
@@ -87,10 +87,22 @@
     <fragment
         android:id="@+id/dest_post_detail"
         android:name="com.wasingun.seller_lounge.ui.postdetail.PostDetailFragment"
-        android:label="PostDetailFragment" >
+        android:label="@string/post_detail" >
         <argument
             android:name="post"
             app:argType="com.wasingun.seller_lounge.data.model.post.PostInfo" />
+        <action
+            android:id="@+id/action_dest_post_detail_to_dest_loading_dialog"
+            app:destination="@id/dest_loading_dialog" />
+        <action
+            android:id="@+id/action_dest_post_detail_to_dest_home"
+            app:destination="@id/dest_home"
+            app:popUpTo="@id/dest_home"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_dest_post_detail_to_dest_edit_post"
+            app:destination="@id/dest_edit_post" />
+
     </fragment>
 
     <fragment
@@ -100,6 +112,24 @@
         <action
             android:id="@+id/action_dest_recently_viewed_post_to_dest_post_detail"
             app:destination="@id/dest_post_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dest_edit_post"
+        android:name="com.wasingun.seller_lounge.ui.editpost.EditPostFragment"
+        android:label="@string/edit_post" >
+        <argument
+            android:name="post"
+            app:argType="com.wasingun.seller_lounge.data.model.post.PostInfo" />
+        <action
+            android:id="@+id/action_dest_edit_post_to_dest_loading_dialog"
+            app:destination="@id/dest_loading_dialog" />
+        <action
+            android:id="@+id/action_dest_edit_post_to_dest_home"
+            app:destination="@id/dest_home"
+            app:popUpTo="@id/dest_home"
+            app:popUpToInclusive="true"/>
+
     </fragment>
 
 </navigation>
