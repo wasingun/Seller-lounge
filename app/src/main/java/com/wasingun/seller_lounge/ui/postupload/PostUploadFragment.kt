@@ -94,9 +94,9 @@ class PostUploadFragment : BaseFragment<FragmentPostUploadBinding>() {
         lifecycleScope.launch {
             viewModel.isCompleted.collect {
                 if (it) {
-                    delay(300)
                     findNavController().navigateUp()
-                    findNavController().navigateUp()
+                    val action = PostUploadFragmentDirections.actionDestPostUploadToDestHome()
+                    findNavController().navigate(action)
                 }
             }
         }
