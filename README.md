@@ -44,7 +44,7 @@ Seller-lounge는 제조사와 소매상을 연결하는 비즈니스 소셜 네�
 
 | 로그인 | 게시판 카테고리 | 게시물 검색 |
 | :---------------: | :---------------: | :---------------: |
-| <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/b52a3a57-1685-4a8a-acee-be1480229a5c" align="center" width="300px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/f3415396-6c99-4e84-93e8-401074658a39" align="center" width="300px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/441da6aa-1186-4e4a-a6be-2b61fcffc1d7" align="center" width="300px"/> |
+| <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/b52a3a57-1685-4a8a-acee-be1480229a5c" align="center" width="250px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/f3415396-6c99-4e84-93e8-401074658a39" align="center" width="250px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/441da6aa-1186-4e4a-a6be-2b61fcffc1d7" align="center" width="250px"/> |
 
 </div>
 
@@ -52,7 +52,7 @@ Seller-lounge는 제조사와 소매상을 연결하는 비즈니스 소셜 네�
 
 | 다운로드 및 알림 | 게시물 상세화면 이미지 | 게시물 업로드 |
 | :---------------: | :---------------: | :---------------: |
-| <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/40d6f2df-87bc-4035-974a-d20bae96adf0" align="center" width="300px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/2b54cf2f-a1c7-42ab-a0ca-b4c0956c9199" align="center" width="300px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/81928a59-9724-49da-8eac-c3974951e05a" align="center" width="300px"/> |
+| <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/40d6f2df-87bc-4035-974a-d20bae96adf0" align="center" width="250px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/2b54cf2f-a1c7-42ab-a0ca-b4c0956c9199" align="center" width="250px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/81928a59-9724-49da-8eac-c3974951e05a" align="center" width="250px"/> |
 
 </div>
 
@@ -60,7 +60,7 @@ Seller-lounge는 제조사와 소매상을 연결하는 비즈니스 소셜 네�
 
 | 게시물 수정 | 게시물 삭제 | 다크모드 |
 | :---------------: | :---------------: | :---------------: |
-| <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/58c74d88-0f7b-4c31-841e-db393a7eaf16" align="center" width="300px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/45460723-10e1-496e-8a1c-ffd727bbfc13" align="center" width="300px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/6c0feb10-6c02-4596-ba6b-ed4d51038810" align="center" width="300px"/> |
+| <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/58c74d88-0f7b-4c31-841e-db393a7eaf16" align="center" width="250px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/45460723-10e1-496e-8a1c-ffd727bbfc13" align="center" width="250px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/6c0feb10-6c02-4596-ba6b-ed4d51038810" align="center" width="250px"/> |
 
 </div>
 
@@ -68,7 +68,7 @@ Seller-lounge는 제조사와 소매상을 연결하는 비즈니스 소셜 네�
 
 | 최근 열람 게시물 | 로그아웃 |
 | :---------------: | :---------------: |
-| <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/131002f4-6613-49ca-b250-7dcf703ddfbc" align="center" width="300px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/8ba25fd7-595a-416f-8a08-2fa25ae15ae7" align="center" width="300px"/> |
+| <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/131002f4-6613-49ca-b250-7dcf703ddfbc" align="center" width="250px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/8ba25fd7-595a-416f-8a08-2fa25ae15ae7" align="center" width="250px"/> |
 
 </div>
 
@@ -76,7 +76,7 @@ Seller-lounge는 제조사와 소매상을 연결하는 비즈니스 소셜 네�
 
 | 상품 검색 | 트랜드 검색 |
 | :---------------: | :---------------: |
-| <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/ac00562e-35a3-4b7c-86ef-1023d144ae4a" align="center" width="300px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/c261fa8f-470a-4a10-9659-078a89fd1db6" align="center" width="300px"/> |
+| <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/ac00562e-35a3-4b7c-86ef-1023d144ae4a" align="center" width="250px"/> | <img src="https://github.com/wasingun/Seller-lounge/assets/121553658/c261fa8f-470a-4a10-9659-078a89fd1db6" align="center" width="250px"/> |
 
 </div>
 
