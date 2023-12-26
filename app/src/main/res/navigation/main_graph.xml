@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
     app:startDestination="@id/dest_home">
 
     <fragment
         android:id="@+id/dest_login"
         android:name="com.wasingun.seller_lounge.ui.login.LoginFragment"
-        android:label="@string/login">
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_dest_login_to_dest_home"
             app:destination="@id/dest_home"
@@ -18,7 +20,8 @@
     <fragment
         android:id="@+id/dest_home"
         android:name="com.wasingun.seller_lounge.ui.home.HomeFragment"
-        android:label="@string/home">
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_dest_home_to_dest_login"
             app:destination="@id/dest_login"
@@ -36,12 +39,14 @@
     <fragment
         android:id="@+id/dest_product_search"
         android:name="com.wasingun.seller_lounge.ui.productsearch.ProductSearchFragment"
-        android:label="@string/product_search" />
+        android:label="@string/product_search"
+        tools:layout="@layout/fragment_product_search"/>
 
     <fragment
         android:id="@+id/dest_trend_comparison"
         android:name="com.wasingun.seller_lounge.ui.trendcomparison.TrendComparisonFragment"
-        android:label="@string/trend_comparison">
+        android:label="@string/trend_comparison"
+        tools:layout="@layout/fragment_trend_comparison">
         <action
             android:id="@+id/action_dest_trend_comparison_to_dest_trend_comparison_result"
             app:destination="@id/dest_trend_comparison_result" />
@@ -50,7 +55,8 @@
     <fragment
         android:id="@+id/dest_setting"
         android:name="com.wasingun.seller_lounge.ui.setting.SettingFragment"
-        android:label="@string/setting" >
+        android:label="@string/setting"
+        tools:layout="@layout/fragment_setting">
         <action
             android:id="@+id/action_dest_setting_to_dest_recently_viewed_post"
             app:destination="@id/dest_recently_viewed_post" />
@@ -64,7 +70,8 @@
     <fragment
         android:id="@+id/dest_trend_comparison_result"
         android:name="com.wasingun.seller_lounge.ui.trendcomparison.TrendComparisonResultFragment"
-        android:label="@string/chart_result">
+        android:label="@string/chart_result"
+        tools:layout="@layout/fragment_trend_comparison_result">
         <argument
             android:name="keyword_response"
             app:argType="com.wasingun.seller_lounge.data.model.trendcomparison.KeywordResponse" />
@@ -73,7 +80,8 @@
     <fragment
         android:id="@+id/dest_post_upload"
         android:name="com.wasingun.seller_lounge.ui.postupload.PostUploadFragment"
-        android:label="@string/post">
+        android:label="@string/post"
+        tools:layout="@layout/fragment_post_upload">
         <action
             android:id="@+id/action_dest_post_upload_to_dest_loading_dialog"
             app:destination="@id/dest_loading_dialog" />
@@ -87,12 +95,14 @@
     <dialog
         android:id="@+id/dest_loading_dialog"
         android:name="com.wasingun.seller_lounge.ui.common.LoadingDialogFragment"
-        android:label="@string/loading" />
+        android:label="@string/loading"
+        tools:layout="@layout/dialog_fragment_loading"/>
 
     <fragment
         android:id="@+id/dest_post_detail"
         android:name="com.wasingun.seller_lounge.ui.postdetail.PostDetailFragment"
-        android:label="@string/post_detail" >
+        android:label="@string/post_detail"
+        tools:layout="@layout/fragment_post_detail">
         <argument
             android:name="post"
             app:argType="com.wasingun.seller_lounge.data.model.post.PostInfo" />
@@ -113,7 +123,8 @@
     <fragment
         android:id="@+id/dest_recently_viewed_post"
         android:name="com.wasingun.seller_lounge.ui.setting.RecentlyViewedPostFragment"
-        android:label="@string/recently_viewed_post" >
+        android:label="@string/recently_viewed_post"
+        tools:layout="@layout/fragment_recently_viewed_post">
         <action
             android:id="@+id/action_dest_recently_viewed_post_to_dest_post_detail"
             app:destination="@id/dest_post_detail" />
@@ -122,7 +133,8 @@
     <fragment
         android:id="@+id/dest_edit_post"
         android:name="com.wasingun.seller_lounge.ui.editpost.EditPostFragment"
-        android:label="@string/edit_post" >
+        android:label="@string/edit_post"
+        tools:layout="@layout/fragment_edit_post">
         <argument
             android:name="post"
             app:argType="com.wasingun.seller_lounge.data.model.post.PostInfo" />
