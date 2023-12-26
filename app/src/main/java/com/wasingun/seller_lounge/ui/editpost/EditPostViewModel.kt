@@ -21,13 +21,15 @@ class EditPostViewModel @Inject constructor(
 ) : ViewModel() {
     private val _isCompleted = MutableStateFlow<Boolean>(false)
     val isCompleted: StateFlow<Boolean> = _isCompleted
+
     private val _isInputError = MutableStateFlow(0)
     val isInputError: StateFlow<Int> = _isInputError
+
     private val _isNetworkError = MutableStateFlow(0)
     val isNetworkError: StateFlow<Int> = _isNetworkError
+
     private val _isLoading = MutableStateFlow<Boolean>(false)
     val isLoading: StateFlow<Boolean> = _isLoading
-
 
     fun updatePost(
         postId: String,

@@ -17,7 +17,6 @@ class ProductSearchViewModel @Inject constructor(private val repository: Product
     ViewModel() {
     val searchKeyword = MutableStateFlow<String?>(null)
     val sortType = MutableStateFlow<String?>(null)
-
     val item = getProductInfoList().cachedIn(viewModelScope)
 
     fun getProductInfoList(): Flow<PagingData<ProductInfo>> {
