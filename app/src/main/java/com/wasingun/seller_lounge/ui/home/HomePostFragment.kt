@@ -38,6 +38,7 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
         val category =
             arguments?.getSerializableCompat(Constants.KEY_CATEGORY, ProductCategory::class.java)
         binding.rvPostList.adapter = adapter
+        binding.rvPostList.setHasFixedSize(true)
         getPostList(category)
         observeError()
         showLoadingState()

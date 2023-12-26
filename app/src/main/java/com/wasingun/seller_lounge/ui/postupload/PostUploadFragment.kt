@@ -135,6 +135,8 @@ class PostUploadFragment : BaseFragment<FragmentPostUploadBinding>() {
         binding.viewModel = viewModel
         binding.rvImageList.adapter = imageListAdapter
         binding.rvDocumentList.adapter = documentListAdapter
+        binding.rvImageList.setHasFixedSize(true)
+        binding.rvDocumentList.setHasFixedSize(true)
     }
 
     private fun setDropdownMenu() {

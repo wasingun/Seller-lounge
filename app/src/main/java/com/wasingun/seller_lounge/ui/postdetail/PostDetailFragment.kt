@@ -315,6 +315,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
             tvDelete.setOnClickListener {
                 setDeleteAlertDialog(userInfo)
             }
+            rvDocumentList.setHasFixedSize(true)
         }
         if (postInfo.imageList.isNullOrEmpty()) {
             binding.vpImageList.visibility = View.GONE

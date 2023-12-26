@@ -46,6 +46,7 @@ class ProductSearchFragment : BaseFragment<FragmentProductSearchBinding>() {
         binding.btnSearchIcon.setClickEvent(lifecycleScope) {
             submitPagingData()
         }
+        binding.rvProductList.setHasFixedSize(true)
     }
 
     override fun onStart() {
