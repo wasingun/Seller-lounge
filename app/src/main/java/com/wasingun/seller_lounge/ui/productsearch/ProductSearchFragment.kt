@@ -8,7 +8,9 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.localpost.SortSearchType
 import com.wasingun.seller_lounge.databinding.FragmentProductSearchBinding
@@ -66,8 +68,10 @@ class ProductSearchFragment : BaseFragment<FragmentProductSearchBinding>() {
 
     private fun submitPagingData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getProductInfoList().collectLatest { pagingData ->
-                adapter.submitData(pagingData)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getProductInfoList().collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
+                }
             }
         }
     }

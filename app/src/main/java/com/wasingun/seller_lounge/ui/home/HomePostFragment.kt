@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.ProductCategory
@@ -67,9 +68,11 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
 
     private fun observeError() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isError.collect { errorMessage ->
-                if (errorMessage != 0) {
-                    binding.root.showTextMessage(errorMessage)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isError.collect { errorMessage ->
+                    if (errorMessage != 0) {
+                        binding.root.showTextMessage(errorMessage)
+                    }
                 }
             }
         }
@@ -77,14 +80,16 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
 
     private fun observeRecentViewedPost(category: ProductCategory?) {
         lifecycleScope.launch {
-            viewModel.localPostList.collect { postList ->
-                if (category == ProductCategory.ALL) {
-                    adapter.submitList(postList)
-                } else {
-                    val filteringPostList = postList.filter {
-                        it.category == category
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.localPostList.collect { postList ->
+                    if (category == ProductCategory.ALL) {
+                        adapter.submitList(postList)
+                    } else {
+                        val filteringPostList = postList.filter {
+                            it.category == category
+                        }
+                        adapter.submitList(filteringPostList)
                     }
-                    adapter.submitList(filteringPostList)
                 }
             }
         }
@@ -92,11 +97,13 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
 
     private fun showLoadingState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isLoading.collect { state ->
-                if (state) {
-                    binding.viewLoadingIndicator.visibility = View.VISIBLE
-                } else {
-                    binding.viewLoadingIndicator.visibility = View.GONE
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isLoading.collect { state ->
+                    if (state) {
+                        binding.viewLoadingIndicator.visibility = View.VISIBLE
+                    } else {
+                        binding.viewLoadingIndicator.visibility = View.GONE
+                    }
                 }
             }
         }
@@ -115,16 +122,18 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
 
     private fun searchRemotePost(category: ProductCategory?) {
         lifecycleScope.launch {
-            sharedViewModel.searchKeyword.debounce(500).distinctUntilChanged().collect { keyword ->
-                val currentList = if (category == ProductCategory.ALL) {
-                    viewModel.remotePostList.value
-                } else {
-                    viewModel.remotePostList.value.filter { it.category == category }
-                }
-                if (keyword.isNotBlank()) {
-                    adapter.submitList(currentList.filter { it.title.contains(keyword) })
-                } else  {
-                    adapter.submitList(currentList)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sharedViewModel.searchKeyword.debounce(500).distinctUntilChanged().collect { keyword ->
+                    val currentList = if (category == ProductCategory.ALL) {
+                        viewModel.remotePostList.value
+                    } else {
+                        viewModel.remotePostList.value.filter { it.category == category }
+                    }
+                    if (keyword.isNotBlank()) {
+                        adapter.submitList(currentList.filter { it.title.contains(keyword) })
+                    } else  {
+                        adapter.submitList(currentList)
+                    }
                 }
             }
         }
@@ -132,16 +141,18 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
 
     private fun searchRecentViewedPost(category: ProductCategory?) {
         lifecycleScope.launch {
-            sharedViewModel.searchKeyword.debounce(500).distinctUntilChanged().collect { keyword ->
-                val recentViewedList = if (category == ProductCategory.ALL) {
-                    viewModel.localPostList.value
-                } else {
-                    viewModel.localPostList.value.filter { it.category == category }
-                }
-                if (keyword.isNotBlank()) {
-                    adapter.submitList(recentViewedList.filter { it.title.contains(keyword) })
-                } else {
-                    adapter.submitList(recentViewedList)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sharedViewModel.searchKeyword.debounce(500).distinctUntilChanged().collect { keyword ->
+                    val recentViewedList = if (category == ProductCategory.ALL) {
+                        viewModel.localPostList.value
+                    } else {
+                        viewModel.localPostList.value.filter { it.category == category }
+                    }
+                    if (keyword.isNotBlank()) {
+                        adapter.submitList(recentViewedList.filter { it.title.contains(keyword) })
+                    } else {
+                        adapter.submitList(recentViewedList)
+                    }
                 }
             }
         }
@@ -149,17 +160,19 @@ class HomePostFragment : BaseFragment<LayoutHomePostBinding>() {
 
     private fun submitRemotePostList(category: ProductCategory?) {
         lifecycleScope.launch {
-            viewModel.remotePostList.flowWithLifecycle(
-                viewLifecycleOwner.lifecycle,
-                Lifecycle.State.STARTED
-            ).collect { postList ->
-                if (category == ProductCategory.ALL) {
-                    adapter.submitList(postList)
-                } else {
-                    val filteringPostList = postList.filter {
-                        it.category == category
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.remotePostList.flowWithLifecycle(
+                    viewLifecycleOwner.lifecycle,
+                    Lifecycle.State.STARTED
+                ).collect { postList ->
+                    if (category == ProductCategory.ALL) {
+                        adapter.submitList(postList)
+                    } else {
+                        val filteringPostList = postList.filter {
+                            it.category == category
+                        }
+                        adapter.submitList(filteringPostList)
                     }
-                    adapter.submitList(filteringPostList)
                 }
             }
         }
