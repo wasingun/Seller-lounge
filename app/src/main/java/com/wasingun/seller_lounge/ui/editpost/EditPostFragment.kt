@@ -6,7 +6,9 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wasingun.seller_lounge.R
@@ -39,18 +41,20 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>() {
 
     private fun setInputErrorState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val announceMessageList = listOf(
-                R.string.announce_image_attachment_limit,
-                R.string.announce_document_attachment_limit,
-                R.string.announce_input_title,
-                R.string.announce_blank_category,
-                R.string.announce_blank_body,
-                R.string.announce_duplicate_file
-            )
-            viewModel.isInputError.collect { resourceId ->
-                if (announceMessageList.contains(resourceId)) {
-                    binding.root.showTextMessage(resourceId)
-                    viewModel.resetInputErrorState()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                val announceMessageList = listOf(
+                    R.string.announce_image_attachment_limit,
+                    R.string.announce_document_attachment_limit,
+                    R.string.announce_input_title,
+                    R.string.announce_blank_category,
+                    R.string.announce_blank_body,
+                    R.string.announce_duplicate_file
+                )
+                viewModel.isInputError.collect { resourceId ->
+                    if (announceMessageList.contains(resourceId)) {
+                        binding.root.showTextMessage(resourceId)
+                        viewModel.resetInputErrorState()
+                    }
                 }
             }
         }
@@ -58,16 +62,18 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>() {
 
     private fun collectNetworkErrorState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val announceMessageList = listOf(
-                R.string.error_api_http_response,
-                R.string.error_api_network
-            )
-            viewModel.isNetworkError.collect { resourceId ->
-                if (announceMessageList.contains(resourceId)) {
-                    delay(300)
-                    findNavController().navigateUp()
-                    binding.root.showTextMessage(resourceId)
-                    viewModel.resetNetworkErrorState()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                val announceMessageList = listOf(
+                    R.string.error_api_http_response,
+                    R.string.error_api_network
+                )
+                viewModel.isNetworkError.collect { resourceId ->
+                    if (announceMessageList.contains(resourceId)) {
+                        delay(300)
+                        findNavController().navigateUp()
+                        binding.root.showTextMessage(resourceId)
+                        viewModel.resetNetworkErrorState()
+                    }
                 }
             }
         }
@@ -75,12 +81,14 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>() {
 
     private fun collectCompleteState() {
         lifecycleScope.launch {
-            viewModel.isCompleted.collect { completeState ->
-                if (completeState) {
-                    findNavController().navigateUp()
-                    delay(300)
-                    val action = EditPostFragmentDirections.actionDestEditPostToDestHome()
-                    findNavController().navigate(action)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isCompleted.collect { completeState ->
+                    if (completeState) {
+                        findNavController().navigateUp()
+                        delay(300)
+                        val action = EditPostFragmentDirections.actionDestEditPostToDestHome()
+                        findNavController().navigate(action)
+                    }
                 }
             }
         }
@@ -88,10 +96,12 @@ class EditPostFragment : BaseFragment<FragmentEditPostBinding>() {
 
     private fun collectLoadingState() {
         lifecycleScope.launch {
-            viewModel.isLoading.collect { loadingState ->
-                if (loadingState) {
-                    val action = EditPostFragmentDirections.actionDestEditPostToDestLoadingDialog()
-                    findNavController().navigate(action)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isLoading.collect { loadingState ->
+                    if (loadingState) {
+                        val action = EditPostFragmentDirections.actionDestEditPostToDestLoadingDialog()
+                        findNavController().navigate(action)
+                    }
                 }
             }
         }

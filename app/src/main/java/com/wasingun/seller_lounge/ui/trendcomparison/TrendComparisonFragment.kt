@@ -6,7 +6,9 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.ProductCategory
@@ -57,10 +59,12 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
 
     private fun setInputErrorMessage() {
         lifecycleScope.launch {
-            viewModel.isInputError.collect { resourceId ->
-                if (resourceId in inputErrorMessageList) {
-                    binding.btnSearch.showTextMessage(resourceId)
-                    viewModel.resetInputErrorMessage()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isInputError.collect { resourceId ->
+                    if (resourceId in inputErrorMessageList) {
+                        binding.btnSearch.showTextMessage(resourceId)
+                        viewModel.resetInputErrorMessage()
+                    }
                 }
             }
         }
@@ -68,14 +72,16 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
 
     private fun moveToResultScreen() {
         lifecycleScope.launch {
-            viewModel.keywordResponseResult.collect {
-                if (it?.endDate != null) {
-                    val action =
-                        TrendComparisonFragmentDirections.actionDestTrendComparisonToDestTrendComparisonResult(
-                            it
-                        )
-                    viewModel.resetKeywordResponse()
-                    findNavController().navigate(action)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.keywordResponseResult.collect {
+                    if (it?.endDate != null) {
+                        val action =
+                            TrendComparisonFragmentDirections.actionDestTrendComparisonToDestTrendComparisonResult(
+                                it
+                            )
+                        viewModel.resetKeywordResponse()
+                        findNavController().navigate(action)
+                    }
                 }
             }
         }
@@ -89,10 +95,12 @@ class TrendComparisonFragment : BaseFragment<FragmentTrendComparisonBinding>() {
 
     private fun setAPIErrorMessage() {
         lifecycleScope.launch {
-            viewModel.isNetworkError.collect { resourceId ->
-                if (resourceId in apiErrorMessage) {
-                    binding.btnSearch.showTextMessage(resourceId)
-                    viewModel.resetNetworkErrorMessage()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isNetworkError.collect { resourceId ->
+                    if (resourceId in apiErrorMessage) {
+                        binding.btnSearch.showTextMessage(resourceId)
+                        viewModel.resetNetworkErrorMessage()
+                    }
                 }
             }
         }

@@ -22,10 +22,13 @@ class HomePostViewModel @Inject constructor(private val repository: PostListRepo
         started = SharingStarted.WhileSubscribed(10000),
         initialValue = listOf(),
     )
+
     private val _localPostList = MutableStateFlow(listOf<PostInfo>())
     val localPostList: StateFlow<List<PostInfo>> = _localPostList
+
     private val _isError = MutableStateFlow(0)
     val isError: StateFlow<Int> = _isError
+
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading
 

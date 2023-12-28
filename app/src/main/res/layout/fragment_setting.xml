@@ -41,9 +41,9 @@
             style="@style/TextTitleBold14"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:paddingVertical="10dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:paddingVertical="10dp"
             android:text="@string/nickname"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_profile_image" />
@@ -65,8 +65,8 @@
             style="@style/TextTitleBold14"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:paddingVertical="10dp"
             android:layout_marginStart="20dp"
+            android:paddingVertical="10dp"
             android:text="@string/email"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
@@ -85,33 +85,36 @@
         <TextView
             android:id="@+id/tv_customer_feedback"
             style="@style/TextTitleBold14"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:paddingVertical="10dp"
             android:layout_marginStart="20dp"
+            android:paddingVertical="10dp"
             android:text="@string/customer_feedback"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
         <TextView
             android:id="@+id/tv_recently_viewed_post"
             style="@style/TextTitleBold14"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:paddingVertical="10dp"
             android:layout_marginStart="20dp"
+            android:paddingVertical="10dp"
             android:text="@string/recently_viewed_post"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_customer_feedback" />
 
         <TextView
             android:id="@+id/tv_logout"
             style="@style/TextTitleBold14"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:paddingVertical="10dp"
             android:layout_marginStart="20dp"
+            android:paddingVertical="10dp"
             android:text="@string/logout"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_recently_viewed_post" />
 

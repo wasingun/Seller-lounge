@@ -3,7 +3,9 @@ package com.wasingun.seller_lounge.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.wasingun.seller_lounge.R
@@ -39,9 +41,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun setErrorMessage() {
         viewLifecycleOwner.lifecycleScope.launch {
-            sharedViewModel.isError.collect { errorMessage ->
-                if (errorMessage != 0) {
-                    binding.root.showTextMessage(errorMessage)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sharedViewModel.isError.collect { errorMessage ->
+                    if (errorMessage != 0) {
+                        binding.root.showTextMessage(errorMessage)
+                    }
                 }
             }
         }

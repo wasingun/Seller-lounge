@@ -21,14 +21,19 @@ class PostUploadViewModel @Inject constructor(
 ) : ViewModel() {
     private val _postImageList = MutableStateFlow<List<ImageContent>?>(null)
     val postImageList: StateFlow<List<ImageContent>?> = _postImageList
+
     private val _postDocumentList = MutableStateFlow<List<DocumentContent>?>(null)
     val postDocumentList: StateFlow<List<DocumentContent>?> = _postDocumentList
+
     private val _isCompleted = MutableStateFlow<Boolean>(false)
     val isCompleted: StateFlow<Boolean> = _isCompleted
+
     private val _isInputError = MutableStateFlow(0)
     val isInputError: StateFlow<Int> = _isInputError
+
     private val _isNetworkError = MutableStateFlow(0)
     val isNetworkError: StateFlow<Int> = _isNetworkError
+
     private val _isLoading = MutableStateFlow<Boolean>(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 

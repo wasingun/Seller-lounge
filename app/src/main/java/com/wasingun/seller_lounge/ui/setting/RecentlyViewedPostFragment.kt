@@ -30,11 +30,16 @@ class RecentlyViewedPostFragment : BaseFragment<FragmentRecentlyViewedPostBindin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setRecentlyViewedPostList()
+    }
+
+    private fun setRecentlyViewedPostList() {
         binding.rvLocalPostList.adapter = adapter
         lifecycleScope.launch {
             val localPostList = viewModel.getLocalPostList()
             adapter.submitList(localPostList)
         }
+        binding.rvLocalPostList.setHasFixedSize(true)
     }
 
     override fun getFragmentView(): Int {

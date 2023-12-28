@@ -11,7 +11,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.work.Constraints
@@ -77,16 +79,18 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
 
     private fun collectNetworkRequestErrorState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isNetworkRequestError.collect { resourceId ->
-                val announceMessageList = listOf(
-                    R.string.error_api_network,
-                    R.string.error_api_http_response
-                )
-                if (announceMessageList.contains(resourceId)) {
-                    delay(300)
-                    findNavController().navigateUp()
-                    binding.root.showTextMessage(resourceId)
-                    viewModel.resetNetworkRequestErrorState()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isNetworkRequestError.collect { resourceId ->
+                    val announceMessageList = listOf(
+                        R.string.error_api_network,
+                        R.string.error_api_http_response
+                    )
+                    if (announceMessageList.contains(resourceId)) {
+                        delay(300)
+                        findNavController().navigateUp()
+                        binding.root.showTextMessage(resourceId)
+                        viewModel.resetNetworkRequestErrorState()
+                    }
                 }
             }
         }
@@ -94,12 +98,14 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
 
     private fun collectCompletedState() {
         lifecycleScope.launch {
-            viewModel.isCompleted.collect {
-                if (it) {
-                    delay(300)
-                    val action = PostDetailFragmentDirections.actionDestPostDetailToDestHome()
-                    findNavController().navigateUp()
-                    findNavController().navigate(action)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isCompleted.collect {
+                    if (it) {
+                        delay(300)
+                        val action = PostDetailFragmentDirections.actionDestPostDetailToDestHome()
+                        findNavController().navigateUp()
+                        findNavController().navigate(action)
+                    }
                 }
             }
         }
@@ -107,11 +113,13 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
 
     private fun collectLoadingState() {
         lifecycleScope.launch {
-            viewModel.isLoading.collect {
-                if (it) {
-                    val action =
-                        PostDetailFragmentDirections.actionDestPostDetailToDestLoadingDialog()
-                    findNavController().navigate(action)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isLoading.collect {
+                    if (it) {
+                        val action =
+                            PostDetailFragmentDirections.actionDestPostDetailToDestLoadingDialog()
+                        findNavController().navigate(action)
+                    }
                 }
             }
         }
@@ -261,9 +269,11 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
 
     private fun setErrorMessage() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isUserInfoLoadError.collect { errorMessage ->
-                if (errorMessage != 0) {
-                    binding.root.showTextMessage(errorMessage)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isUserInfoLoadError.collect { errorMessage ->
+                    if (errorMessage != 0) {
+                        binding.root.showTextMessage(errorMessage)
+                    }
                 }
             }
         }
@@ -283,9 +293,11 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
 
     private fun setWriterInfo() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.writerInfo.collect { writerInfo ->
-                binding.tvUserName.text = writerInfo.userName
-                binding.ivProfileImage.setCircleImage(writerInfo.userImage)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.writerInfo.collect { writerInfo ->
+                    binding.tvUserName.text = writerInfo.userName
+                    binding.ivProfileImage.setCircleImage(writerInfo.userImage)
+                }
             }
         }
     }
@@ -303,6 +315,7 @@ class PostDetailFragment : BaseFragment<FragmentPostDetailBinding>() {
             tvDelete.setOnClickListener {
                 setDeleteAlertDialog(userInfo)
             }
+            rvDocumentList.setHasFixedSize(true)
         }
         if (postInfo.imageList.isNullOrEmpty()) {
             binding.vpImageList.visibility = View.GONE

@@ -10,7 +10,9 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.wasingun.seller_lounge.R
 import com.wasingun.seller_lounge.data.model.ProductCategory
@@ -46,34 +48,38 @@ class PostUploadFragment : BaseFragment<FragmentPostUploadBinding>() {
 
     private fun setErrorMessage() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val announceMessageList = listOf(R.string.announce_image_attachment_limit,
-                R.string.announce_document_attachment_limit,
-                R.string.announce_input_title,
-                R.string.announce_blank_category,
-                R.string.announce_blank_body,
-                R.string.announce_duplicate_file)
-            viewModel.isInputError.collect { resourceId ->
-                if (announceMessageList.contains(resourceId)) {
-                    binding.root.showTextMessage(resourceId)
-                    viewModel.resetInputError()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                val announceMessageList = listOf(R.string.announce_image_attachment_limit,
+                    R.string.announce_document_attachment_limit,
+                    R.string.announce_input_title,
+                    R.string.announce_blank_category,
+                    R.string.announce_blank_body,
+                    R.string.announce_duplicate_file)
+                viewModel.isInputError.collect { resourceId ->
+                    if (announceMessageList.contains(resourceId)) {
+                        binding.root.showTextMessage(resourceId)
+                        viewModel.resetInputError()
+                    }
                 }
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isNetworkError.collect { resourceId ->
-                when (resourceId) {
-                    R.string.error_api_http_response -> {
-                        delay(300)
-                        findNavController().navigateUp()
-                        binding.root.showTextMessage(R.string.error_api_http_response)
-                        viewModel.resetNetworkErrorState()
-                    }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isNetworkError.collect { resourceId ->
+                    when (resourceId) {
+                        R.string.error_api_http_response -> {
+                            delay(300)
+                            findNavController().navigateUp()
+                            binding.root.showTextMessage(R.string.error_api_http_response)
+                            viewModel.resetNetworkErrorState()
+                        }
 
-                    R.string.error_api_network -> {
-                        delay(300)
-                        findNavController().navigateUp()
-                        binding.root.showTextMessage(R.string.error_api_network)
-                        viewModel.resetNetworkErrorState()
+                        R.string.error_api_network -> {
+                            delay(300)
+                            findNavController().navigateUp()
+                            binding.root.showTextMessage(R.string.error_api_network)
+                            viewModel.resetNetworkErrorState()
+                        }
                     }
                 }
             }
@@ -82,30 +88,38 @@ class PostUploadFragment : BaseFragment<FragmentPostUploadBinding>() {
 
     private fun observeData() {
         lifecycleScope.launch {
-            viewModel.postImageList.collect { imageContentList ->
-                imageListAdapter.submitList(imageContentList)
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.postDocumentList.collect { documentContentList ->
-                documentListAdapter.submitList(documentContentList)
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.isCompleted.collect {
-                if (it) {
-                    findNavController().navigateUp()
-                    val action = PostUploadFragmentDirections.actionDestPostUploadToDestHome()
-                    findNavController().navigate(action)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.postImageList.collect { imageContentList ->
+                    imageListAdapter.submitList(imageContentList)
                 }
             }
         }
         lifecycleScope.launch {
-            viewModel.isLoading.collect {
-                if (it) {
-                    val action =
-                        PostUploadFragmentDirections.actionDestPostUploadToDestLoadingDialog()
-                    findNavController().navigate(action)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.postDocumentList.collect { documentContentList ->
+                    documentListAdapter.submitList(documentContentList)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isCompleted.collect {
+                    if (it) {
+                        findNavController().navigateUp()
+                        val action = PostUploadFragmentDirections.actionDestPostUploadToDestHome()
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isLoading.collect {
+                    if (it) {
+                        val action =
+                            PostUploadFragmentDirections.actionDestPostUploadToDestLoadingDialog()
+                        findNavController().navigate(action)
+                    }
                 }
             }
         }
@@ -121,6 +135,8 @@ class PostUploadFragment : BaseFragment<FragmentPostUploadBinding>() {
         binding.viewModel = viewModel
         binding.rvImageList.adapter = imageListAdapter
         binding.rvDocumentList.adapter = documentListAdapter
+        binding.rvImageList.setHasFixedSize(true)
+        binding.rvDocumentList.setHasFixedSize(true)
     }
 
     private fun setDropdownMenu() {
