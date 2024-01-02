@@ -13,6 +13,13 @@
 
 Seller-lounge는 제조사와 소매상을 연결하는 비즈니스 소셜 네트워크 서비스(SNS) 앱으로, 제조사는 Seller-lounge를 통해 소매상을 찾아 자신의 상품 판로를 개척할 수 있으며, 온라인 쇼핑몰 판매자는 새로운 상품을 발견하고 관련 쇼핑 검색 및 트렌드 분석 데이터를 확인할 수 있습니다. 이 앱은 사용자들이 다양한 상품 카테고리에 게시물, 이미지 및 문서를 자유롭게 등록할 수 있도록 게시판 기반 기능을 제공하며, 앱 내에서 필요한 상품을 즉시 검색할 수 있는 쇼핑 검색 기능과 온라인 쇼핑 트렌드를 비교 및 분석할 수 있는 트렌드 비교 기능도 함께 제공합니다.
 
+## **관련 문서**
+
+1. [프로젝트 특이사항, 문제해결 및 작업일지](https://github.com/wasingun/Seller-lounge/wiki)
+2. [Figma 디자인](https://www.figma.com/file/dNZodPvK5vPfI5lZsk86GC/Seller-lounge?type=design&node-id=0%3A1&mode=design&t=p8eeDlaLCcqpTEMH-1)
+3. [프로젝트 계획서 및 작업 세부내용](https://docs.google.com/spreadsheets/d/1yRPlcND7PRcaASqhWuAiidxJbTP4_4i6zC5dgw1ddso/edit?usp=sharing)
+4. [프로젝트 기획안](https://docs.google.com/presentation/d/1vdosyiObbAbiz2gkTeziBOVghhKqtG5V-A3ngxRpung/edit?usp=sharing)
+
 ## **기술 스택**
 
 - Minimum SDK level 24
