@@ -13,11 +13,10 @@ import com.wasingun.seller_lounge.network.onError
 import com.wasingun.seller_lounge.network.onException
 import com.wasingun.seller_lounge.network.onSuccess
 import com.wasingun.seller_lounge.constants.Constants
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
@@ -77,20 +76,19 @@ class PostRemoteDataSource @Inject constructor(private val postDataClient: PostD
         try {
             withTimeout(15000L) {
                 imageList.map { imageContent ->
-                    async {
+                    launch {
                         val location = getImageFileLocation(userId, imageContent)
                         val imageRef = storageRef.child(location)
                         imageRef.putFile(imageContent.uri).await()
-                        location
                     }
-                } + documentList.map { documentContent ->
-                    async {
+                }
+                documentList.map { documentContent ->
+                    launch {
                         val location = getDocumentFileLocation(userId, documentContent)
                         val documentRef = storageRef.child(location)
                         documentRef.putFile(documentContent.uri).await()
-                        location
                     }
-                }.awaitAll()
+                }
             }
         } catch (e: Exception) {
             return true
